@@ -31,7 +31,7 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
                     ""name"": ""PlayerControls"",
                     ""type"": ""PassThrough"",
                     ""id"": ""f27c0f57-0a9a-4ccf-af55-a42d76e0f17b"",
-                    ""expectedControlType"": ""Vector3"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -39,9 +39,9 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""PlayerInput"",
-                    ""id"": ""c61761ce-8c32-4a2f-bd7c-c46b98d4f54c"",
-                    ""path"": ""3DVector"",
+                    ""name"": ""2D Vector"",
+                    ""id"": ""444ca5d3-3e93-4bc7-bcde-a18e8c75afb9"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -51,8 +51,8 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""2cf7524e-6b8a-4d21-8f24-d389b3916319"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""id"": ""84a3829a-5a60-4363-94c1-a7dbbd6e5c1b"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -62,8 +62,8 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""cd890957-1bf9-4394-ab05-ac42b8003daf"",
-                    ""path"": """",
+                    ""id"": ""c820ff7a-dc42-4b53-ab92-2785c1b83133"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -73,7 +73,7 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""1ef49099-1988-4a12-9728-5f8032fcbc93"",
+                    ""id"": ""e880156b-5691-41f7-9479-e7aceea76273"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -84,30 +84,8 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""0336919e-69a2-4bdf-99d2-5708f7a4c9d4"",
+                    ""id"": ""dcf60879-bda1-46f3-baab-37b1ff33a0e3"",
                     ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PlayerControls"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""forward"",
-                    ""id"": ""0cfe5017-fe90-4a7a-8b4a-179a5591ff4f"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PlayerControls"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""backward"",
-                    ""id"": ""2cbc16df-16f6-478c-a39f-7d79e764944c"",
-                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
