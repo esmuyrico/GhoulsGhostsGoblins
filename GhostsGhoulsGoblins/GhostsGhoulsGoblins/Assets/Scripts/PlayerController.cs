@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     //checks if player is on ground
     private bool isGrounded;
     private bool canJump;
+    private bool canDive;
     private int jumpForce = 5;
     Rigidbody rb;
     private void Awake()
@@ -19,7 +20,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //temporary moves
-    private void PlayerMoves()
+    private void groundCheck()
     {
         if (Physics.Raycast(transform.position, Vector3.down, 1.15f))
         {
@@ -31,17 +32,13 @@ public class PlayerController : MonoBehaviour
             //player is not on ground/platform
             isGrounded = false;
         }
-        //if player hits space and is on ground, then jump
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            canJump = true;
-            playerJump();
-        }
     }
 
     private void Update()
     {
-        PlayerMoves();
+        groundCheck();
+        playerJump();
+        playerDive();
     }
 
 
@@ -54,8 +51,10 @@ public class PlayerController : MonoBehaviour
 
     private void playerJump()
     {
-        if (canJump)
+        //if player hits space and is on ground, then jump
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
+            canJump = true;
             GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             //sets jump to false one player is in the air
             canJump = false;
@@ -63,6 +62,23 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void playerDive()
+    {
+        //if player hits space and is on ground, then jump
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            canDive = true;
 
+            GetComponent<Rigidbody>().AddForce(Vector3.forward * jumpForce, ForceMode.Impulse);
+            //sets jump to false one player is in the air
+            canDive = false;
+            groundCheck();
+            if (isGrounded)
+            {
+                canDive = true;
+            }
+        }
+
+    }
 
 }
