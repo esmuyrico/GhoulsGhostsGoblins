@@ -9,10 +9,13 @@ public class PlayerController : MonoBehaviour
     //checks if player is on ground
     private bool isGrounded;
     private bool canJump;
+    private int jumpForce = 5;
+    Rigidbody rb;
     private void Awake()
     {
         playerActions = new PlayerMovement();
         playerActions.Enable();
+       
     }
 
     //temporary moves
@@ -31,12 +34,15 @@ public class PlayerController : MonoBehaviour
         //if player hits space and is on ground, then jump
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            //jump is true if player hits space and is on ground
             canJump = true;
+            playerJump();
         }
     }
 
-    
+    private void Update()
+    {
+        PlayerMoves();
+    }
 
 
     private void FixedUpdate()
@@ -44,5 +50,19 @@ public class PlayerController : MonoBehaviour
         Vector3 moveVec = playerActions.PlayerMoves.PlayerControls.ReadValue<Vector2>();
         GetComponent<Rigidbody>().AddForce(new Vector3(moveVec.x, 0) * playerSpeed, ForceMode.Force);
     }
+
+
+    private void playerJump()
+    {
+        if (canJump)
+        {
+            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            //sets jump to false one player is in the air
+            canJump = false;
+        }
+
+    }
+
+
 
 }
