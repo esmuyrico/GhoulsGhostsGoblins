@@ -25,13 +25,13 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
     ""maps"": [
         {
             ""name"": ""PlayerMoves"",
-            ""id"": ""762e3350-8fce-4d0c-af97-d41eb6ed411d"",
+            ""id"": ""e641db0e-846d-4c72-8bc4-757aec47c61a"",
             ""actions"": [
                 {
                     ""name"": ""PlayerControls"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""f27c0f57-0a9a-4ccf-af55-a42d76e0f17b"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""id"": ""dad821bc-173f-4513-a379-e1da753d9da6"",
+                    ""expectedControlType"": ""Vector3"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -39,9 +39,20 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""444ca5d3-3e93-4bc7-bcde-a18e8c75afb9"",
-                    ""path"": ""2DVector"",
+                    ""name"": """",
+                    ""id"": ""5f5f7e92-b264-4951-8cf1-ce3a41cc0007"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerControls"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""3D Vector"",
+                    ""id"": ""e9e52aff-131f-433c-a273-c1d5df5a1311"",
+                    ""path"": ""3DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -51,8 +62,8 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""84a3829a-5a60-4363-94c1-a7dbbd6e5c1b"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""id"": ""d6af366b-d48a-48a3-a247-95751facadd4"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -62,8 +73,8 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""c820ff7a-dc42-4b53-ab92-2785c1b83133"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""id"": ""3fba8020-9985-44d3-ace7-252c8a36c3b8"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -73,7 +84,7 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""e880156b-5691-41f7-9479-e7aceea76273"",
+                    ""id"": ""590d35f8-5c18-44b5-9379-72ef07655e09"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -84,8 +95,30 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""dcf60879-bda1-46f3-baab-37b1ff33a0e3"",
+                    ""id"": ""7e762231-dee5-4771-8fd7-986045c67f67"",
                     ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerControls"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""forward"",
+                    ""id"": ""4412af7f-70bf-4b29-ba0a-932ec5f873d7"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerControls"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""backward"",
+                    ""id"": ""9992f224-a0cc-4ea6-b03e-da6180dc80c0"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
