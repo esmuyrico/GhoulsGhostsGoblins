@@ -11,34 +11,23 @@ public class PlayerController : MonoBehaviour
     private bool canJump;
     private bool canDive;
     private int jumpForce = 5;
+    private int diveForce = 6;
     Rigidbody rb;
     private void Awake()
     {
         playerActions = new PlayerMovement();
         playerActions.Enable();
+        canDive = true;
        
     }
 
-    //temporary moves
-    private void groundCheck()
-    {
-        if (Physics.Raycast(transform.position, Vector3.down, 1.15f))
-        {
-            //player is on ground/platform
-            isGrounded = true;
-        }
-        else
-        {
-            //player is not on ground/platform
-            isGrounded = false;
-        }
-    }
+
 
     private void Update()
     {
         groundCheck();
         playerJump();
-        playerDive();
+        diveCheck();
     }
 
 
@@ -48,6 +37,25 @@ public class PlayerController : MonoBehaviour
         GetComponent<Rigidbody>().AddForce(new Vector3(moveVec.x, 0) * playerSpeed, ForceMode.Force);
     }
 
+    //temporary moves
+    private void groundCheck()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, 1.15f))
+        {
+            //player is on ground/platform
+            isGrounded = true;
+            if (!canDive)
+            {
+                transform.Rotate(-90, 0, 0);
+                canDive = true;
+            }
+        }
+        else
+        {
+            //player is not on ground/platform
+            isGrounded = false;
+        }
+    }
 
     private void playerJump()
     {
@@ -62,23 +70,28 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void playerDive()
+    private void diveCheck()
     {
         //if player hits space and is on ground, then jump
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && canDive == true)
         {
-            canDive = true;
-
-            GetComponent<Rigidbody>().AddForce(Vector3.forward * jumpForce, ForceMode.Impulse);
-            //sets jump to false one player is in the air
-            canDive = false;
-            groundCheck();
-            if (isGrounded)
+            if (!isGrounded)
             {
-                canDive = true;
+                playerDive();
+            }
+            else
+            {
+                canDive = false;
             }
         }
-
     }
-
+    private void playerDive()
+    {
+        if (canDive)
+        {
+            GetComponent<Rigidbody>().AddForce(Vector3.forward * diveForce, ForceMode.Impulse);
+            transform.Rotate(90, 0, 0);  
+            canDive = false;
+        }
+    }
 }
