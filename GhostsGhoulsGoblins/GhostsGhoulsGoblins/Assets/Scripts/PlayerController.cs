@@ -8,9 +8,10 @@ public class PlayerController : MonoBehaviour
     public float playerSpeed = 5;
     private PlayerMovement playerActions;
     //checks if player is on ground
-    private bool isGrounded;
-    private bool canJump;
-    private bool canDive;
+    public bool isGrounded;
+    public bool isDiving;
+    public bool canJump;
+    public bool canDive;
     private int jumpForce = 5;
     private int diveForce = 6;
     Rigidbody rb;
@@ -25,7 +26,6 @@ public class PlayerController : MonoBehaviour
         playerActions = new PlayerMovement();
         playerActions.Enable();
         canDive = true;
-       
     }
 
 
@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
             {
                 transform.Rotate(-90, 0, 0);
                 canDive = true;
+                isDiving = false;
             }
         }
         else
@@ -109,9 +110,31 @@ public class PlayerController : MonoBehaviour
     {
         if (canDive)
         {
+            isDiving = true;
             GetComponent<Rigidbody>().AddForce(Vector3.forward * diveForce, ForceMode.Impulse);
             transform.Rotate(90, 0, 0);
             canDive = false;
         }
     }
+
+    /// <summary>
+    /// Needs work, but intended to destroy wall when player dives into it
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerEnter(Collider other)
+    {
+        //if the obstacle you triggered has a tag "Enemy":
+        if (other.transform.tag == "WeakWall")
+        {
+
+            if (isDiving == true)
+            {
+                Destroy(this.gameObject);
+            }
+        }
+    }
+
+
+
+
 }

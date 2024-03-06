@@ -457,6 +457,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 25
+  isGrounded: 0
+  isDiving: 0
+  canJump: 0
+  canDive: 0
   sensitivityValue: 40
 --- !u!1 &1543800335
 GameObject:
@@ -695,8 +699,8 @@ GameObject:
   - component: {fileID: 2126170526}
   - component: {fileID: 2126170525}
   m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
+  m_Name: WeakWall
+  m_TagString: WeakWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -781,8 +785,8 @@ Transform:
   m_GameObject: {fileID: 2126170524}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.86, y: -0.19, z: 2.76}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -4.16, y: 1.48, z: 4.62}
+  m_LocalScale: {x: 4.5594, y: 4.3461, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
