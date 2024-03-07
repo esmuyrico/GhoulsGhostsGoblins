@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
         playerActions = new PlayerMovement();
         playerActions.Enable();
         canDive = true;
-        transform.Rotate(90, 0, 0);
 
     }
 
