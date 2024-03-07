@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
         playerActions = new PlayerMovement();
         playerActions.Enable();
         canDive = true;
+        transform.Rotate(90, 0, 0);
+
     }
 
 
@@ -65,7 +67,7 @@ public class PlayerController : MonoBehaviour
             isGrounded = true;
             if (!canDive && isGrounded)
             {
-                transform.Rotate(-90, 0, 0);
+                //transform.Rotate(-90, 0, 0);
                 canDive = true;
                 isDiving = false;
             }
@@ -82,6 +84,8 @@ public class PlayerController : MonoBehaviour
         //if player hits space and is on ground, then jump
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
+
+
             canJump = true;
             GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             //sets jump to false one player is in the air
@@ -94,8 +98,10 @@ public class PlayerController : MonoBehaviour
     private void DiveCheck()
     {
         //if player hits space and is on ground, then jump
-        if (Input.GetKeyDown(KeyCode.E) && canDive == true)
+        if (Input.GetKeyDown(KeyCode.E))
         {
+            transform.Rotate(90, 0, 0);
+
             if (!isGrounded)
             {
                 PlayerDive();
