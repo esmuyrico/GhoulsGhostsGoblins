@@ -5,20 +5,21 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-    public float playerSpeed = 5;
     private PlayerMovement playerActions;
+
+    [SerializeField] float playerSpeed = 5;
+    [SerializeField] int jumpForce = 5;
+    [SerializeField] int divefwdForce = 6;
+    [SerializeField] float diveUpForce = 5;
+
+
     //checks if player is on ground
-    public bool isGrounded;
-    public bool isDiving;
-    public bool canJump;
-    public bool canDive;
-    private int jumpForce = 5;
-    private int diveForce = 6;
+    private bool isGrounded;
+    private bool isDiving;
+    private bool canDive;
     Rigidbody rb;
 
-    //private float xRotate = 0f;
-    private float yRotate = 0f;
-    public float sensitivityValue = 40f;
+
 
 
     private void Awake()
@@ -34,7 +35,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         GroundCheck();
-        PlayerJump();
+        PlayerMove();
         DiveCheck();
         TurnPlayer();
 
@@ -45,28 +46,32 @@ public class PlayerController : MonoBehaviour
     private void TurnPlayer()
     {
 
-        //xRotate += Input.GetAxis("Mouse Y") * sensitivityValue;
-        yRotate += Input.GetAxis("Mouse X") * sensitivityValue;
-        transform.localEulerAngles = new Vector3(0, yRotate, 0);
+
 
     }
 
     private void FixedUpdate()
     {
-        Vector3 moveVec = playerActions.PlayerMoves.PlayerControls.ReadValue<Vector2>();
-        GetComponent<Rigidbody>().AddForce(new Vector3(moveVec.x, 0) * playerSpeed, ForceMode.Force);
+        //Vector3 moveVec = playerActions.PlayerMoves.PlayerControls.ReadValue<Vector2>();
+        //GetComponent<Rigidbody>().AddForce(new Vector3(moveVec.x, 0) * playerSpeed, ForceMode.Force);
     }
+    
 
-    //temporary moves
+
+    /// <summary>
+    /// Checks if the player is on the ground, falling or in the air.
+    /// Respawns player if fall off map.
+    /// </summary>
     private void GroundCheck()
     {
         if (Physics.Raycast(transform.position, Vector3.down, 1.15f))
         {
             //player is on ground/platform
             isGrounded = true;
-            if (!canDive && isGrounded)
-            {
-                //transform.Rotate(-90, 0, 0);
+
+            if ((Physics.Raycast(transform.position, Vector3.down, .5f)) && isDiving)
+            { 
+                transform.Rotate(-90, 0, 0);
                 canDive = true;
                 isDiving = false;
             }
@@ -76,50 +81,81 @@ public class PlayerController : MonoBehaviour
             //player is not on ground/platform
             isGrounded = false;
         }
+        //if player falls, respawns player
+        if(transform.position.y < -2)
+        {
+            transform.position = new Vector3(0, 3, 0);
+        }
     }
 
-    private void PlayerJump()
+
+
+    /// <summary>
+    /// Temporary code to get player moving and jumping
+    /// </summary>
+    private void PlayerMove()
     {
-        //if player hits space and is on ground, then jump
+        //move forward
+        if (Input.GetKey(KeyCode.W))
+        {
+            transform.position += Vector3.forward * playerSpeed * Time.deltaTime;
+        }
+        //move left
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.position += Vector3.left * playerSpeed * Time.deltaTime;
+        }
+        //move back
+        if (Input.GetKey(KeyCode.S))
+        {
+            transform.position += Vector3.back * playerSpeed * Time.deltaTime;
+        }
+        //move right
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.position += Vector3.right * playerSpeed * Time.deltaTime;
+        }
+        //player jump
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-
-
-            canJump = true;
             GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            //sets jump to false one player is in the air
-            canJump = false;
-
         }
+
+
 
     }
 
+
+
+    /// <summary>
+    /// Checks if player can dive
+    /// </summary>
     private void DiveCheck()
     {
         //if player hits space and is on ground, then jump
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyUp(KeyCode.E))
         {
-            transform.Rotate(90, 0, 0);
-
             if (!isGrounded)
             {
-                PlayerDive();
+                //
             }
-            else
+            if (isGrounded)
             {
-                canDive = false;
+                FloorDive();
             }
         }
     }
-    private void PlayerDive()
+    /// <summary>
+    /// Dive while standing
+    /// </summary>
+    private void FloorDive()
     {
-        if (canDive)
-        {
             isDiving = true;
-            GetComponent<Rigidbody>().AddForce(Vector3.forward * diveForce, ForceMode.Impulse);
-            transform.Rotate(90, 0, 0);
             canDive = false;
-        }
+            transform.Rotate(90, 0, 0);
+            GetComponent<Rigidbody>().AddForce(Vector3.forward * diveForce, ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+
     }
 
     /// <summary>
