@@ -210,13 +210,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 297524101}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.13667499, y: 0.1932928, z: -0.027197678, w: -0.9711942}
-  m_LocalPosition: {x: 2.4330633, y: 3.6175234, z: -4.242207}
+  m_LocalRotation: {x: 0.19848706, y: 0, z: 0, w: 0.9801035}
+  m_LocalPosition: {x: 0.2, y: 3.8235319, z: -4.59454}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 729841985}
-  m_LocalEulerAnglesHint: {x: 5.471, y: -121.872, z: 0}
+  m_LocalEulerAnglesHint: {x: 22.897, y: 0, z: 0}
 --- !u!114 &297524105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -561,11 +561,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff25c7e7cad86e4da882728974ecb88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 25
-  isGrounded: 0
-  isDiving: 0
-  canDive: 0
-  sensitivityValue: 60
+  playerSpeed: 10
+  jumpForce: 7
+  divefwdForce: 7
+  diveUpForce: 7
+  sensitivityValue: 20
 --- !u!1 &1543800335
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// issues: rotation of player clashes with dive rotation;
+/// need player rotation to only rotate the y axis.
+///         landing return to 0 degrees rotation is having some issues
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     private PlayerMovement playerActions;
@@ -11,22 +16,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int jumpForce = 5;
     [SerializeField] int divefwdForce = 6;
     [SerializeField] float diveUpForce = 5;
+    [SerializeField] float sensitivityValue = 40f;
 
-
-    //checks if player is on ground
+    private float xDir;
     private bool isGrounded;
     private bool isDiving;
-    private bool canDive;
     Rigidbody rb;
 
-
+    private float yRotate = 0f;
 
 
     private void Awake()
     {
         playerActions = new PlayerMovement();
         playerActions.Enable();
-        canDive = true;
 
     }
 
@@ -34,20 +37,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        xDir = transform.forward.x;
         GroundCheck();
         PlayerMove();
         DiveCheck();
         TurnPlayer();
-
-    }
-
-
-
-    private void TurnPlayer()
-    {
-
-
-
     }
 
     private void FixedUpdate()
@@ -56,7 +50,11 @@ public class PlayerController : MonoBehaviour
         //GetComponent<Rigidbody>().AddForce(new Vector3(moveVec.x, 0) * playerSpeed, ForceMode.Force);
     }
     
+        private void TurnPlayer()
+    {
 
+
+    }
 
     /// <summary>
     /// Checks if the player is on the ground, falling or in the air.
@@ -72,7 +70,6 @@ public class PlayerController : MonoBehaviour
             if ((Physics.Raycast(transform.position, Vector3.down, .5f)) && isDiving)
             { 
                 transform.Rotate(-90, 0, 0);
-                canDive = true;
                 isDiving = false;
             }
         }
@@ -98,22 +95,22 @@ public class PlayerController : MonoBehaviour
         //move forward
         if (Input.GetKey(KeyCode.W))
         {
-            transform.position += Vector3.forward * playerSpeed * Time.deltaTime;
+            transform.position += transform.forward * playerSpeed * Time.deltaTime;
         }
         //move left
         if (Input.GetKey(KeyCode.A))
         {
-            transform.position += Vector3.left * playerSpeed * Time.deltaTime;
+            transform.position -= transform.right * playerSpeed * Time.deltaTime;
         }
         //move back
         if (Input.GetKey(KeyCode.S))
         {
-            transform.position += Vector3.back * playerSpeed * Time.deltaTime;
+            transform.position -= transform.forward * playerSpeed * Time.deltaTime;
         }
         //move right
         if (Input.GetKey(KeyCode.D))
         {
-            transform.position += Vector3.right * playerSpeed * Time.deltaTime;
+            transform.position += transform.right * playerSpeed * Time.deltaTime;
         }
         //player jump
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -121,6 +118,8 @@ public class PlayerController : MonoBehaviour
             GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
 
+        yRotate += Input.GetAxis("Mouse X") * sensitivityValue;
+        //transform.localEulerAngles = new Vector3(xDir, yRotate, 0);
 
 
     }
@@ -151,10 +150,10 @@ public class PlayerController : MonoBehaviour
     private void FloorDive()
     {
             isDiving = true;
-            canDive = false;
+            GetComponent<Rigidbody>().AddForce(Vector3.up * diveUpForce, ForceMode.Impulse);
+
+            GetComponent<Rigidbody>().AddForce(transform.forward * divefwdForce, ForceMode.Impulse);
             transform.Rotate(90, 0, 0);
-            GetComponent<Rigidbody>().AddForce(Vector3.forward * diveForce, ForceMode.Impulse);
-            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
     }
 
