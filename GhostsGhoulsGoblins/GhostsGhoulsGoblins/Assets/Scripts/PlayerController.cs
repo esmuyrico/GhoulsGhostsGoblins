@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     private float xDir;
     private bool isGrounded;
-    private bool isDiving;
+    [SerializeField] bool isDiving;
     Rigidbody rb;
 
     private float yRotate = 0f;
@@ -81,6 +81,11 @@ public class PlayerController : MonoBehaviour
         //if player falls, respawns player
         if(transform.position.y < -2)
         {
+            if(isDiving)
+            {
+                transform.Rotate(-90, 0, 0);
+                isDiving= false;
+            }
             transform.position = new Vector3(0, 3, 0);
         }
     }
@@ -92,35 +97,37 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void PlayerMove()
     {
-        //move forward
-        if (Input.GetKey(KeyCode.W))
+        if (!isDiving)
         {
-            transform.position += transform.forward * playerSpeed * Time.deltaTime;
+            //move forward
+            if (Input.GetKey(KeyCode.W))
+            {
+                transform.position += transform.forward * playerSpeed * Time.deltaTime;
+            }
+            //move left
+            if (Input.GetKey(KeyCode.A))
+            {
+                transform.position -= transform.right * playerSpeed * Time.deltaTime;
+            }
+            //move back
+            if (Input.GetKey(KeyCode.S))
+            {
+                transform.position -= transform.forward * playerSpeed * Time.deltaTime;
+            }
+            //move right
+            if (Input.GetKey(KeyCode.D))
+            {
+                transform.position += transform.right * playerSpeed * Time.deltaTime;
+            }
+            //player jump
+            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+            {
+                GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            }
+        
+            yRotate += Input.GetAxis("Mouse X") * sensitivityValue;
+            transform.localEulerAngles = new Vector3(xDir, yRotate, 0);
         }
-        //move left
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.position -= transform.right * playerSpeed * Time.deltaTime;
-        }
-        //move back
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.position -= transform.forward * playerSpeed * Time.deltaTime;
-        }
-        //move right
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.position += transform.right * playerSpeed * Time.deltaTime;
-        }
-        //player jump
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
-
-        yRotate += Input.GetAxis("Mouse X") * sensitivityValue;
-        //transform.localEulerAngles = new Vector3(xDir, yRotate, 0);
-
 
     }
 
@@ -138,7 +145,7 @@ public class PlayerController : MonoBehaviour
             {
                 //
             }
-            if (isGrounded)
+            if (isGrounded && !isDiving)
             {
                 FloorDive();
             }
