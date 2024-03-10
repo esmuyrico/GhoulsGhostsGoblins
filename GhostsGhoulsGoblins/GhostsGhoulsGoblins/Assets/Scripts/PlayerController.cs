@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour
 
 
     /// <summary>
-    /// Checks if player can dive
+    /// Checks if the player can dive.
     /// </summary>
     private void DiveCheck()
     {
@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!isGrounded)
             {
-                //
+                //null
             }
             if (isGrounded && !isDiving)
             {
@@ -158,10 +158,8 @@ public class PlayerController : MonoBehaviour
     {
             isDiving = true;
             GetComponent<Rigidbody>().AddForce(Vector3.up * diveUpForce, ForceMode.Impulse);
-
             GetComponent<Rigidbody>().AddForce(transform.forward * divefwdForce, ForceMode.Impulse);
             transform.Rotate(90, 0, 0);
-
     }
 
     /// <summary>
