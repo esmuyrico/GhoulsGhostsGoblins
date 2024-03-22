@@ -39,14 +39,16 @@ public class PlayerController : MonoBehaviour
     {
         xDir = transform.forward.x;
         GroundCheck();
+        MoveDirection();
     }
 
     private void FixedUpdate()
     {
         Vector3 moveVec = playerActions.PlayerMoves.Movement.ReadValue<Vector2>();
-        GetComponent<Rigidbody>().AddForce(new Vector3(moveVec.x, 0) * playerSpeed, ForceMode.Force);
+        //transform.position -= transform.forward * playerSpeed * Time.deltaTime;
+
     }
-    
+
 
 
     /// <summary>
@@ -92,10 +94,6 @@ public class PlayerController : MonoBehaviour
     {
         if (!isDiving)
         {
-              OnMoveBack();
-            OnMoveForward();
-            OnMoveLeft();
-            OnMoveRight();
             yRotate += Input.GetAxis("Mouse X") * sensitivityValue;
             transform.localEulerAngles = new Vector3(xDir, yRotate, 0);
         }
@@ -104,7 +102,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnMoveForward()
     {
-        transform.position += transform.forward * playerSpeed * Time.deltaTime;
+        transform.position -= transform.right * playerSpeed * Time.deltaTime;
     }
     private void OnMoveLeft()
     {
@@ -124,7 +122,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void OnJump()
     {
-        GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);       
+        if(isGrounded == true)
+        {
+            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);       
+        }
     }
 
     /// <summary>
