@@ -675,6 +675,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: goblin
       objectReference: {fileID: 0}
+    - target: {fileID: 1412806113956660022, guid: 840756714422b824181f610166563144,
+        type: 3}
+      propertyPath: m_NotificationBehavior
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2515482390688758343, guid: 840756714422b824181f610166563144,
         type: 3}
       propertyPath: m_LocalPosition.x

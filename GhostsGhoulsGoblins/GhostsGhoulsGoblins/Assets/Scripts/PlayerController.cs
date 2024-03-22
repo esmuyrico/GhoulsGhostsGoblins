@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
-    private PlayerMovement playerActions;
+    private PlayerMove playerActions;
 
     [SerializeField] float playerSpeed = 5;
     [SerializeField] int jumpForce = 5;
@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        playerActions = new PlayerMovement();
+        playerActions = new PlayerMove();
         playerActions.Enable();
 
     }
@@ -39,22 +39,15 @@ public class PlayerController : MonoBehaviour
     {
         xDir = transform.forward.x;
         GroundCheck();
-        PlayerMove();
-        DiveCheck();
-        TurnPlayer();
     }
 
     private void FixedUpdate()
     {
-        //Vector3 moveVec = playerActions.PlayerMoves.PlayerControls.ReadValue<Vector2>();
-        //GetComponent<Rigidbody>().AddForce(new Vector3(moveVec.x, 0) * playerSpeed, ForceMode.Force);
+        Vector3 moveVec = playerActions.PlayerMoves.Movement.ReadValue<Vector2>();
+        GetComponent<Rigidbody>().AddForce(new Vector3(moveVec.x, 0) * playerSpeed, ForceMode.Force);
     }
     
-        private void TurnPlayer()
-    {
 
-
-    }
 
     /// <summary>
     /// Checks if the player is on the ground, falling or in the air.
@@ -93,73 +86,63 @@ public class PlayerController : MonoBehaviour
 
 
     /// <summary>
-    /// Temporary code to get player moving and jumping
+    /// Temporary code allow player to adjust direction with mouse
     /// </summary>
-    private void PlayerMove()
+    private void MoveDirection()
     {
         if (!isDiving)
         {
-            //move forward
-            if (Input.GetKey(KeyCode.W))
-            {
-                transform.position += transform.forward * playerSpeed * Time.deltaTime;
-            }
-            //move left
-            if (Input.GetKey(KeyCode.A))
-            {
-                transform.position -= transform.right * playerSpeed * Time.deltaTime;
-            }
-            //move back
-            if (Input.GetKey(KeyCode.S))
-            {
-                transform.position -= transform.forward * playerSpeed * Time.deltaTime;
-            }
-            //move right
-            if (Input.GetKey(KeyCode.D))
-            {
-                transform.position += transform.right * playerSpeed * Time.deltaTime;
-            }
-            //player jump
-            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-            {
-                GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            }
-        
+              OnMoveBack();
+            OnMoveForward();
+            OnMoveLeft();
+            OnMoveRight();
             yRotate += Input.GetAxis("Mouse X") * sensitivityValue;
             transform.localEulerAngles = new Vector3(xDir, yRotate, 0);
         }
 
     }
 
-
+    private void OnMoveForward()
+    {
+        transform.position += transform.forward * playerSpeed * Time.deltaTime;
+    }
+    private void OnMoveLeft()
+    {
+        transform.position -= transform.right * playerSpeed * Time.deltaTime;
+    }
+    private void OnMoveRight()
+    {
+        transform.position -= transform.forward * playerSpeed * Time.deltaTime;
+    }
+    private void OnMoveBack()
+    {
+        transform.position += transform.right * playerSpeed * Time.deltaTime;
+    }
 
     /// <summary>
-    /// Checks if the player can dive.
+    /// Jump mechanic
     /// </summary>
-    private void DiveCheck()
+    private void OnJump()
     {
-        //if player hits space and is on ground, then jump
-        if (Input.GetKeyUp(KeyCode.E))
-        {
-            if (!isGrounded)
-            {
-                //null
-            }
-            if (isGrounded && !isDiving)
-            {
-                FloorDive();
-            }
-        }
+        GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);       
     }
+
     /// <summary>
     /// Dive while standing
     /// </summary>
-    private void FloorDive()
+    private void OnDive()
     {
+        if (!isGrounded)
+        {
+            //null
+        }
+        if (isGrounded && !isDiving)
+        {
             isDiving = true;
             GetComponent<Rigidbody>().AddForce(Vector3.up * diveUpForce, ForceMode.Impulse);
             GetComponent<Rigidbody>().AddForce(transform.forward * divefwdForce, ForceMode.Impulse);
             transform.Rotate(90, 0, 0);
+        }
     }
 
     /// <summary>
