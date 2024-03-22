@@ -169,12 +169,12 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //if the obstacle you triggered has a tag "Enemy":
-        if (other.transform.tag == "WeakWall")
+        if (other.transform.tag == "BreakableWall")
         {
-
             if (isDiving == true)
             {
-                Destroy(this.gameObject);
+                //destroys wall if diving
+                Destroy(other.gameObject);
             }
         }
     }
