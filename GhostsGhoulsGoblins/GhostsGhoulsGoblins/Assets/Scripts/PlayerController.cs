@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 /// <summary>
-/// issues: rotation of player clashes with dive rotation;
+/// issues: rotation of player clashes with dive rotation; seems to be only having prob when facing x, y, or z directly
 /// need player rotation to only rotate the y axis.
 ///         landing return to 0 degrees rotation is having some issues
 /// </summary>
