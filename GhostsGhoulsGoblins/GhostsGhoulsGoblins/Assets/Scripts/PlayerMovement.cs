@@ -60,7 +60,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
                     ""id"": ""3a10cf4d-b9fe-446c-9e8a-78986f9a7407"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -69,7 +69,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
                     ""id"": ""b781b6e4-4a21-4e9f-83e9-4ab6c32b44de"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -78,7 +78,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
                     ""id"": ""4eba0d03-93e2-46e7-9bad-6dc2d3ab13fc"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -87,7 +87,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
                     ""id"": ""62b8ba41-ab55-4c01-85bd-c20981821d4d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
@@ -133,17 +133,6 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MoveLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""03448f2e-625e-4d75-90f6-eaaa94c7a37d"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": ""Hold"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -212,6 +201,17 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""03448f2e-625e-4d75-90f6-eaaa94c7a37d"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }

@@ -40,12 +40,12 @@ public class PlayerController : MonoBehaviour
         xDir = transform.forward.x;
         GroundCheck();
         MoveDirection();
+        PlayerMovement();
     }
 
     private void FixedUpdate()
     {
-        Vector3 moveVec = playerActions.PlayerMoves.Movement.ReadValue<Vector2>();
-        //transform.position -= transform.forward * playerSpeed * Time.deltaTime;
+
 
     }
 
@@ -97,25 +97,41 @@ public class PlayerController : MonoBehaviour
             yRotate += Input.GetAxis("Mouse X") * sensitivityValue;
             transform.localEulerAngles = new Vector3(xDir, yRotate, 0);
         }
+    }
+    /// <summary>
+    /// temporary move code unitl input system used
+    /// </summary>
+    private void PlayerMovement()
+    {
+
+        if (!isDiving)
+        {
+            if (Input.GetKey(KeyCode.W))
+            {
+                transform.position += transform.forward * playerSpeed * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                transform.position -= transform.right * playerSpeed * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                transform.position -= transform.forward * playerSpeed * Time.deltaTime;
+            }
+                if (Input.GetKey(KeyCode.D))
+            {
+                transform.position += transform.right * playerSpeed * Time.deltaTime;
+            }
+        }
 
     }
 
-    private void OnMoveForward()
-    {
-        transform.position -= transform.right * playerSpeed * Time.deltaTime;
-    }
-    private void OnMoveLeft()
-    {
-        transform.position -= transform.right * playerSpeed * Time.deltaTime;
-    }
-    private void OnMoveRight()
-    {
-        transform.position -= transform.forward * playerSpeed * Time.deltaTime;
-    }
-    private void OnMoveBack()
-    {
-        transform.position += transform.right * playerSpeed * Time.deltaTime;
-    }
+
+
+
+
+
+
 
     /// <summary>
     /// Jump mechanic
