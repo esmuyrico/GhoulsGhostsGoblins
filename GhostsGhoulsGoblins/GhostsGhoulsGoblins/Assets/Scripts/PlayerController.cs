@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// issues: rotation of player clashes with dive rotation; seems to be only having prob when facing x, y, or z directly
@@ -11,6 +12,8 @@ using UnityEngine.UIElements;
 public class PlayerController : MonoBehaviour
 {
     private PlayerMove playerActions;
+    PlayerInput playerInput;
+    InputAction moveAction;
 
     [SerializeField] float playerSpeed = 5;
     [SerializeField] int jumpForce = 5;
@@ -33,14 +36,24 @@ public class PlayerController : MonoBehaviour
 
     }
 
-
+    private void Start()
+    {
+        playerInput = GetComponent<PlayerInput>();
+        moveAction = playerInput.actions.FindAction("Movement");
+    }
 
     private void Update()
     {
         xDir = transform.forward.x;
         GroundCheck();
         MoveDirection();
-        PlayerMovement();
+        //PlayerWalk();
+    }
+
+    void PlayerWalk()
+    {
+        Vector2 direction = moveAction.ReadValue<Vector2>();
+        transform.position += new Vector3(direction.x, 0, direction.x) * playerSpeed *Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -128,8 +141,41 @@ public class PlayerController : MonoBehaviour
 
 
 
+    private void OnMoveForward()
+    {
+        if (isGrounded == true)
+        {
+            transform.position += transform.forward * playerSpeed * Time.deltaTime;
+            Debug.Log("front");
 
+        }
+    }
+    private void OnMoveLeft()
+    {
+        if (isGrounded == true)
+        {
+            transform.position -= transform.right * playerSpeed * Time.deltaTime;
+            Debug.Log("left");
 
+        }
+    }
+    private void OnMoveBack()
+    {
+        if (isGrounded == true)
+        {
+            transform.position -= transform.forward * playerSpeed * Time.deltaTime;
+            Debug.Log("BAck");
+        }
+    }
+    private void OnMoveRight()
+    {
+        if (isGrounded == true)
+        {
+            transform.position += transform.right * playerSpeed * Time.deltaTime;
+            Debug.Log("right");
+
+        }
+    }
 
 
 
@@ -163,7 +209,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Needs work, but intended to destroy wall when player dives into it
+    /// destroy wall when player dives into it
     /// </summary>
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
