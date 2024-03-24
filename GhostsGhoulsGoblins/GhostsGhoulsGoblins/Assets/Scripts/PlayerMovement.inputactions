@@ -34,39 +34,39 @@
                 },
                 {
                     "name": "MoveForward",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "3a10cf4d-b9fe-446c-9e8a-78986f9a7407",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "MoveLeft",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "b781b6e4-4a21-4e9f-83e9-4ab6c32b44de",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "MoveRight",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "4eba0d03-93e2-46e7-9bad-6dc2d3ab13fc",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "MoveBack",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "62b8ba41-ab55-4c01-85bd-c20981821d4d",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
