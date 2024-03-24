@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded == true)
         {
             transform.position += transform.forward * playerSpeed * Time.deltaTime;
-            Debug.Log("front");
+
 
         }
     }
@@ -156,7 +156,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded == true)
         {
             transform.position -= transform.right * playerSpeed * Time.deltaTime;
-            Debug.Log("left");
+
 
         }
     }
@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded == true)
         {
             transform.position -= transform.forward * playerSpeed * Time.deltaTime;
-            Debug.Log("BAck");
+
         }
     }
     private void OnMoveRight()
@@ -173,7 +173,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded == true)
         {
             transform.position += transform.right * playerSpeed * Time.deltaTime;
-            Debug.Log("right");
+
 
         }
     }
@@ -224,6 +224,17 @@ public class PlayerController : MonoBehaviour
                 Destroy(other.gameObject);
             }
         }
+
+        //if the obstacle you triggered has a tag "Enemy":
+        if (other.transform.tag == "Enemy")
+        {
+            if (isDiving == true)
+            {
+                //destroys wall if diving
+                Destroy(other.gameObject);
+            }
+        }
+
     }
 
 
