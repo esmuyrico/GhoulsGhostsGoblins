@@ -13,13 +13,16 @@ public class ScreenInUI : MonoBehaviour
     // holds references to the next possible screens that the player could select
     private GameObject[] NextScreens;
 
-    public void GoPreviousScene()
+    // enables the previous screen 
+    public void GoPreviousScreen()
     {
-
+        previousScreen.SetActive(true);
+        this.gameObject.SetActive(false);
     }
 
-    public void GoNextScene()
+    public void GoNextScreen(GameObject nextScreen)
     {
-
+        nextScreen.SetActive(true);
+        this.gameObject.SetActive(false);
     }
 }
