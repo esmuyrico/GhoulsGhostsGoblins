@@ -29,6 +29,7 @@ public class EnemyShoot : MonoBehaviour
     {
         DetectPlayer();
         shootPlayer();
+        
     }
 
     private void DetectPlayer()
@@ -70,6 +71,7 @@ public class EnemyShoot : MonoBehaviour
             }
 
         }
+
     }
 
     IEnumerator  ShootProjectiles()
