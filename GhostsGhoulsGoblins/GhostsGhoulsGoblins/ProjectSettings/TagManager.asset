@@ -9,6 +9,7 @@ TagManager:
   - WeakWall
   - Key
   - Door
+  - Projectile
   layers:
   - Default
   - TransparentFX

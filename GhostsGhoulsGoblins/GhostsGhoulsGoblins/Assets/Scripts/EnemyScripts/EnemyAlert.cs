@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class EnemyAlert : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class EnemyAlert : MonoBehaviour
 
     public LayerMask targetPlayer;
     public LayerMask obstacleMask;
-    [SerializeField] bool enemyAlerted;
+    public bool enemyAlerted;
+    public Transform player;
 
     //if player is x distance to enemy, alert
 
@@ -19,16 +21,17 @@ public class EnemyAlert : MonoBehaviour
     private void Update()
     {
         DetectPlayer();
+        shootPlayer();
     }
 
     private void DetectPlayer()
     {
         Vector3 playerTarget = (playerLoc.transform.position - transform.position).normalized;
-    
+
         if (Vector3.Angle(transform.forward, playerTarget) <= visionAngle)
         {
             float distanceToTarget = Vector3.Distance(transform.position, playerLoc.transform.position);
-            if (distanceToTarget < visionRange)
+            if (distanceToTarget <= visionRange)
             {
                 if (Physics.Raycast(transform.position, playerTarget, distanceToTarget, obstacleMask) == false)
                 {
@@ -37,16 +40,28 @@ public class EnemyAlert : MonoBehaviour
                 }
 
             }
+            if (distanceToTarget >= visionRange) 
+            { 
+                enemyAlerted = false;
+            }
 
         }
         else
         {
-                    enemyAlerted = false;
+            enemyAlerted = false;
         }
     }
 
-
-
-
+    private void shootPlayer()
+    {
+        if (enemyAlerted)
+        {
+            transform.LookAt(player);
+        }
+    }
 
 }
+
+
+
+
