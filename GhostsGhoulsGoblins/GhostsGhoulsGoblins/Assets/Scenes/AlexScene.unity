@@ -269,7 +269,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 555947902}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8fd6f14fd9f76e4eb14d74ed9fb4674, type: 3}
   m_Name: 
@@ -302,6 +302,17 @@ MonoBehaviour:
   projectileSpawn: {fileID: 1886074049}
   projectileSpeed: 30
   canShoot: 0
+  playerLoc: {fileID: 1699320599}
+  visionRange: 10
+  visionAngle: 30
+  targetPlayer:
+    serializedVersion: 2
+    m_Bits: 64
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 128
+  enemyAlerted: 0
+  player: {fileID: 1699320614}
 --- !u!1 &717511054
 GameObject:
   m_ObjectHideFlags: 0

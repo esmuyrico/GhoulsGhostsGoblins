@@ -40,8 +40,8 @@ public class EnemyAlert : MonoBehaviour
                 }
 
             }
-            if (distanceToTarget >= visionRange) 
-            { 
+            if (distanceToTarget >= visionRange)
+            {
                 enemyAlerted = false;
             }
 
@@ -61,7 +61,3 @@ public class EnemyAlert : MonoBehaviour
     }
 
 }
-
-
-
-

@@ -9,36 +9,89 @@ public class EnemyShoot : MonoBehaviour
     private EnemyAlert _enemyAlert;
     public Transform projectileSpawn;
     [SerializeField] float projectileSpeed;
-    [SerializeField] bool canShoot;
-    // Start is called before the first frame update
-    void Update()
+    [SerializeField] bool canShoot = true;
+    public GameObject playerLoc;
+    public float visionRange;
+    public float visionAngle;
+    public LayerMask targetPlayer;
+    public LayerMask obstacleMask;
+    public bool enemyAlerted;
+    public Transform player;
+
+    //if player is x distance to enemy, alert
+
+    //if player is y distance to enemy, passive
+
+    private void Update()
     {
-        ShootPlayer();
+        DetectPlayer();
+        shootPlayer();
     }
 
-    private void ShootPlayer()
+    private void DetectPlayer()
     {
-        if (_enemyAlert.enemyAlerted == true)
+        Vector3 playerTarget = (playerLoc.transform.position - transform.position).normalized;
+
+        if (Vector3.Angle(transform.forward, playerTarget) <= visionAngle)
         {
-            StartCoroutine(ShootProjectiles());
+            float distanceToTarget = Vector3.Distance(transform.position, playerLoc.transform.position);
+            if (distanceToTarget <= visionRange)
+            {
+                if (Physics.Raycast(transform.position, playerTarget, distanceToTarget, obstacleMask) == false)
+                {
+                    enemyAlerted = true;
+
+                }
+
+            }
+            if (distanceToTarget >= visionRange)
+            {
+                enemyAlerted = false;
+            }
+
+        }
+        else
+        {
+            enemyAlerted = false;
+        }
+    }
+
+    private void shootPlayer()
+    {
+        if (enemyAlerted)
+        {
+            transform.LookAt(player);
+            if (canShoot == true)
+            {
+                canShoot = false;
+                StartCoroutine(ShootProjectiles());
+            }
+            else if (canShoot == false)
+            {
+                StartCoroutine(ShootDelay());
+            }
         }
     }
 
     IEnumerator  ShootProjectiles()
     {
-        if (canShoot)
-        {
-            canShoot = false;
-            var projectile = Instantiate(projectileObject, projectileSpawn.position, projectileSpawn.rotation);
-            projectile.GetComponent<Rigidbody>().velocity = projectileSpawn.up * projectileSpeed;
-        }
-        StartCoroutine(MoveDelay());
+        canShoot = false;
+        var projectile = Instantiate(projectileObject, projectileSpawn.position, projectileSpawn.rotation);
+        projectile.GetComponent<Rigidbody>().velocity = projectileSpawn.forward * projectileSpeed;
+        StartCoroutine(ShootDelay());
         yield return null;
     }
 
-    IEnumerator MoveDelay()
+
+
+
+
+
+
+    IEnumerator ShootDelay()
     {
-        yield return new WaitForSeconds(1);
+        float timeBetween = 4f;
+        yield return new WaitForSeconds(timeBetween);
         canShoot = true;
     }
 }
