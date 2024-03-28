@@ -9,7 +9,7 @@ public class EnemyShoot : MonoBehaviour
     private EnemyAlert _enemyAlert;
     public Transform projectileSpawn;
     [SerializeField] float projectileSpeed;
-    [SerializeField] bool canShoot = true;
+    [SerializeField] bool canShoot;
     public GameObject playerLoc;
     public float visionRange;
     public float visionAngle;
@@ -21,7 +21,10 @@ public class EnemyShoot : MonoBehaviour
     //if player is x distance to enemy, alert
 
     //if player is y distance to enemy, passive
-
+    private void Start()
+    {
+        canShoot = true;
+    }
     private void Update()
     {
         DetectPlayer();
@@ -73,21 +76,13 @@ public class EnemyShoot : MonoBehaviour
     {
         if (canShoot == true)
         {
-        canShoot = false;
-        var projectile = Instantiate(projectileObject, projectileSpawn.position, projectileSpawn.rotation);
-        projectile.GetComponent<Rigidbody>().velocity = projectileSpawn.forward * projectileSpeed;
+            canShoot = false;
+            var projectile = Instantiate(projectileObject, projectileSpawn.position, projectileSpawn.rotation);
+            projectile.GetComponent<Rigidbody>().velocity = projectileSpawn.forward * projectileSpeed;
         }
-    
         StartCoroutine(ShootDelay());
         yield return null;
     }
-
-
-
-
-
-
-
     IEnumerator ShootDelay()
     {
         float timeBetween = 4f;
