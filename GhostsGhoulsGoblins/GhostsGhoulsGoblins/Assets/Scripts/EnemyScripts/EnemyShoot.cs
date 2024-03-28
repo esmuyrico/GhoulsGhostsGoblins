@@ -58,26 +58,26 @@ public class EnemyShoot : MonoBehaviour
 
     private void shootPlayer()
     {
-        if (enemyAlerted)
+        if (enemyAlerted == true)
         {
             transform.LookAt(player);
             if (canShoot == true)
             {
-                canShoot = false;
                 StartCoroutine(ShootProjectiles());
             }
-            else if (canShoot == false)
-            {
-                StartCoroutine(ShootDelay());
-            }
+
         }
     }
 
     IEnumerator  ShootProjectiles()
     {
+        if (canShoot == true)
+        {
         canShoot = false;
         var projectile = Instantiate(projectileObject, projectileSpawn.position, projectileSpawn.rotation);
         projectile.GetComponent<Rigidbody>().velocity = projectileSpawn.forward * projectileSpeed;
+        }
+    
         StartCoroutine(ShootDelay());
         yield return null;
     }
