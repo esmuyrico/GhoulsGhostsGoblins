@@ -9,7 +9,7 @@ public class EnemyAlert : MonoBehaviour
     public float visionRange;
     public float visionAngle;
 
-    public LayerMask targetPlayer;
+    public LayerMask Player;
     public LayerMask obstacleMask;
     public bool enemyAlerted;
     public Transform player;
@@ -38,20 +38,17 @@ public class EnemyAlert : MonoBehaviour
                     enemyAlerted = true;
 
                 }
-
             }
             if (distanceToTarget >= visionRange)
             {
                 enemyAlerted = false;
             }
-
         }
         else
         {
             enemyAlerted = false;
         }
     }
-
     private void shootPlayer()
     {
         if (enemyAlerted)
@@ -59,5 +56,4 @@ public class EnemyAlert : MonoBehaviour
             transform.LookAt(player);
         }
     }
-
 }
