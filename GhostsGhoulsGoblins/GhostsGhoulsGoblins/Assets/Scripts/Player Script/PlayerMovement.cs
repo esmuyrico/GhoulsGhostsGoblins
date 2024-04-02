@@ -95,7 +95,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7092d16e-fdd1-42e6-8c19-e7e7b05db907"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/shift"",
                     ""interactions"": ""Press(behavior=1)"",
                     ""processors"": """",
                     ""groups"": """",
