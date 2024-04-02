@@ -8,22 +8,15 @@ public class EnemyAlert : MonoBehaviour
     public GameObject playerLoc;
     public float visionRange;
     public float visionAngle;
-
     public LayerMask Player;
     public LayerMask obstacleMask;
     public bool enemyAlerted;
     public Transform player;
-
-    //if player is x distance to enemy, alert
-
-    //if player is y distance to enemy, passive
-
     private void Update()
     {
         DetectPlayer();
         shootPlayer();
     }
-
     private void DetectPlayer()
     {
         Vector3 playerTarget = (playerLoc.transform.position - transform.position).normalized;
@@ -36,7 +29,6 @@ public class EnemyAlert : MonoBehaviour
                 if (Physics.Raycast(transform.position, playerTarget, distanceToTarget, obstacleMask) == false)
                 {
                     enemyAlerted = true;
-
                 }
             }
             if (distanceToTarget >= visionRange)
