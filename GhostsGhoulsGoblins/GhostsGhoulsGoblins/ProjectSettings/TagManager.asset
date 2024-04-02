@@ -10,6 +10,7 @@ TagManager:
   - Key
   - Door
   - Projectile
+  - Coin
   layers:
   - Default
   - TransparentFX
