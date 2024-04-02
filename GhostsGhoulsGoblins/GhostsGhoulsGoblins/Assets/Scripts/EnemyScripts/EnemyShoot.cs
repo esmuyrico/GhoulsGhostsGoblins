@@ -29,9 +29,7 @@ public class EnemyShoot : MonoBehaviour
     {
         DetectPlayer();
         shootPlayer();
-        
     }
-
     private void DetectPlayer()
     {
         Vector3 playerTarget = (playerLoc.transform.position - transform.position).normalized;
@@ -44,22 +42,18 @@ public class EnemyShoot : MonoBehaviour
                 if (Physics.Raycast(transform.position, playerTarget, distanceToTarget, obstacleMask) == false)
                 {
                     enemyAlerted = true;
-
                 }
-
             }
             if (distanceToTarget >= visionRange)
             {
                 enemyAlerted = false;
             }
-
         }
         else
         {
             enemyAlerted = false;
         }
     }
-
     private void shootPlayer()
     {
         if (enemyAlerted == true)
@@ -69,12 +63,9 @@ public class EnemyShoot : MonoBehaviour
             {
                 StartCoroutine(ShootProjectiles());
             }
-
         }
-
     }
-
-    IEnumerator  ShootProjectiles()
+    IEnumerator ShootProjectiles()
     {
         if (canShoot == true)
         {
