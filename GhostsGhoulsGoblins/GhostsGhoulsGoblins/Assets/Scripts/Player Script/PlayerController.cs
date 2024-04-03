@@ -20,14 +20,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int divefwdForce = 6;
     [SerializeField] float diveUpForce = 5;
     [SerializeField] float sensitivityValue = 40f;
-
+    private bool m_HitDetect;
     private float xDir;
     private bool isGrounded;
     [SerializeField] bool isDiving;
     Rigidbody rb;
-
+    RaycastHit touchFloor;
+    Collider m_Collider;
     private float yRotate = 0f;
-
+    public float m_MaxDistance;
 
     private void Awake()
     {
@@ -40,6 +41,10 @@ public class PlayerController : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions.FindAction("Movement");
+
+
+        m_MaxDistance = 1f;
+        m_Collider = GetComponent<Collider>();
     }
 
     private void Update()
@@ -49,6 +54,8 @@ public class PlayerController : MonoBehaviour
         MoveDirection();
         //PlayerWalk();
         PlayerMovement();
+        m_Collider = GetComponent<Collider>();
+
     }
 
     void PlayerWalk()
@@ -71,22 +78,38 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void GroundCheck()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, 1.15f))
+        m_HitDetect = Physics.BoxCast(m_Collider.bounds.center, transform.localScale * 0.5f, -transform.up, out touchFloor, transform.rotation, m_MaxDistance);
+        if (m_HitDetect)
         {
-            //player is on ground/platform
-            isGrounded = true;
+            Debug.Log("Hit : " + touchFloor.collider.name);
 
-            if ((Physics.Raycast(transform.position, Vector3.down, .5f)) && isDiving)
-            { 
+            if (isDiving)
+            {
                 transform.Rotate(-90, 0, 0);
                 isDiving = false;
             }
+            isGrounded = true;
         }
         else
         {
-            //player is not on ground/platform
             isGrounded = false;
         }
+
+        //if (Physics.Raycast(transform.position, Vector3.down, 1.15f))
+        //{
+        //player is on ground/platform
+        //isGrounded = true;
+        //if ((Physics.Raycast(transform.position, Vector3.down, .5f)) && isDiving)
+        //{ 
+        //transform.Rotate(-90, 0, 0);
+        //isDiving = false;
+        //}
+        //}
+        //else
+        //{
+        //player is not on ground/platform
+        //isGrounded = false;
+        //}
         //if player falls, respawns player
         if(transform.position.y < -2)
         {
@@ -95,10 +118,28 @@ public class PlayerController : MonoBehaviour
                 transform.Rotate(-90, 0, 0);
                 isDiving= false;
             }
-            transform.position = new Vector3(0, 3, 0);
+        transform.position = new Vector3(0, 3, 0);
         }
     }
-
+    void OnDrawGizmos()
+    {
+        //Check if there has been a hit yet
+        if (m_HitDetect)
+        {
+            //Draw a Ray forward from GameObject toward the hit
+            Gizmos.DrawRay(transform.position, transform.forward * touchFloor.distance);
+            //Draw a cube that extends to where the hit exists
+            Gizmos.DrawWireCube(transform.position + transform.forward * touchFloor.distance, transform.localScale);
+        }
+        //If there hasn't been a hit yet, draw the ray at the maximum distance
+        else
+        {
+            //Draw a Ray forward from GameObject toward the maximum distance
+            Gizmos.DrawRay(transform.position, transform.forward * m_MaxDistance);
+            //Draw a cube at the maximum distance
+            Gizmos.DrawWireCube(transform.position + transform.forward * m_MaxDistance, transform.localScale);
+        }
+    }
 
 
     /// <summary>
@@ -117,7 +158,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void PlayerMovement()
     {
-
         if (!isDiving)
         {
             if (Input.GetKey(KeyCode.W))
@@ -144,41 +184,33 @@ public class PlayerController : MonoBehaviour
 
     private void OnMoveForward()
     {
-        if (isGrounded == true)
+        if (isDiving == false)
         {
-            transform.position += transform.forward * playerSpeed * Time.deltaTime;
-
-
+            transform.position += Vector3.forward * playerSpeed * Time.deltaTime;
         }
     }
     private void OnMoveLeft()
     {
-        if (isGrounded == true)
+        if (isDiving == false)
         {
-            transform.position -= transform.right * playerSpeed * Time.deltaTime;
-
-
+            transform.position += Vector3.left * playerSpeed * Time.deltaTime;
         }
     }
     private void OnMoveBack()
     {
-        if (isGrounded == true)
+        if (isDiving == false)
         {
-            transform.position -= transform.forward * playerSpeed * Time.deltaTime;
+            transform.position += Vector3.back * playerSpeed * Time.deltaTime;
 
         }
     }
     private void OnMoveRight()
     {
-        if (isGrounded == true)
+        if (isDiving == false)
         {
-            transform.position += transform.right * playerSpeed * Time.deltaTime;
-
-
+            transform.position += Vector3.right * playerSpeed * Time.deltaTime;
         }
     }
-
-
 
     /// <summary>
     /// Jump mechanic
