@@ -20,15 +20,24 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int divefwdForce = 6;
     [SerializeField] float diveUpForce = 5;
     [SerializeField] float sensitivityValue = 40f;
-    private bool m_HitDetect;
     private float xDir;
     private bool isGrounded;
     [SerializeField] bool isDiving;
     Rigidbody rb;
-    RaycastHit touchFloor;
-    Collider m_Collider;
+
     private float yRotate = 0f;
-    public float m_MaxDistance;
+
+    //variables for checking if walking on ground
+    private bool feetOnGround;
+    RaycastHit feetFloor;
+    Collider feetCollider;
+    public float floorToFeet = .5f;
+
+    //variables for dive landing
+    private bool faceOnGround;
+    RaycastHit faceFloor;
+    Collider faceCollider;
+    public float floorToFace;
 
     private void Awake()
     {
@@ -43,8 +52,8 @@ public class PlayerController : MonoBehaviour
         moveAction = playerInput.actions.FindAction("Movement");
 
 
-        m_MaxDistance = 1f;
-        m_Collider = GetComponent<Collider>();
+        feetCollider = GetComponent<Collider>();
+        faceCollider = GetComponent<Collider>();
     }
 
     private void Update()
@@ -54,7 +63,8 @@ public class PlayerController : MonoBehaviour
         MoveDirection();
         //PlayerWalk();
         PlayerMovement();
-        m_Collider = GetComponent<Collider>();
+        feetCollider = GetComponent<Collider>();
+        faceCollider = GetComponent<Collider>();
 
     }
 
@@ -62,12 +72,6 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 direction = moveAction.ReadValue<Vector2>();
         transform.position += new Vector3(direction.x, 0, direction.x) * playerSpeed *Time.deltaTime;
-    }
-
-    private void FixedUpdate()
-    {
-
-
     }
 
 
@@ -78,11 +82,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void GroundCheck()
     {
-        m_HitDetect = Physics.BoxCast(m_Collider.bounds.center, transform.localScale * 0.5f, -transform.up, out touchFloor, transform.rotation, m_MaxDistance);
-        if (m_HitDetect)
+        //Checks if standing on ground
+        feetOnGround = Physics.BoxCast(feetCollider.bounds.center, transform.localScale * 0.5f, -transform.up, out feetFloor, transform.rotation, floorToFeet);
+        if (feetOnGround)
         {
-            Debug.Log("Hit : " + touchFloor.collider.name);
-
+            //Debug.Log("Hit : " + feetFloor.collider.name);
             if (isDiving)
             {
                 transform.Rotate(-90, 0, 0);
@@ -94,6 +98,10 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
+
+
+
+
 
         //if (Physics.Raycast(transform.position, Vector3.down, 1.15f))
         //{
@@ -111,35 +119,17 @@ public class PlayerController : MonoBehaviour
         //isGrounded = false;
         //}
         //if player falls, respawns player
-        if(transform.position.y < -2)
+        if (transform.position.y < -2)
         {
-            if(isDiving)
+            if (isDiving)
             {
                 transform.Rotate(-90, 0, 0);
-                isDiving= false;
+                isDiving = false;
             }
-        transform.position = new Vector3(0, 3, 0);
+            transform.position = new Vector3(0, 3, 0);
         }
     }
-    void OnDrawGizmos()
-    {
-        //Check if there has been a hit yet
-        if (m_HitDetect)
-        {
-            //Draw a Ray forward from GameObject toward the hit
-            Gizmos.DrawRay(transform.position, transform.forward * touchFloor.distance);
-            //Draw a cube that extends to where the hit exists
-            Gizmos.DrawWireCube(transform.position + transform.forward * touchFloor.distance, transform.localScale);
-        }
-        //If there hasn't been a hit yet, draw the ray at the maximum distance
-        else
-        {
-            //Draw a Ray forward from GameObject toward the maximum distance
-            Gizmos.DrawRay(transform.position, transform.forward * m_MaxDistance);
-            //Draw a cube at the maximum distance
-            Gizmos.DrawWireCube(transform.position + transform.forward * m_MaxDistance, transform.localScale);
-        }
-    }
+
 
 
     /// <summary>
@@ -238,8 +228,22 @@ public class PlayerController : MonoBehaviour
             GetComponent<Rigidbody>().AddForce(Vector3.up * diveUpForce, ForceMode.Impulse);
             GetComponent<Rigidbody>().AddForce(transform.forward * divefwdForce, ForceMode.Impulse);
             transform.Rotate(90, 0, 0);
+            FinishDive();
         }
     }
+    private void FinishDive()
+    {
+        faceOnGround = Physics.BoxCast(faceCollider.bounds.center, transform.localScale * 0.5f, transform.forward, out faceFloor, transform.rotation, floorToFace);
+
+        if (isDiving && faceOnGround)
+        {
+            Debug.Log("Face Hit : " + faceFloor.collider.name);
+            transform.Rotate(-90, 0, 0);
+            isGrounded = true;
+            isDiving = false;
+        }
+    }
+
 
     /// <summary>
     /// destroy wall when player dives into it

@@ -1,26 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class player : MonoBehaviour
+public class PlayerData : MonoBehaviour
 {
     private int coinNum;
-    public Text coinNumText;
-
     // Start is called before the first frame update
     void Start()
     {
         coinNum = 0;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject.tag == "Coin")
+        if (collision.gameObject.tag == "Coin")
         {
-            other.gameObject.SetActive(false);
+            Destroy(collision.gameObject);
             coinNum++;
-            coinNumText.text = "Coin: " + coinNum;
         }
     }
 }

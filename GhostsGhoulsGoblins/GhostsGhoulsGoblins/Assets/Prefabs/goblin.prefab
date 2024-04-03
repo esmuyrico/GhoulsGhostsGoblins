@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2228931155758763798}
   - component: {fileID: 7557266637533346692}
   - component: {fileID: 1412806113956660022}
+  - component: {fileID: 8243701471150846984}
   m_Layer: 0
   m_Name: goblin
   m_TagString: Untagged
@@ -156,6 +157,8 @@ MonoBehaviour:
   diveUpForce: 7
   sensitivityValue: 20
   isDiving: 0
+  floorToFeet: 0
+  floorToFace: 0
 --- !u!114 &1412806113956660022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +190,18 @@ MonoBehaviour:
   m_DefaultActionMap: PlayerMoves
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &8243701471150846984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673190492060221989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdda7e868f51aac4e85c0e9feabe3ae7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3495605200933090855
 GameObject:
   m_ObjectHideFlags: 0

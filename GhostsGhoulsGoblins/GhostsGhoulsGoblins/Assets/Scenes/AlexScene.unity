@@ -642,6 +642,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5925648082544075472}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1699320621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699320599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdda7e868f51aac4e85c0e9feabe3ae7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1812892287
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1202,6 +1214,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
         type: 3}
+      propertyPath: floorToFace
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
+        type: 3}
+      propertyPath: floorToFeet
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
+        type: 3}
       propertyPath: playerSpeed
       value: 10
       objectReference: {fileID: 0}
@@ -1223,6 +1245,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1699320607}
+    - targetCorrespondingSourceObject: {fileID: 673190492060221989, guid: 840756714422b824181f610166563144,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1699320621}
   m_SourcePrefab: {fileID: 100100000, guid: 840756714422b824181f610166563144, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
