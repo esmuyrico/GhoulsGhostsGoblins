@@ -6,12 +6,18 @@ using static UnityEngine.GraphicsBuffer;
 public class EnemyAlert : MonoBehaviour
 {
     public GameObject playerLoc;
+    //private PlayerController _playerController;
     public float visionRange;
     public float visionAngle;
     public LayerMask Player;
     public LayerMask obstacleMask;
     public bool enemyAlerted;
     public Transform player;
+
+    private void Start()
+    {
+        //_playerController = GetComponent<PlayerController>();
+    }
     private void Update()
     {
         DetectPlayer();
