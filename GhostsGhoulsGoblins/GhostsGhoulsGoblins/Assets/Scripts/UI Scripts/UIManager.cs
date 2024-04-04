@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+// Brough, Heath
+// Created (3/26/2024)
+// Last updated (4/3/2024)
+// Handles UI navigation and holds functions to update the Coins, Health, and Dive Charge Meter
+
 public class UIManager : Singleton<UIManager>
 {
     [SerializeField]
@@ -26,7 +31,7 @@ public class UIManager : Singleton<UIManager>
     void Start()
     {
         currentMenuScreen = mainMenuScreen;
-        Time.timeScale = 0;
+       // Time.timeScale = 0;
 
         _HUDRef = GameObject.FindGameObjectWithTag("HUD");
 
@@ -95,6 +100,10 @@ public class UIManager : Singleton<UIManager>
         HealthBarRef.transform.GetChild(0).localScale = new Vector3(healthPercent , 1, 1);
     }
 
+    /// <summary>
+    /// Updates the gold count in the UI
+    /// </summary>
+    /// <param name="newGoldTotal">The new amount of gold to display</param>
     public void UpdateGold(int newGoldTotal)
     {
         // update the gold in the UI
@@ -117,6 +126,28 @@ public class UIManager : Singleton<UIManager>
             DiveStrengthBar.GetComponent<Image>().color = Color.blue;
             DiveStrengthBar.GetComponent<RectTransform>().transform.localScale = new Vector3(0.1f + 0.9f * percentComplete, 1, 1);
         }
+
+    }
+
+    private void OnGUI()
+    {
+        if (GUILayout.Button("Health 50"))
+        {
+            UpdateHealth(50, 100);
+        }
+        if (GUILayout.Button("Dive 0"))
+        {
+            UpdateDiveCharge(0);
+        }
+        if (GUILayout.Button("Dive 50"))
+        {
+            UpdateDiveCharge(0.5f);
+        }
+        if (GUILayout.Button("Gold 5"))
+        {
+            UpdateGold(5);
+        }
+
 
     }
 }

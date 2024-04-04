@@ -32,17 +32,20 @@ public class EnemyMovement : MonoBehaviour
             }
             else
             {
+                Debug.Log("goingLeft");
                 transform.position += Vector3.left * speed * Time.deltaTime;
             }
         }
         else
         {
+            
             if (transform.position.x >= rightPos.x)
             {
                 goingLeft = true;
             }
             else
             {
+                Debug.Log("goingRight");
                 transform.position += Vector3.right * speed * Time.deltaTime;
             }
         }
