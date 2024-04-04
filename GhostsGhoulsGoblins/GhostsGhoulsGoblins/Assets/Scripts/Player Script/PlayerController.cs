@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
     private float floorToFeet = .5f;
 
     //variables for dive landing
-    private bool faceOnGround;
+    public bool faceOnGround;
     RaycastHit faceFloor;
     Collider faceCollider;
     public float floorToFace;
@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("Hit : " + feetFloor.collider.name);
             if (isDiving)
             {
-                transform.Rotate(-90, 0, 0);
+                //transform.Rotate(-90, 0, 0);
                 isDiving = false;
             }
             isGrounded = true;
@@ -135,7 +135,7 @@ public class PlayerController : MonoBehaviour
         {
             if (isDiving)
             {
-                transform.Rotate(-90, 0, 0);
+                //transform.Rotate(-90, 0, 0);
                 isDiving = false;
             }
             transform.position = new Vector3(0, 3, 0);
@@ -271,7 +271,7 @@ public class PlayerController : MonoBehaviour
         if (isDiving && faceOnGround)
         {
             Debug.Log("Face Hit : " + faceFloor.collider.name);
-            transform.Rotate(-90, 0, 0);
+            //transform.Rotate(-90, 0, 0);
             isGrounded = true;
             isDiving = false;
         }
@@ -301,7 +301,7 @@ public class PlayerController : MonoBehaviour
             if (isDiving == true)
             {
                 //destroys wall if diving
-                transform.Rotate(-90, 0, 0);
+                //transform.Rotate(-90, 0, 0);
                 isGrounded = true;
                 isDiving = false;
             }
