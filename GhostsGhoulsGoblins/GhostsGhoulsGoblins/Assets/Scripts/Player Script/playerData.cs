@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerData : MonoBehaviour
+public class PlayerData : Singleton<PlayerData>
 {
     private int coinNum;
     // Start is called before the first frame update
@@ -11,12 +11,14 @@ public class PlayerData : MonoBehaviour
         coinNum = 0;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Coin")
+        if (other.gameObject.tag == "Coin")
         {
-            Destroy(collision.gameObject);
+            other.gameObject.SetActive(false);
             coinNum++;
+            UIManager.Instance.UpdateGold(coinNum);
         }
     }
+
 }

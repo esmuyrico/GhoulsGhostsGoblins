@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     private bool feetOnGround;
     RaycastHit feetFloor;
     Collider feetCollider;
-    public float floorToFeet = .5f;
+    private float floorToFeet = .5f;
 
     //variables for dive landing
     private bool faceOnGround;
