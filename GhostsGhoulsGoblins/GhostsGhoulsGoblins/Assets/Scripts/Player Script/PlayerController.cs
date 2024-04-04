@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
     void PlayerWalk()
     {
         Vector2 direction = moveAction.ReadValue<Vector2>();
-        transform.position += new Vector3(direction.x, 0, direction.x) * playerSpeed *Time.deltaTime;
+        transform.position += new Vector3(direction.x, 0, direction.x) * playerSpeed * Time.deltaTime;
     }
 
 
@@ -239,9 +239,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void OnJump()
     {
-        if(isGrounded == true)
+        if (isGrounded == true)
         {
-            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);       
+            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
 
@@ -276,12 +276,12 @@ public class PlayerController : MonoBehaviour
             isDiving = false;
         }
     }
-    IEnumerator  GroundCheckDelay()
+    IEnumerator GroundCheckDelay()
     {
-         yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.5f);
     }
 
-    
+
 
     /// <summary>
     /// destroy wall when player dives into it
@@ -289,13 +289,21 @@ public class PlayerController : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.transform)
+        {
+            //
+        }
+
+
         //if the obstacle you triggered has a tag "Enemy":
-        if (other.transform.tag == "BreakableWall")
+        if (other.transform.tag == "Untagged")
         {
             if (isDiving == true)
             {
                 //destroys wall if diving
-                Destroy(other.gameObject);
+                transform.Rotate(-90, 0, 0);
+                isGrounded = true;
+                isDiving = false;
             }
         }
 
@@ -307,11 +315,7 @@ public class PlayerController : MonoBehaviour
                 //destroys wall if diving
                 Destroy(other.gameObject);
             }
+
         }
-
     }
-
-
-
-
 }
