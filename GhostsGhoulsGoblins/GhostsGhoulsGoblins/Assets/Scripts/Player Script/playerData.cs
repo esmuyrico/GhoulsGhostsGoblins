@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerData : Singleton<PlayerData>
+public class PlayerData : MonoBehaviour
 {
     private int coinNum;
     // Start is called before the first frame update

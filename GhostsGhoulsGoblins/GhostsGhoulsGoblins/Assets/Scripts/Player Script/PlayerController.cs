@@ -20,6 +20,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int divefwdForce = 6;
     [SerializeField] float diveUpForce = 5;
     [SerializeField] float sensitivityValue = 40f;
+
+
+    public Vector3 diveDirection { get; set; }
+
+
     private float xDir;
     private bool isGrounded;
     [SerializeField] bool isDiving;
@@ -37,7 +42,7 @@ public class PlayerController : MonoBehaviour
     private bool faceOnGround;
     RaycastHit faceFloor;
     Collider faceCollider;
-    private float floorToFace = .5f;
+    private float floorToFace = 3f;
 
     //variables for dive targeting
     private bool enemyInRange;
@@ -260,7 +265,7 @@ public class PlayerController : MonoBehaviour
     }
     private void FinishDive()
     {
-        faceOnGround = Physics.BoxCast(faceCollider.bounds.center, transform.localScale * 6f, transform.forward, out faceFloor, transform.rotation, floorToFace);
+        faceOnGround = Physics.BoxCast(faceCollider.bounds.center, transform.localScale * .5f, transform.forward, out faceFloor, transform.rotation, floorToFace);
 
         if (isDiving && faceOnGround)
         {

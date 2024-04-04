@@ -51,7 +51,12 @@ public class EnemyAlert : MonoBehaviour
     {
         if (enemyAlerted)
         {
-            transform.LookAt(player);
+
+            transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+
+
+            //transform.rotation
+
         }
     }
 }
