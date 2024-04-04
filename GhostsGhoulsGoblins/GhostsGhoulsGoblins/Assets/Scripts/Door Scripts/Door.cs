@@ -7,28 +7,22 @@ public class Door : MonoBehaviour
     // the total number of keys needed for the door to open
     [SerializeField]
     private int keysNeeded = 1;
-    private int currentKeys = 0;
+    [SerializeField] private float currentKeys = 0;
 
     [SerializeField]
     private int switchesNeeded = 1;
-    private int currentSwitches = 0;
+    [SerializeField] private int currentSwitches = 0;
 
+    [SerializeField] private GameObject ActivateOnOpen = null;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        ActivateOnOpen.SetActive(false);
     }
 
     public void IncreaseKeyCount()
     {
-        currentKeys++;
+        currentKeys+=0.5f;
         Debug.Log("Player needs " + (keysNeeded - currentKeys) + " more keys");
     }
 
@@ -45,14 +39,24 @@ public class Door : MonoBehaviour
     private IEnumerator OpenDoorWithDelay()
     {
         yield return new WaitForSeconds(1f);
-        Destroy(gameObject);
+        GetRidOFDoor();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && currentKeys == keysNeeded)
+        if (other.CompareTag("Player") && currentKeys >= keysNeeded)
         {
-            Destroy(gameObject);
+            GetRidOFDoor();
         }
+    }
+
+    // opens the door and reveals the next part
+    private void GetRidOFDoor()
+    {
+        if (ActivateOnOpen != null)
+        {
+            ActivateOnOpen.SetActive(true);
+        }
+        Destroy(gameObject);
     }
 }
