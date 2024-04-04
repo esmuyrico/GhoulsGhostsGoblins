@@ -27,11 +27,14 @@ public class PlayerController : MonoBehaviour
 
 
     private float xDir;
-    private bool isGrounded;
+    public bool isGrounded;
     [SerializeField] bool isDiving;
     Rigidbody rb;
 
     private float yRotate = 0f;
+
+    private Vector3 startPos;
+
 
     //variables for checking if walking on ground
     private bool feetOnGround;
@@ -61,7 +64,7 @@ public class PlayerController : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions.FindAction("Movement");
-
+        transform.position = (startPos);
 
         feetCollider = GetComponent<Collider>();
         faceCollider = GetComponent<Collider>();
@@ -71,12 +74,13 @@ public class PlayerController : MonoBehaviour
     {
         xDir = transform.forward.x;
         GroundCheck();
+        BackupGroundCheck();
         MoveDirection();
         //PlayerWalk();
         PlayerMovement();
         feetCollider = GetComponent<Collider>();
         faceCollider = GetComponent<Collider>();
-        OnDrawGizmos();
+        //OnDrawGizmos();
 
     }
 
@@ -86,7 +90,17 @@ public class PlayerController : MonoBehaviour
         transform.position += new Vector3(direction.x, 0, direction.x) * playerSpeed * Time.deltaTime;
     }
 
-
+    private void BackupGroundCheck()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, 1.15f))
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+    }
 
     /// <summary>
     /// Checks if the player is on the ground, falling or in the air.
@@ -135,10 +149,10 @@ public class PlayerController : MonoBehaviour
         {
             if (isDiving)
             {
-                //transform.Rotate(-90, 0, 0);
+                transform.Rotate(-90, 0, 0);
                 isDiving = false;
             }
-            transform.position = new Vector3(0, 3, 0);
+            transform.position = new Vector3(-1.3f, 20, 1.1f);
         }
     }
 
@@ -158,6 +172,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             //Draw a Ray forward from GameObject toward the maximum distance
+            Gizmos.DrawRay(transform.position, transform.forward * floorToFace);
             Gizmos.DrawRay(transform.position, transform.forward * floorToFace);
             //Draw a cube at the maximum distance
             Gizmos.DrawWireCube(transform.position + transform.forward * floorToFace, transform.localScale);
@@ -259,9 +274,10 @@ public class PlayerController : MonoBehaviour
             isDiving = true;
             GetComponent<Rigidbody>().AddForce(Vector3.up * diveUpForce, ForceMode.Impulse);
             GetComponent<Rigidbody>().AddForce(transform.forward * divefwdForce, ForceMode.Impulse);
-            transform.Rotate(90, 0, 0);
+            //transform.Rotate(90, 0, 0);
             StartCoroutine(GroundCheckDelay());
-            FinishDive();
+            Debug.Log("restdyfug");
+
         }
     }
     private void FinishDive()
@@ -278,7 +294,10 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator GroundCheckDelay()
     {
-        yield return new WaitForSeconds(.5f);
+
+        yield return new WaitForSeconds(.9f);
+        Debug.Log("PLEASEWORK");
+        FinishDive();
     }
 
 
@@ -289,19 +308,27 @@ public class PlayerController : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.transform)
+        if (other.transform.tag == "Untagged")
         {
-            //
+                isGrounded = true;
+
+            if (isDiving == true)
+            {
+                //destroys wall if diving
+                //transform.Rotate(-90, 0, 0);
+                isDiving = false;
+            }
         }
 
 
         //if the obstacle you triggered has a tag "Enemy":
-        if (other.transform.tag == "Untagged")
+        if (other.transform.gameObject)
         {
             if (isDiving == true)
             {
                 //destroys wall if diving
                 //transform.Rotate(-90, 0, 0);
+                Debug.Log("Hit Something");
                 isGrounded = true;
                 isDiving = false;
             }
