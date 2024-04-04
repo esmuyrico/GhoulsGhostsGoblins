@@ -15,8 +15,9 @@ public class PlayerData : MonoBehaviour
     {
         if (collision.gameObject.tag == "Coin")
         {
-            Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
             coinNum++;
+            UIManager.Instance.UpdateGold(coinNum);
         }
     }
 }
