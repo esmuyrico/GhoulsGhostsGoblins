@@ -1026,6 +1026,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5064259382351905465, guid: 0af7cd80c2e907d41a06919b02beee1f,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5136193457440645499, guid: 0af7cd80c2e907d41a06919b02beee1f,
         type: 3}
       propertyPath: m_Name
@@ -1034,7 +1039,12 @@ PrefabInstance:
     - target: {fileID: 5136193457440645499, guid: 0af7cd80c2e907d41a06919b02beee1f,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5922779703452047028, guid: 0af7cd80c2e907d41a06919b02beee1f,
+        type: 3}
+      propertyPath: m_Mass
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7777978816949840587, guid: 0af7cd80c2e907d41a06919b02beee1f,
         type: 3}
@@ -1144,6 +1154,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6959367228068547727, guid: 840756714422b824181f610166563144,
+        type: 3}
+      propertyPath: sensitivityValue
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7189316125418544418, guid: 840756714422b824181f610166563144,
         type: 3}
       propertyPath: m_Enabled
@@ -1157,7 +1172,7 @@ PrefabInstance:
     - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
         type: 3}
       propertyPath: floorToFace
-      value: 0.6
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
         type: 3}
@@ -1176,8 +1191,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
         type: 3}
+      propertyPath: goblinToEnemy
+      value: 46.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
+        type: 3}
       propertyPath: m_MaxDistance
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
+        type: 3}
+      propertyPath: PleaseWorkFloat
+      value: 90.77
       objectReference: {fileID: 0}
     - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
         type: 3}
