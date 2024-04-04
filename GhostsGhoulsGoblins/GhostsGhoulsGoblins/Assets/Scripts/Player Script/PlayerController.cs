@@ -37,8 +37,13 @@ public class PlayerController : MonoBehaviour
     private bool faceOnGround;
     RaycastHit faceFloor;
     Collider faceCollider;
-    public float floorToFace;
+    private float floorToFace = .5f;
 
+    //variables for dive targeting
+    private bool enemyInRange;
+    RaycastHit diveTarget;
+    Collider frontCollider;
+    public float goblinToEnemy;
     private void Awake()
     {
         playerActions = new PlayerMove();
@@ -65,6 +70,7 @@ public class PlayerController : MonoBehaviour
         PlayerMovement();
         feetCollider = GetComponent<Collider>();
         faceCollider = GetComponent<Collider>();
+        OnDrawGizmos();
 
     }
 
@@ -130,7 +136,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
 
+        //Check if there has been a hit yet
+        if (faceOnGround)
+        {
+            //Draw a Ray forward from GameObject toward the hit
+            Gizmos.DrawRay(transform.position, transform.forward * faceFloor.distance);
+            //Draw a cube that extends to where the hit exists
+            Gizmos.DrawWireCube(transform.position + transform.forward * faceFloor.distance, transform.localScale);
+        }
+        //If there hasn't been a hit yet, draw the ray at the maximum distance
+        else
+        {
+            //Draw a Ray forward from GameObject toward the maximum distance
+            Gizmos.DrawRay(transform.position, transform.forward * floorToFace);
+            //Draw a cube at the maximum distance
+            Gizmos.DrawWireCube(transform.position + transform.forward * floorToFace, transform.localScale);
+        }
+    }
 
     /// <summary>
     /// Temporary code allow player to adjust direction with mouse
@@ -228,12 +254,13 @@ public class PlayerController : MonoBehaviour
             GetComponent<Rigidbody>().AddForce(Vector3.up * diveUpForce, ForceMode.Impulse);
             GetComponent<Rigidbody>().AddForce(transform.forward * divefwdForce, ForceMode.Impulse);
             transform.Rotate(90, 0, 0);
+            StartCoroutine(GroundCheckDelay());
             FinishDive();
         }
     }
     private void FinishDive()
     {
-        faceOnGround = Physics.BoxCast(faceCollider.bounds.center, transform.localScale * 0.5f, transform.forward, out faceFloor, transform.rotation, floorToFace);
+        faceOnGround = Physics.BoxCast(faceCollider.bounds.center, transform.localScale * 6f, transform.forward, out faceFloor, transform.rotation, floorToFace);
 
         if (isDiving && faceOnGround)
         {
@@ -243,7 +270,12 @@ public class PlayerController : MonoBehaviour
             isDiving = false;
         }
     }
+    IEnumerator  GroundCheckDelay()
+    {
+         yield return new WaitForSeconds(.5f);
+    }
 
+    
 
     /// <summary>
     /// destroy wall when player dives into it
