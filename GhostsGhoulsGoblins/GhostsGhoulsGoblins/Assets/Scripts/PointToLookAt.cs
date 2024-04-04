@@ -11,7 +11,7 @@ public class PointToLookAt : MonoBehaviour
 {
     public Vector3 worldPosition;
     public Vector3 screenPostion;
-
+    public GameObject playerRef;
     public Vector3 playerPos;
 
     // Plane used for finding the position on screen to look at
@@ -20,6 +20,7 @@ public class PointToLookAt : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdatePlaneHeight();
         screenPostion = Input.mousePosition;
         worldPosition = new Vector3(0, 0, 0);
 
@@ -57,5 +58,10 @@ public class PointToLookAt : MonoBehaviour
         }
         // Debug.Log(mouseDelta);
 */
+    }
+
+    public void UpdatePlaneHeight()
+    { 
+        plane = new Plane(Vector3.down, playerRef.transform.position.y);
     }
 }

@@ -8,9 +8,11 @@ public class PitEdge : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("hit");
             // stores the last point that the player was when they leave the ground
             Vector3 lastGroundPoint = new Vector3(other.transform.position.x, transform.position.y, other.transform.position.z);
-            // other.GetComponent<PlayerController>().StoreLastGroundPoint(LastGroundPoint);
+            Debug.Log(lastGroundPoint);
+            other.GetComponent<Checkpoints>().StoreLastGroundPoint(lastGroundPoint);
         }
     }
 }

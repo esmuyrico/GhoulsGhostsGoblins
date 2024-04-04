@@ -11,6 +11,9 @@ TagManager:
   - Door
   - Projectile
   - HUD
+  - CheckPoint
+  - GameEnd
+  - Coin
   layers:
   - Default
   - TransparentFX

@@ -85,6 +85,8 @@ public class UIManager : Singleton<UIManager>
     private void StartGame()
     {
         Time.timeScale = 1;
+        _HUDRef.SetActive(true);
+        mainMenuScreen.SetActive(false);
     }
 
     /// <summary>

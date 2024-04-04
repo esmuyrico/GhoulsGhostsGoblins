@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        startPos = transform.position;
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions.FindAction("Movement");
         transform.position = (startPos);
@@ -273,7 +274,7 @@ public class PlayerController : MonoBehaviour
         {
             isDiving = true;
             GetComponent<Rigidbody>().AddForce(Vector3.up * diveUpForce, ForceMode.Impulse);
-            GetComponent<Rigidbody>().AddForce(transform.forward * divefwdForce, ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(diveDirection * divefwdForce, ForceMode.Impulse);
             //transform.Rotate(90, 0, 0);
             StartCoroutine(GroundCheckDelay());
             Debug.Log("restdyfug");

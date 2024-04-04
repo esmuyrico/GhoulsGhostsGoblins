@@ -10,7 +10,7 @@ public class BottomlessPit : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // function to deal damage to player and respawn them at the edge of the pit
-            // other.GetComponent<PlayerController>().TakeDamage(DamageAmount, true);
+            other.GetComponent<Checkpoints>().FellOff();
             
         }
     }

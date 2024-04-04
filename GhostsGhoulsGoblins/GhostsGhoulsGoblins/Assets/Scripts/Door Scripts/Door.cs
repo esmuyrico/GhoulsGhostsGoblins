@@ -22,7 +22,7 @@ public class Door : MonoBehaviour
 
     public void IncreaseKeyCount()
     {
-        currentKeys+=0.5f;
+        currentKeys++;
         Debug.Log("Player needs " + (keysNeeded - currentKeys) + " more keys");
     }
 
