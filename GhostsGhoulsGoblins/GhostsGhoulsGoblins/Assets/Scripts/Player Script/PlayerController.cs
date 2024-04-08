@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     private float xDir;
     public bool isGrounded;
-    [SerializeField] bool isDiving;
+    public bool isDiving;
     Rigidbody rb;
 
     private float yRotate = 0f;
@@ -277,7 +277,6 @@ public class PlayerController : MonoBehaviour
             GetComponent<Rigidbody>().AddForce(diveDirection * divefwdForce, ForceMode.Impulse);
             //transform.Rotate(90, 0, 0);
             StartCoroutine(GroundCheckDelay());
-            Debug.Log("restdyfug");
 
         }
     }
@@ -297,7 +296,6 @@ public class PlayerController : MonoBehaviour
     {
 
         yield return new WaitForSeconds(.9f);
-        Debug.Log("PLEASEWORK");
         FinishDive();
     }
 

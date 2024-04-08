@@ -10,6 +10,7 @@ public class EnemyMovement : MonoBehaviour
     private Vector3 rightPos;
     public int speed;
     public bool goingLeft;
+    public PlayerController _playerController;
 
     //spawngold
     public GameObject goldCoin;
@@ -18,6 +19,8 @@ public class EnemyMovement : MonoBehaviour
 
     void Start()
     {
+        _playerController = FindObjectOfType<PlayerController>();
+
         leftPos = leftPoint.transform.position;
         rightPos = rightPoint.transform.position;
     }
@@ -61,8 +64,8 @@ public class EnemyMovement : MonoBehaviour
         Debug.Log("HitPlayer");
         //Once dive is fix, uncomment code
 
-        //if (_playerController.isDiving == true)
-        //{
+        if (_playerController.isDiving == true)
+        {
         //Instantiate(goldCoin, coinSpawn, Quaternion.identity);
 
         //spawn coin
@@ -74,7 +77,7 @@ public class EnemyMovement : MonoBehaviour
         //destroys enemy if diving
         Destroy(gameObject);
 
-        //}
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
