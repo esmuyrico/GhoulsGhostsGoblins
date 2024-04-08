@@ -192,7 +192,7 @@ public class PlayerController : MonoBehaviour
         }
     }
     /// <summary>
-    /// temporary move code unitl input system used
+    /// Player movement checking if player can move
     /// </summary>
     private void PlayerMovement()
     {
@@ -215,11 +215,12 @@ public class PlayerController : MonoBehaviour
                 OnMoveRight();
             }
         }
-
     }
 
 
-
+    /// <summary>
+    /// Moves player forward
+    /// </summary>
     private void OnMoveForward()
     {
         if (isDiving == false)
@@ -227,6 +228,9 @@ public class PlayerController : MonoBehaviour
             transform.position += Vector3.forward * playerSpeed * Time.deltaTime;
         }
     }
+    /// <summary>
+    /// Moves player left
+    /// </summary>
     private void OnMoveLeft()
     {
         if (isDiving == false)
@@ -234,6 +238,9 @@ public class PlayerController : MonoBehaviour
             transform.position += Vector3.left * playerSpeed * Time.deltaTime;
         }
     }
+    /// <summary>
+    /// Moves player back
+    /// </summary>
     private void OnMoveBack()
     {
         if (isDiving == false)
@@ -242,6 +249,9 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+    /// <summary>
+    /// Moves player right
+    /// </summary>
     private void OnMoveRight()
     {
         if (isDiving == false)
@@ -262,7 +272,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Dive while standing
+    /// Dive feature
     /// </summary>
     private void OnDive()
     {
@@ -280,6 +290,9 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+    /// <summary>
+    /// if player hits face on ground, player will be considered grounded and will return to stand/walking
+    /// </summary>
     private void FinishDive()
     {
         faceOnGround = Physics.BoxCast(faceCollider.bounds.center, transform.localScale * PleaseWorkFloat, transform.forward, out faceFloor, transform.rotation, floorToFace);
@@ -292,9 +305,12 @@ public class PlayerController : MonoBehaviour
             isDiving = false;
         }
     }
+    /// <summary>
+    /// waits to check if player is on ground after diving
+    /// </summary>
+    /// <returns></returns>
     IEnumerator GroundCheckDelay()
     {
-
         yield return new WaitForSeconds(.9f);
         FinishDive();
     }

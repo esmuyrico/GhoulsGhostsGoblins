@@ -19,23 +19,25 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //camera starts following player
+        //camera starts following player at start
         offset = transform.position - player.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //CameraControl();
 
     }
 
-    private void CameraControl()
-    {
+    /// <summary>
+    /// turns camera with mouse
+    /// </summary>
+    //private void CameraControl()
+    //{
         //xRotate += Input.GetAxis("Mouse Y") * sensitivityValue;
-        yRotate += Input.GetAxis("Mouse X") * sensitivityValue;
-        transform.localEulerAngles = new Vector3(0, yRotate, 0);
-    }
+        //yRotate += Input.GetAxis("Mouse X") * sensitivityValue;
+        //transform.localEulerAngles = new Vector3(0, yRotate, 0);
+    //}
 
 
 
@@ -44,6 +46,6 @@ public class CameraController : MonoBehaviour
     void LateUpdate()
     {
         //keeps following player
-        //transform.position = player.transform.position + offset;
+        transform.position = player.transform.position + offset;
     }
 }

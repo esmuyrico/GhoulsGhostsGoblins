@@ -12,7 +12,7 @@ public class EnemyMovement : MonoBehaviour
     public bool goingLeft;
     public PlayerController _playerController;
 
-    //spawngold
+    //spawngold variables
     public GameObject goldCoin;
     public Transform coinSpawn;
 
@@ -58,7 +58,10 @@ public class EnemyMovement : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// when player dives into enemy, the enemy drops a coin and dies
+    /// function called in OnCollisionEnter
+    /// </summary>
     private void EnemyDeath()
     {
         Debug.Log("HitPlayer");
@@ -66,16 +69,16 @@ public class EnemyMovement : MonoBehaviour
 
         if (_playerController.isDiving == true)
         {
-        //Instantiate(goldCoin, coinSpawn, Quaternion.identity);
+            //Instantiate(goldCoin, coinSpawn, Quaternion.identity);
 
-        //spawn coin
-        //var WWay = Instantiate(WWayPrefab, RBottomSpawn.position, RBottomSpawn.rotation * Quaternion.Euler(0f, -90f, 0f));
-        //WWay.GetComponent<Rigidbody>().velocity = RBottomSpawn.up;
+            //spawn coin
+            //var WWay = Instantiate(WWayPrefab, RBottomSpawn.position, RBottomSpawn.rotation * Quaternion.Euler(0f, -90f, 0f));
+            //WWay.GetComponent<Rigidbody>().velocity = RBottomSpawn.up;
 
-        var spawnGold = Instantiate(goldCoin, coinSpawn.position, coinSpawn.rotation);
-        spawnGold.GetComponent<Rigidbody>().velocity = coinSpawn.forward * 1;
-        //destroys enemy if diving
-        Destroy(gameObject);
+            var spawnGold = Instantiate(goldCoin, coinSpawn.position, coinSpawn.rotation);
+            spawnGold.GetComponent<Rigidbody>().velocity = coinSpawn.forward * 1;
+            //destroys enemy if diving
+            Destroy(gameObject);
 
         }
     }
