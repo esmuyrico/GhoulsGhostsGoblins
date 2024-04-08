@@ -11,6 +11,11 @@ public class EnemyMovement : MonoBehaviour
     public int speed;
     public bool goingLeft;
 
+    //spawngold
+    public GameObject goldCoin;
+    public Transform coinSpawn;
+
+
     void Start()
     {
         leftPos = leftPoint.transform.position;
@@ -32,7 +37,6 @@ public class EnemyMovement : MonoBehaviour
             }
             else
             {
-                Debug.Log("goingLeft");
                 transform.position += Vector3.left * speed * Time.deltaTime;
             }
         }
@@ -45,13 +49,40 @@ public class EnemyMovement : MonoBehaviour
             }
             else
             {
-                Debug.Log("goingRight");
                 transform.position += Vector3.right * speed * Time.deltaTime;
             }
         }
     }
 
 
-    //here
+
+    private void EnemyDeath()
+    {
+        Debug.Log("HitPlayer");
+        //Once dive is fix, uncomment code
+
+        //if (_playerController.isDiving == true)
+        //{
+        //Instantiate(goldCoin, coinSpawn, Quaternion.identity);
+
+        //spawn coin
+        //var WWay = Instantiate(WWayPrefab, RBottomSpawn.position, RBottomSpawn.rotation * Quaternion.Euler(0f, -90f, 0f));
+        //WWay.GetComponent<Rigidbody>().velocity = RBottomSpawn.up;
+
+        var spawnGold = Instantiate(goldCoin, coinSpawn.position, coinSpawn.rotation);
+        spawnGold.GetComponent<Rigidbody>().velocity = coinSpawn.forward * 1;
+        //destroys enemy if diving
+        Destroy(gameObject);
+
+        //}
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            EnemyDeath();
+        }
+    }
 
 }

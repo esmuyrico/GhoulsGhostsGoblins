@@ -334,16 +334,5 @@ public class PlayerController : MonoBehaviour
                 isDiving = false;
             }
         }
-
-        //if the obstacle you triggered has a tag "Enemy":
-        if (other.transform.tag == "Enemy")
-        {
-            if (isDiving == true)
-            {
-                //destroys wall if diving
-                Destroy(other.gameObject);
-            }
-
-        }
     }
 }
