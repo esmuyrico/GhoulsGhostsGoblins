@@ -15,7 +15,7 @@ public class Enemy2Movement : MonoBehaviour
     [SerializeField] float alertSpeed = 4;
 
     //external scripts
-    private EnemyShoot _enemyShoot;
+    private EnemyAlert _enemyAlert;
     private PlayerController _playerController;
 
     //spawngold variables
@@ -30,7 +30,7 @@ public class Enemy2Movement : MonoBehaviour
     void Start()
     {
         _playerController = FindObjectOfType<PlayerController>();
-        _enemyShoot = FindObjectOfType<EnemyShoot>();
+        _enemyAlert = FindObjectOfType<EnemyAlert>();
     }
 
     void Update()
@@ -47,11 +47,11 @@ public class Enemy2Movement : MonoBehaviour
     /// </summary>
     private void EnemyMove()
     {
-        if (_enemyShoot.enemyAlerted == false)
+        if (_enemyAlert.enemyAlerted == false)
         {
             MoveToWaypoint();
         }
-        if (_enemyShoot.enemyAlerted == true)
+        if (_enemyAlert.enemyAlerted == true)
         {
             ChasePlayer();
         }
