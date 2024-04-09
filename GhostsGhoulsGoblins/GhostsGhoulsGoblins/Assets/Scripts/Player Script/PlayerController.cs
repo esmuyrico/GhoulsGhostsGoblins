@@ -4,11 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 
-/// <summary>
-/// issues: rotation of player clashes with dive rotation; seems to be only having prob when facing x, y, or z directly
-/// need player rotation to only rotate the y axis.
-///         landing return to 0 degrees rotation is having some issues
-/// </summary>
+
 public class PlayerController : MonoBehaviour
 {
     private PlayerMove playerActions;
@@ -20,7 +16,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int divefwdForce = 6;
     [SerializeField] float diveUpForce = 5;
     [SerializeField] float sensitivityValue = 40f;
-    [SerializeField] float PleaseWorkFloat;
 
 
     public Vector3 diveDirection { get; set; }
@@ -42,17 +37,7 @@ public class PlayerController : MonoBehaviour
     Collider feetCollider;
     private float floorToFeet = .5f;
 
-    //variables for dive landing
-    //public bool faceOnGround;
-    //RaycastHit faceFloor;
-    //Collider faceCollider;
-    //public float floorToFace;
 
-    //variables for dive targeting
-    private bool enemyInRange;
-    RaycastHit diveTarget;
-    Collider frontCollider;
-    //public float goblinToEnemy;
     private void Awake()
     {
         playerActions = new PlayerMove();
@@ -77,23 +62,10 @@ public class PlayerController : MonoBehaviour
         GroundCheck();
         BackupGroundCheck();
         MoveDirection();
-        //PlayerWalk();
         PlayerMovement();
         feetCollider = GetComponent<Collider>();
-                //  faceCollider = GetComponent<Collider>();
+        //  faceCollider = GetComponent<Collider>();
         //OnDrawGizmos();
-
-
-
-
-
-
-    }
-
-    void PlayerWalk()
-    {
-        Vector2 direction = moveAction.ReadValue<Vector2>();
-        transform.position += new Vector3(direction.x, 0, direction.x) * playerSpeed * Time.deltaTime;
     }
 
     private void BackupGroundCheck()
@@ -130,27 +102,7 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
-
-
-
-
-
-        //if (Physics.Raycast(transform.position, Vector3.down, 1.15f))
-        //{
-        //player is on ground/platform
-        //isGrounded = true;
-        //if ((Physics.Raycast(transform.position, Vector3.down, .5f)) && isDiving)
-        //{ 
-        //transform.Rotate(-90, 0, 0);
-        //isDiving = false;
-        //}
-        //}
-        //else
-        //{
-        //player is not on ground/platform
-        //isGrounded = false;
-        //}
-        //if player falls, respawns player
+        //respawns if falls too far
         if (transform.position.y < -2)
         {
             if (isDiving)
@@ -161,30 +113,7 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(-1.3f, 20, 1.1f);
         }
     }
-    /*
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
 
-        //Check if there has been a hit yet
-        if (faceOnGround)
-        {
-            //Draw a Ray forward from GameObject toward the hit
-            Gizmos.DrawRay(transform.position, transform.forward * faceFloor.distance);
-            //Draw a cube that extends to where the hit exists
-            Gizmos.DrawWireCube(transform.position + transform.forward * faceFloor.distance, transform.localScale);
-        }
-        //If there hasn't been a hit yet, draw the ray at the maximum distance
-        else
-        {
-            //Draw a Ray forward from GameObject toward the maximum distance
-            Gizmos.DrawRay(transform.position, transform.forward * floorToFace);
-            Gizmos.DrawRay(transform.position, transform.forward * floorToFace);
-            //Draw a cube at the maximum distance
-            Gizmos.DrawWireCube(transform.position + transform.forward * floorToFace, transform.localScale);
-        }
-    }
-    */
 
     /// <summary>
     /// Temporary code allow player to adjust direction with mouse
@@ -293,25 +222,32 @@ public class PlayerController : MonoBehaviour
             //delay a sec or 2
             StartCoroutine(DiveCheckDelay());
             //if no contact: is diving = true
-            transform.Rotate(90, 0, 0);
+            //transform.Rotate(90, 0, 0);
 
             isDiving = true;
 
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
     /// <summary>
     /// if player hits face on ground, player will be considered grounded and will return to stand/walking
     /// </summary>
     private void FinishDive()
     {
-        //faceOnGround = Physics.BoxCast(faceCollider.bounds.center, transform.localScale * PleaseWorkFloat, transform.forward, out faceFloor, transform.rotation, floorToFace);
-        //if contact  and is diving (circumstances might belong in collision)
         
             isDiving = false;
-
-            //Debug.Log("Face Hit : " + faceFloor.collider.name);
-            transform.Rotate(-90, 0, 0);
+            //transform.Rotate(-90, 0, 0);
             //isGrounded = true;
         
     }
@@ -321,7 +257,7 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     IEnumerator DiveCheckDelay()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
     }
 
 
