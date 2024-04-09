@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
             if (isDiving)
             {
                 //transform.Rotate(-90, 0, 0);
-                isDiving = false;
+                //isDiving = false;
             }
             isGrounded = true;
         }
@@ -150,7 +150,7 @@ public class PlayerController : MonoBehaviour
         {
             if (isDiving)
             {
-                transform.Rotate(-90, 0, 0);
+                //transform.Rotate(-90, 0, 0);
                 isDiving = false;
             }
             transform.position = new Vector3(-1.3f, 20, 1.1f);
@@ -282,39 +282,41 @@ public class PlayerController : MonoBehaviour
         }
         if (isGrounded && !isDiving)
         {
-            isDiving = true;
             GetComponent<Rigidbody>().AddForce(Vector3.up * diveUpForce, ForceMode.Impulse);
             GetComponent<Rigidbody>().AddForce(diveDirection * divefwdForce, ForceMode.Impulse);
-            //transform.Rotate(90, 0, 0);
-            StartCoroutine(GroundCheckDelay());
+            //delay a sec or 2
+            StartCoroutine(DiveCheckDelay());
+            //if no contact: is diving = true
+            isDiving = true;
+            transform.Rotate(90, 0, 0);
 
         }
     }
+
     /// <summary>
     /// if player hits face on ground, player will be considered grounded and will return to stand/walking
     /// </summary>
     private void FinishDive()
     {
-        faceOnGround = Physics.BoxCast(faceCollider.bounds.center, transform.localScale * PleaseWorkFloat, transform.forward, out faceFloor, transform.rotation, floorToFace);
-
+        //faceOnGround = Physics.BoxCast(faceCollider.bounds.center, transform.localScale * PleaseWorkFloat, transform.forward, out faceFloor, transform.rotation, floorToFace);
+        //if contact  and is diving (circumstances might belong in collision)
         if (isDiving && faceOnGround)
         {
-            Debug.Log("Face Hit : " + faceFloor.collider.name);
-            //transform.Rotate(-90, 0, 0);
-            isGrounded = true;
             isDiving = false;
+
+            //Debug.Log("Face Hit : " + faceFloor.collider.name);
+            transform.Rotate(-90, 0, 0);
+            //isGrounded = true;
         }
     }
     /// <summary>
     /// waits to check if player is on ground after diving
     /// </summary>
     /// <returns></returns>
-    IEnumerator GroundCheckDelay()
+    IEnumerator DiveCheckDelay()
     {
         yield return new WaitForSeconds(.9f);
-        FinishDive();
     }
-
 
 
     /// <summary>
@@ -323,6 +325,12 @@ public class PlayerController : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
+        if (isDiving)
+        {
+            FinishDive();
+        }
+        Debug.Log("i feel everything");
+
         if (other.transform.tag == "Untagged")
         {
                 isGrounded = true;
