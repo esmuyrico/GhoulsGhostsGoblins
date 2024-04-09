@@ -72,6 +72,10 @@ public class EnemyMovement : MonoBehaviour
         {
             ChasePlayer();
         }
+        if (transform.position.y < -5)
+        {
+            Destroy(gameObject);
+        }
     }
 
     /// <summary>
