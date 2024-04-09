@@ -74,7 +74,7 @@
                     "name": "",
                     "id": "7092d16e-fdd1-42e6-8c19-e7e7b05db907",
                     "path": "<Keyboard>/shift",
-                    "interactions": "Press(behavior=1)",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
                     "action": "Dive",
