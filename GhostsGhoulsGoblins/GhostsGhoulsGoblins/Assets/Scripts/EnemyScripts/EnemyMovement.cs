@@ -1,15 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public GameObject leftPoint;
-    public GameObject rightPoint;
-    private Vector3 leftPos;
-    private Vector3 rightPos;
-    public int speed;
-    public bool goingLeft;
+
+
+    //YT VIDE WAYPOINNTS TUTORIAL
+    public GameObject[] waypoints;
+    private int current = 0;
+    [SerializeField] float walkSpeed = 1;
+    private float waypointDistance = 1;
+
+
+
+
+
+
+
+
+
     public PlayerController _playerController;
 
     //spawngold variables
@@ -21,40 +32,28 @@ public class EnemyMovement : MonoBehaviour
     {
         _playerController = FindObjectOfType<PlayerController>();
 
-        leftPos = leftPoint.transform.position;
-        rightPos = rightPoint.transform.position;
     }
 
     void Update()
     {
-        Movement();
+        //PathDirection();
+        MoveToWaypoint();
     }
 
-    private void Movement()
+    /// <summary>
+    /// Enemy moves to waypoints in the order of the list they're on 
+    /// </summary>
+    private void MoveToWaypoint()
     {
-        if (goingLeft)
+        if (Vector3.Distance(waypoints[current].transform.position, transform.position) < waypointDistance)
         {
-            if (transform.position.x <= leftPos.x)
+            current++;
+            if(current >= waypoints.Length)
             {
-                goingLeft = false;
-            }
-            else
-            {
-                transform.position += Vector3.left * speed * Time.deltaTime;
+                current = 0;
             }
         }
-        else
-        {
-            
-            if (transform.position.x >= rightPos.x)
-            {
-                goingLeft = true;
-            }
-            else
-            {
-                transform.position += Vector3.right * speed * Time.deltaTime;
-            }
-        }
+        transform.position = Vector3.MoveTowards(transform.position, waypoints[current].transform.position, Time.deltaTime * walkSpeed);
     }
 
 

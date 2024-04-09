@@ -6,7 +6,6 @@ using UnityEngine;
 public class EnemyShoot : MonoBehaviour
 {
     public GameObject projectileObject;
-    private EnemyAlert _enemyAlert;
     public Transform projectileSpawn;
     [SerializeField] float projectileSpeed;
     [SerializeField] bool canShoot;
@@ -30,6 +29,9 @@ public class EnemyShoot : MonoBehaviour
         DetectPlayer();
         shootPlayer();
     }
+    /// <summary>
+    /// if player is in range, shoots at player
+    /// </summary>
     private void DetectPlayer()
     {
         Vector3 playerTarget = (playerLoc.transform.position - transform.position).normalized;
@@ -54,6 +56,9 @@ public class EnemyShoot : MonoBehaviour
             enemyAlerted = false;
         }
     }
+    /// <summary>
+    /// shoots at player if alerted
+    /// </summary>
     private void shootPlayer()
     {
         if (enemyAlerted == true)
@@ -65,6 +70,10 @@ public class EnemyShoot : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Shoots projectile
+    /// </summary>
+    /// <returns></returns>
     IEnumerator ShootProjectiles()
     {
         if (canShoot == true)
@@ -76,6 +85,10 @@ public class EnemyShoot : MonoBehaviour
         StartCoroutine(ShootDelay());
         yield return null;
     }
+    /// <summary>
+    /// Delays shooting time
+    /// </summary>
+    /// <returns></returns>
     IEnumerator ShootDelay()
     {
         float timeBetween = 4f;

@@ -75,7 +75,6 @@ GameObject:
   - component: {fileID: 5737686327559676683}
   - component: {fileID: 5064259382351905465}
   - component: {fileID: 5922779703452047028}
-  - component: {fileID: 7777978816949840587}
   - component: {fileID: 1991916153783288390}
   - component: {fileID: 6615073948840180082}
   m_Layer: 0
@@ -203,29 +202,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &7777978816949840587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5136193457440645499}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8fd6f14fd9f76e4eb14d74ed9fb4674, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerLoc: {fileID: 0}
-  visionRange: 10
-  visionAngle: 90
-  Player:
-    serializedVersion: 2
-    m_Bits: 0
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 128
-  enemyAlerted: 0
-  player: {fileID: 0}
 --- !u!114 &1991916153783288390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,10 +242,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed67256a2cf01e4c9c7a6d1c04aa6c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftPoint: {fileID: 0}
-  rightPoint: {fileID: 0}
-  speed: 0
-  goingLeft: 0
+  waypoints: []
+  speed: 1
+  WPradius: 1
+  _playerController: {fileID: 0}
   goldCoin: {fileID: 1990478050186777301, guid: 91bb6abed1f0cd649ab0df3469ddb975,
     type: 3}
   coinSpawn: {fileID: 1334197030215524658}
