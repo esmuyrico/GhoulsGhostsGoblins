@@ -43,10 +43,10 @@ public class PlayerController : MonoBehaviour
     private float floorToFeet = .5f;
 
     //variables for dive landing
-    public bool faceOnGround;
-    RaycastHit faceFloor;
-    Collider faceCollider;
-    public float floorToFace;
+    //public bool faceOnGround;
+    //RaycastHit faceFloor;
+    //Collider faceCollider;
+    //public float floorToFace;
 
     //variables for dive targeting
     private bool enemyInRange;
@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
         transform.position = (startPos);
 
         feetCollider = GetComponent<Collider>();
-        faceCollider = GetComponent<Collider>();
+                //faceCollider = GetComponent<Collider>();
     }
 
     private void Update()
@@ -80,8 +80,13 @@ public class PlayerController : MonoBehaviour
         //PlayerWalk();
         PlayerMovement();
         feetCollider = GetComponent<Collider>();
-        faceCollider = GetComponent<Collider>();
+                //  faceCollider = GetComponent<Collider>();
         //OnDrawGizmos();
+
+
+
+
+
 
     }
 
@@ -117,7 +122,7 @@ public class PlayerController : MonoBehaviour
             if (isDiving)
             {
                 //transform.Rotate(-90, 0, 0);
-                //isDiving = false;
+                isDiving = false;
             }
             isGrounded = true;
         }
@@ -156,7 +161,7 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(-1.3f, 20, 1.1f);
         }
     }
-
+    /*
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -179,6 +184,7 @@ public class PlayerController : MonoBehaviour
             Gizmos.DrawWireCube(transform.position + transform.forward * floorToFace, transform.localScale);
         }
     }
+    */
 
     /// <summary>
     /// Temporary code allow player to adjust direction with mouse
@@ -287,8 +293,9 @@ public class PlayerController : MonoBehaviour
             //delay a sec or 2
             StartCoroutine(DiveCheckDelay());
             //if no contact: is diving = true
-            isDiving = true;
             transform.Rotate(90, 0, 0);
+
+            isDiving = true;
 
         }
     }
@@ -300,14 +307,13 @@ public class PlayerController : MonoBehaviour
     {
         //faceOnGround = Physics.BoxCast(faceCollider.bounds.center, transform.localScale * PleaseWorkFloat, transform.forward, out faceFloor, transform.rotation, floorToFace);
         //if contact  and is diving (circumstances might belong in collision)
-        if (isDiving && faceOnGround)
-        {
+        
             isDiving = false;
 
             //Debug.Log("Face Hit : " + faceFloor.collider.name);
             transform.Rotate(-90, 0, 0);
             //isGrounded = true;
-        }
+        
     }
     /// <summary>
     /// waits to check if player is on ground after diving
@@ -315,7 +321,7 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     IEnumerator DiveCheckDelay()
     {
-        yield return new WaitForSeconds(.9f);
+        yield return new WaitForSeconds(2f);
     }
 
 
@@ -325,15 +331,18 @@ public class PlayerController : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if (isDiving)
+        if (isDiving == true)
         {
             FinishDive();
+            Debug.Log("i did it pa");
+
         }
-        Debug.Log("i feel everything");
+        Debug.Log("fell");
+
 
         if (other.transform.tag == "Untagged")
         {
-                isGrounded = true;
+            isGrounded = true;
 
             if (isDiving == true)
             {

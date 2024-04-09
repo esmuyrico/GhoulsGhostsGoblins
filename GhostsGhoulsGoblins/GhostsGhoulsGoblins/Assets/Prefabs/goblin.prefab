@@ -158,8 +158,8 @@ MonoBehaviour:
   diveUpForce: 7
   sensitivityValue: 20
   PleaseWorkFloat: 0
+  isGrounded: 0
   isDiving: 0
-  floorToFace: 0
 --- !u!114 &1412806113956660022
 MonoBehaviour:
   m_ObjectHideFlags: 0
