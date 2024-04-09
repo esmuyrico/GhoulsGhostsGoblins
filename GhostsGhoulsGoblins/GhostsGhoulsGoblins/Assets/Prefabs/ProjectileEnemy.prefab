@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 1991916153783288390}
   - component: {fileID: 6615073948840180082}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: ProjectileEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -220,7 +220,7 @@ MonoBehaviour:
   projectileSpeed: 30
   canShoot: 0
   playerLoc: {fileID: 0}
-  visionRange: 10
+  visionRange: 15
   visionAngle: 30
   targetPlayer:
     serializedVersion: 2
@@ -243,12 +243,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints: []
-  speed: 1
-  WPradius: 1
-  _playerController: {fileID: 0}
+  walkSpeed: 2
+  playerLocation: {fileID: 0}
+  alertSpeed: 4
   goldCoin: {fileID: 1990478050186777301, guid: 91bb6abed1f0cd649ab0df3469ddb975,
     type: 3}
   coinSpawn: {fileID: 1334197030215524658}
+  meleeEnemy: 0
 --- !u!1 &6662475373023657978
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class Enemy2Movement : MonoBehaviour
 {
     //Waypoint variables
     public GameObject[] waypoints;
@@ -25,15 +24,13 @@ public class EnemyMovement : MonoBehaviour
 
 
     //enemy type (for parent/child script)
-    public bool meleeEnemy;
-    private float playerDistance;
+    private float playerDistance = 1.3f;
 
 
     void Start()
     {
         _playerController = FindObjectOfType<PlayerController>();
         _enemyShoot = FindObjectOfType<EnemyShoot>();
-        EnemyType();
     }
 
     void Update()
@@ -42,21 +39,7 @@ public class EnemyMovement : MonoBehaviour
 
     }
 
-    /// <summary>
-    /// sets the enemy type 
-    /// </summary>
-    public virtual void EnemyType()
-    {
-        meleeEnemy = false;
-        if (meleeEnemy == true)
-        {
-            playerDistance = 2;
-        }
-        if (meleeEnemy == false)
-        {
-            playerDistance = 5;
-        }
-    }
+
 
 
     /// <summary>

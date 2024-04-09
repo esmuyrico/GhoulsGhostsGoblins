@@ -6,23 +6,28 @@ using static UnityEngine.GraphicsBuffer;
 public class EnemyAlert : MonoBehaviour
 {
     public GameObject playerLoc;
-    //private PlayerController _playerController;
     public float visionRange;
     public float visionAngle;
-    public LayerMask Player;
+    public LayerMask targetPlayer;
     public LayerMask obstacleMask;
     public bool enemyAlerted;
     public Transform player;
 
+    //if player is x distance to enemy, alert
+
+    //if player is y distance to enemy, passive
     private void Start()
     {
-        //_playerController = GetComponent<PlayerController>();
+
     }
     private void Update()
     {
         DetectPlayer();
-        shootPlayer();
+        meleePlayer();
     }
+    /// <summary>
+    /// if player is in range, shoots at player
+    /// </summary>
     private void DetectPlayer()
     {
         Vector3 playerTarget = (playerLoc.transform.position - transform.position).normalized;
@@ -47,16 +52,20 @@ public class EnemyAlert : MonoBehaviour
             enemyAlerted = false;
         }
     }
-    private void shootPlayer()
+
+
+    /// <summary>
+    /// shoots at player if alerted
+    /// </summary>
+    private void meleePlayer()
     {
-        if (enemyAlerted)
+        if (enemyAlerted == true)
         {
-
-            transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
-
-
-            //transform.rotation
-
+            transform.LookAt(player);
+            Debug.Log("Kill you");
         }
     }
+
+
+
 }

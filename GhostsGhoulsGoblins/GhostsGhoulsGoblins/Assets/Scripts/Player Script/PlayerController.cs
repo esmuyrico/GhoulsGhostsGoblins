@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     PlayerInput playerInput;
     InputAction moveAction;
 
-    [SerializeField] float playerSpeed = 5;
+    [SerializeField] float playerSpeed = 3.8f;
     [SerializeField] int jumpForce = 5;
     [SerializeField] int divefwdForce = 6;
     [SerializeField] float diveUpForce = 5;

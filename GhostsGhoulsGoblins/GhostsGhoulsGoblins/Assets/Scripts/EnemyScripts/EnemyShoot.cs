@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class EnemyShoot : MonoBehaviour
 {
+    //Shoot variables
     public GameObject projectileObject;
     public Transform projectileSpawn;
     [SerializeField] float projectileSpeed;
     [SerializeField] bool canShoot;
+
+    //alert variables
     public GameObject playerLoc;
     public float visionRange;
     public float visionAngle;
@@ -56,6 +59,17 @@ public class EnemyShoot : MonoBehaviour
             enemyAlerted = false;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
     /// <summary>
     /// shoots at player if alerted
     /// </summary>
