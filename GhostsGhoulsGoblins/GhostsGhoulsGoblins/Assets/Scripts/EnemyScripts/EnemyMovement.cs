@@ -37,7 +37,7 @@ public class EnemyMovement : MonoBehaviour
     void Update()
     {
         //PathDirection();
-        MoveToWaypoint();
+        //MoveToWaypoint();
     }
 
     /// <summary>
