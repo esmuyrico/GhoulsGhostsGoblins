@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
             if (isDiving)
             {
                 //transform.Rotate(-90, 0, 0);
-                isDiving = false;
+                //isDiving = false;
             }
             isGrounded = true;
         }
@@ -218,23 +218,15 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && !isDiving)
         {
             GetComponent<Rigidbody>().AddForce(Vector3.up * diveUpForce, ForceMode.Impulse);
+            //GetComponent<Rigidbody>().AddForce(Vector3.forward * divefwdForce, ForceMode.Impulse);
             GetComponent<Rigidbody>().AddForce(diveDirection * divefwdForce, ForceMode.Impulse);
             //delay a sec or 2
             StartCoroutine(DiveCheckDelay());
             //if no contact: is diving = true
-            //transform.Rotate(90, 0, 0);
 
-            isDiving = true;
 
         }
     }
-
-
-
-
-
-
-
 
 
 
@@ -247,7 +239,7 @@ public class PlayerController : MonoBehaviour
     {
         
             isDiving = false;
-            //transform.Rotate(-90, 0, 0);
+            transform.Rotate(-90, 0, 0);
             //isGrounded = true;
         
     }
@@ -257,7 +249,10 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     IEnumerator DiveCheckDelay()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
+        transform.Rotate(90, 0, 0);
+        isDiving = true;
+
     }
 
 
@@ -302,4 +297,5 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-}
+
+    }

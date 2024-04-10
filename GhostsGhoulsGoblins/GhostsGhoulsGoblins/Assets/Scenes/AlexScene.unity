@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -451,8 +451,8 @@ Transform:
   m_GameObject: {fileID: 717511054}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5038821, y: -0, z: -0, w: 0.8637725}
-  m_LocalPosition: {x: -1.35, y: 4.6899996, z: 23.89}
-  m_LocalScale: {x: 4.5594, y: 8.9873, z: 1}
+  m_LocalPosition: {x: -1.35, y: 3.59, z: 21.96}
+  m_LocalScale: {x: 4.5594, y: 13.465672, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1801,7 +1801,7 @@ PrefabInstance:
     - target: {fileID: 5136193457440645499, guid: 0af7cd80c2e907d41a06919b02beee1f,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5922779703452047028, guid: 0af7cd80c2e907d41a06919b02beee1f,
         type: 3}
@@ -1920,7 +1920,7 @@ PrefabInstance:
     - target: {fileID: 2515482390688758343, guid: 840756714422b824181f610166563144,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.107
       objectReference: {fileID: 0}
     - target: {fileID: 2515482390688758343, guid: 840756714422b824181f610166563144,
         type: 3}
@@ -1976,6 +1976,16 @@ PrefabInstance:
         type: 3}
       propertyPath: sensitivityValue
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7189316125418544418, guid: 840756714422b824181f610166563144,
+        type: 3}
+      propertyPath: m_Height
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7189316125418544418, guid: 840756714422b824181f610166563144,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.54
       objectReference: {fileID: 0}
     - target: {fileID: 7189316125418544418, guid: 840756714422b824181f610166563144,
         type: 3}
