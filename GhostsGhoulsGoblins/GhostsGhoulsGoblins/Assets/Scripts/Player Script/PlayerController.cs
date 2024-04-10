@@ -237,9 +237,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void FinishDive()
     {
-        
-            isDiving = false;
-            transform.Rotate(-90, 0, 0);
+        transform.Rotate(-90, 0, 0);
+
+        isDiving = false;
             //isGrounded = true;
         
     }
