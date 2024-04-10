@@ -218,8 +218,8 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && !isDiving)
         {
             GetComponent<Rigidbody>().AddForce(Vector3.up * diveUpForce, ForceMode.Impulse);
-            //GetComponent<Rigidbody>().AddForce(Vector3.forward * divefwdForce, ForceMode.Impulse);
-            GetComponent<Rigidbody>().AddForce(diveDirection * divefwdForce, ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(Vector3.forward * divefwdForce, ForceMode.Impulse);
+            //GetComponent<Rigidbody>().AddForce(diveDirection * divefwdForce, ForceMode.Impulse);
             //delay a sec or 2
             StartCoroutine(DiveCheckDelay());
             //if no contact: is diving = true
