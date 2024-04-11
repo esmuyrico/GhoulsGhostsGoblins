@@ -746,7 +746,6 @@ MonoBehaviour:
   playerLocation: {fileID: 0}
   alertSpeed: 4
   goldCoin: {fileID: 0}
-  coinSpawn: {fileID: 0}
 --- !u!114 &1619763400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1369,7 +1368,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 122
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!65 &2062740202
 BoxCollider:
@@ -1812,6 +1811,16 @@ PrefabInstance:
         type: 3}
       propertyPath: speed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6615073948840180082, guid: 0af7cd80c2e907d41a06919b02beee1f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6615073948840180082, guid: 0af7cd80c2e907d41a06919b02beee1f,
+        type: 3}
+      propertyPath: walkSpeed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6615073948840180082, guid: 0af7cd80c2e907d41a06919b02beee1f,
         type: 3}

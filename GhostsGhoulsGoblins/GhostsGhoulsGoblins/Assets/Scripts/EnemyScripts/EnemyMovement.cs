@@ -21,7 +21,7 @@ public class EnemyMovement : MonoBehaviour
 
     //spawngold variables
     public GameObject goldCoin;
-    public Transform coinSpawn;
+    public Vector3 coinSpawn;
 
 
     //enemy type (for parent/child script)
@@ -34,6 +34,7 @@ public class EnemyMovement : MonoBehaviour
         _playerController = FindObjectOfType<PlayerController>();
         _enemyShoot = FindObjectOfType<EnemyShoot>();
         EnemyType();
+        coinSpawn = transform.position;
     }
 
     void Update()
@@ -115,25 +116,26 @@ public class EnemyMovement : MonoBehaviour
     {
         //Once dive is fix, uncomment code
 
-        if (_playerController.isDiving == true)
-        {
+        //if (_playerController.isDiving == true)
+        //{
             Debug.Log("yay its working");
             //spawn coin
-            var spawnGold = Instantiate(goldCoin, coinSpawn.position, coinSpawn.rotation);
-            spawnGold.GetComponent<Rigidbody>().velocity = coinSpawn.forward * 1;
+            Instantiate(goldCoin, coinSpawn, Quaternion.identity);
+            //spawnGold.GetComponent<Rigidbody>().velocity = coinSpawn.forward * 1;
             //destroys enemy if diving
             Destroy(gameObject);
-        }
+        //}
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "DiveCollider")
+
+
+
+
+        if (collision.gameObject.tag == "Player")
         {
-                    Debug.Log("HitPlayer");
-
-
-
+            Debug.Log("HITPLAYERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
             EnemyDeath();
         }
     }

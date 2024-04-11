@@ -20,7 +20,7 @@ public class Enemy2Movement : MonoBehaviour
 
     //spawngold variables
     public GameObject goldCoin;
-    public Transform coinSpawn;
+    private Vector3 coinSpawn;
 
 
     //enemy type (for parent/child script)
@@ -31,6 +31,7 @@ public class Enemy2Movement : MonoBehaviour
     {
         _playerController = FindObjectOfType<PlayerController>();
         _enemyAlert = FindObjectOfType<EnemyAlert>();
+        coinSpawn = transform.position;
     }
 
     void Update()
@@ -98,12 +99,23 @@ public class Enemy2Movement : MonoBehaviour
         if (_playerController.isDiving == true)
         {
             //spawn coin
-            var spawnGold = Instantiate(goldCoin, coinSpawn.position, coinSpawn.rotation);
-            spawnGold.GetComponent<Rigidbody>().velocity = coinSpawn.forward * 1;
+            //Instantiate(goldCoin, coinSpawn.position, coinSpawn.rotation);
+            //spawnGold.GetComponent<Rigidbody>().velocity = coinSpawn.forward * 1;
             //destroys enemy if diving
             Destroy(gameObject);
         }
     }
+
+
+    private void OnDestroy()
+    {
+        EnemyDeath();
+        Destroy(gameObject);
+    }
+
+
+
+
 
     private void OnCollisionEnter(Collision collision)
     {

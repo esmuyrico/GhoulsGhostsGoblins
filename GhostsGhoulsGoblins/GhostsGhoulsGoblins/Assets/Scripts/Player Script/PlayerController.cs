@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float diveUpForce = 5;
     [SerializeField] float sensitivityValue = 40f;
 
-    public GameObject diveCollider;
     public Vector3 diveDirection { get; set; }
 
 
@@ -42,7 +41,6 @@ public class PlayerController : MonoBehaviour
     {
         playerActions = new PlayerMove();
         playerActions.Enable();
-        diveCollider.gameObject.SetActive(false);
 
     }
 
@@ -55,7 +53,6 @@ public class PlayerController : MonoBehaviour
         transform.position = (startPos);
 
         feetCollider = GetComponent<Collider>();
-        //faceCollider = GetComponent<Collider>();
     }
 
     private void Update()
@@ -67,8 +64,6 @@ public class PlayerController : MonoBehaviour
         PlayerMovement();
         feetCollider = GetComponent<Collider>();
         //  faceCollider = GetComponent<Collider>();
-        //OnDrawGizmos();
-        DiveCollide();
     }
 
     private void BackupGroundCheck()
@@ -221,8 +216,10 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && !isDiving)
         {
             GetComponent<Rigidbody>().AddForce(Vector3.up * diveUpForce, ForceMode.Impulse);
-            GetComponent<Rigidbody>().AddForce(Vector3.forward * divefwdForce, ForceMode.Impulse);
-            //GetComponent<Rigidbody>().AddForce(diveDirection * divefwdForce, ForceMode.Impulse);
+            //code that works w/o point to click
+            //GetComponent<Rigidbody>().AddForce(Vector3.forward * divefwdForce, ForceMode.Impulse);
+            //code that works with point to click
+            GetComponent<Rigidbody>().AddForce(diveDirection * divefwdForce, ForceMode.Impulse);
             //delay a sec or 2
             StartCoroutine(DiveCheckDelay());
             //if no contact: is diving = true
@@ -266,14 +263,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    private void DiveCollide()
-    {
-        if(isDiving == false)
-            diveCollider.gameObject.SetActive(false);
 
-        if(isDiving == true)
-            diveCollider.gameObject.SetActive(true);
-    }
 
     /// <summary>
     /// destroy wall when player dives into it
@@ -326,7 +316,8 @@ public class PlayerController : MonoBehaviour
 
         if (other.transform.tag == "Enemy")
         {
-            Destroy(transform.gameObject);
+            Debug.Log("hitenemy");
+            //Destroy(other.transform.gameObject);
         }
 
     }
