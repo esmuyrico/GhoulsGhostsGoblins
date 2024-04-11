@@ -27,12 +27,7 @@ public class FollowCamera : MonoBehaviour
     void Update()
     {
         if (transform.position - offset != playerTransform.position)
-        {
-            if (!cameraMoving)
-            {
-                StartCoroutine(SmoothMoveCamera());
-            }
-        }
+            transform.position = playerTransform.position + offset;
     }
 
     private IEnumerator SmoothMoveCamera()

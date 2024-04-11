@@ -7,7 +7,7 @@ using UnityEngine;
 // last modified 11/14/23
 // moves an object around the game based on where the mouse is on the screen
 
-public class PointToLookAt : MonoBehaviour
+public class PointToLookAt : Singleton<PointToLookAt>
 {
     public Vector3 worldPosition;
     public Vector3 screenPostion;
