@@ -6,32 +6,31 @@ using UnityEngine.InputSystem;
 
 
 public class PlayerController : MonoBehaviour
-{
+{    
+    //player movement variables
     private PlayerMove playerActions;
     PlayerInput playerInput;
     InputAction moveAction;
-
     [SerializeField] float playerSpeed = 3.8f;
     [SerializeField] int jumpForce = 5;
     [SerializeField] int divefwdForce = 6;
     [SerializeField] float diveUpForce = 5;
     [SerializeField] float sensitivityValue = 40f;
+    Rigidbody rb;
+    private float yRotate = 0f;
 
-    public Vector3 diveDirection { get; set; }
 
     // Respawning Variables
-    public int lives = 3;
-    public int fallDepth;
-    private Vector3 startPos;
-    public GameObject canvas;
     public bool isInvincible;
+    private Vector3 previousPos;
 
+    //private Vector3 startPos;
+
+    //ground/dive check variables
     private float xDir;
     public bool isGrounded;
     public bool isDiving;
-    Rigidbody rb;
-
-    private float yRotate = 0f;
+    public Vector3 diveDirection { get; set; }
 
     //variables for checking if walking on ground
     private bool feetOnGround;
@@ -48,16 +47,11 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        startPos = transform.position;
+        previousPos = transform.position;
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions.FindAction("Movement");
-        transform.position = (startPos);
-
         feetCollider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
-        startPos = transform.position;
-        DontDestroyOnLoad(canvas);
-        DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
@@ -71,40 +65,9 @@ public class PlayerController : MonoBehaviour
         //  faceCollider = GetComponent<Collider>();
     }
 
-    // This will bring the player to the start position and take lives away
-    private void Respawn()
-    {
-        // When the player is respawned, this will start the Blink Coroutine.
-        StartCoroutine(Blink());
-        lives--;
-        transform.position = startPos;
-        // If the player's lives are less than or equal to 0, then disable control.
-        if (lives <= 0)
-        {
-            this.enabled = false;
-        }
-    }
 
-    // This will cause the player to blink (Invincibility Frame)
-    private IEnumerator Blink()
-    {
-        isInvincible = true;
-        for (int index = 0; index < 30; index++)
-        {
-            if (index % 2 == 0)
-            {
-                GetComponent<MeshRenderer>().enabled = false;
-            }
-            else
-            {
-                GetComponent<MeshRenderer>().enabled = true;
-            }
-            yield return new WaitForSeconds(.1f);
-        }
-        // Once the For loop above is finished, this will turn it back on.
-        GetComponent<MeshRenderer>().enabled = true;
-        isInvincible = false;
-    }
+
+
 
     private void BackupGroundCheck()
     {

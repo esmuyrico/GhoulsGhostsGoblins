@@ -11,6 +11,18 @@ public class PlayerData : MonoBehaviour
         coinNum = 0;
     }
 
+
+    public void HurtPlayer()
+    {
+
+    }
+
+
+
+
+
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Coin")
@@ -19,6 +31,25 @@ public class PlayerData : MonoBehaviour
             coinNum++;
             UIManager.Instance.UpdateGold(coinNum);
         }
+
+
+        if (other.gameObject.tag == "Enemy")
+        {
+
+            HurtPlayer();
+
+
+
+
+
+
+
+        }
+
+
+
+
+
     }
 
 }
