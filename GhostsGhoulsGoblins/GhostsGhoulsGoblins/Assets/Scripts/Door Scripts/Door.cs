@@ -13,18 +13,11 @@ public class Door : MonoBehaviour
     private int switchesNeeded = 1;
     [SerializeField] private int currentSwitches = 0;
 
-    [SerializeField] private GameObject ActivateOnOpen = null;
-
-    private void Start()
-    {
-        ActivateOnOpen.SetActive(false);
-    }
-
     public void IncreaseKeyCount()
     {
         currentKeys++;
         Debug.Log("Player needs " + (keysNeeded - currentKeys) + " more keys");
-    }
+    } 
 
     public void IncreaseSwitchCount()
     {
@@ -53,10 +46,6 @@ public class Door : MonoBehaviour
     // opens the door and reveals the next part
     private void GetRidOFDoor()
     {
-        if (ActivateOnOpen != null)
-        {
-            ActivateOnOpen.SetActive(true);
-        }
         Destroy(gameObject);
     }
 }
