@@ -305,7 +305,6 @@ public class PlayerController : MonoBehaviour
                 //transform.Rotate(-90, 0, 0);
                 isGrounded = true;
                 isDiving = false;
-                Respawn();
             }
         }
 
