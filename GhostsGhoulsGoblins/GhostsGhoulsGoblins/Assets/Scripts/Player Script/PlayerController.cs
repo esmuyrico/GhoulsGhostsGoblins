@@ -19,6 +19,12 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 diveDirection { get; set; }
 
+    // Respawning Variables
+    public int lives = 3;
+    public int fallDepth;
+    private Vector3 startPos;
+    public GameObject canvas;
+    public bool isInvincible;
 
     private float xDir;
     public bool isGrounded;
@@ -26,9 +32,6 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
 
     private float yRotate = 0f;
-
-    private Vector3 startPos;
-
 
     //variables for checking if walking on ground
     private bool feetOnGround;
@@ -41,9 +44,7 @@ public class PlayerController : MonoBehaviour
     {
         playerActions = new PlayerMove();
         playerActions.Enable();
-
     }
-
 
     private void Start()
     {
@@ -53,6 +54,10 @@ public class PlayerController : MonoBehaviour
         transform.position = (startPos);
 
         feetCollider = GetComponent<Collider>();
+        rb = GetComponent<Rigidbody>();
+        startPos = transform.position;
+        DontDestroyOnLoad(canvas);
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
@@ -64,6 +69,41 @@ public class PlayerController : MonoBehaviour
         PlayerMovement();
         feetCollider = GetComponent<Collider>();
         //  faceCollider = GetComponent<Collider>();
+    }
+
+    // This will bring the player to the start position and take lives away
+    private void Respawn()
+    {
+        // When the player is respawned, this will start the Blink Coroutine.
+        StartCoroutine(Blink());
+        lives--;
+        transform.position = startPos;
+        // If the player's lives are less than or equal to 0, then disable control.
+        if (lives <= 0)
+        {
+            this.enabled = false;
+        }
+    }
+
+    // This will cause the player to blink (Invincibility Frame)
+    private IEnumerator Blink()
+    {
+        isInvincible = true;
+        for (int index = 0; index < 30; index++)
+        {
+            if (index % 2 == 0)
+            {
+                GetComponent<MeshRenderer>().enabled = false;
+            }
+            else
+            {
+                GetComponent<MeshRenderer>().enabled = true;
+            }
+            yield return new WaitForSeconds(.1f);
+        }
+        // Once the For loop above is finished, this will turn it back on.
+        GetComponent<MeshRenderer>().enabled = true;
+        isInvincible = false;
     }
 
     private void BackupGroundCheck()
@@ -236,8 +276,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-
-
     /// <summary>
     /// if player hits face on ground, player will be considered grounded and will return to stand/walking
     /// </summary>
@@ -261,18 +299,12 @@ public class PlayerController : MonoBehaviour
 
     }
 
-
-
-
-
     /// <summary>
     /// destroy wall when player dives into it
     /// </summary>
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-
-
         if (other.transform.tag == "Enemy")
         {
             if (isDiving == true)
@@ -301,7 +333,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-
         //if the obstacle you triggered has a tag "Enemy":
         if (other.transform.gameObject)
         {
@@ -311,6 +342,7 @@ public class PlayerController : MonoBehaviour
                 //transform.Rotate(-90, 0, 0);
                 isGrounded = true;
                 isDiving = false;
+                Respawn();
             }
         }
 
