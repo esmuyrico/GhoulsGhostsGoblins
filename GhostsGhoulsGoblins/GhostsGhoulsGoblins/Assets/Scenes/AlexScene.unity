@@ -1972,6 +1972,11 @@ PrefabInstance:
       propertyPath: m_Size.z
       value: 0.9
       objectReference: {fileID: 0}
+    - target: {fileID: 3637962964314623697, guid: 840756714422b824181f610166563144,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6959367228068547727, guid: 840756714422b824181f610166563144,
         type: 3}
       propertyPath: sensitivityValue

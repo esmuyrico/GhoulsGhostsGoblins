@@ -14,6 +14,7 @@ TagManager:
   - CheckPoint
   - GameEnd
   - Coin
+  - DiveCollider
   layers:
   - Default
   - TransparentFX

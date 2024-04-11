@@ -113,11 +113,11 @@ public class EnemyMovement : MonoBehaviour
     /// </summary>
     private void EnemyDeath()
     {
-        Debug.Log("HitPlayer");
         //Once dive is fix, uncomment code
 
         if (_playerController.isDiving == true)
         {
+            Debug.Log("yay its working");
             //spawn coin
             var spawnGold = Instantiate(goldCoin, coinSpawn.position, coinSpawn.rotation);
             spawnGold.GetComponent<Rigidbody>().velocity = coinSpawn.forward * 1;
@@ -128,8 +128,12 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "DiveCollider")
         {
+                    Debug.Log("HitPlayer");
+
+
+
             EnemyDeath();
         }
     }
