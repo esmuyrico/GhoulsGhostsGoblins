@@ -69,17 +69,6 @@ public class PlayerController : MonoBehaviour
 
 
 
-    private void BackupGroundCheck()
-    {
-        if (Physics.Raycast(transform.position, Vector3.down, 1.15f))
-        {
-            isGrounded = true;
-        }
-        else
-        {
-            isGrounded = false;
-        }
-    }
 
     /// <summary>
     /// Checks if the player is on the ground, falling or in the air.
@@ -91,12 +80,6 @@ public class PlayerController : MonoBehaviour
         feetOnGround = Physics.BoxCast(feetCollider.bounds.center, transform.localScale * 0.5f, -transform.up, out feetFloor, transform.rotation, floorToFeet);
         if (feetOnGround)
         {
-            //Debug.Log("Hit : " + feetFloor.collider.name);
-            if (isDiving)
-            {
-                //transform.Rotate(-90, 0, 0);
-                //isDiving = false;
-            }
             isGrounded = true;
         }
         else
@@ -108,13 +91,22 @@ public class PlayerController : MonoBehaviour
         {
             if (isDiving)
             {
-                //transform.Rotate(-90, 0, 0);
                 isDiving = false;
             }
             transform.position = new Vector3(-1.3f, 20, 1.1f);
         }
     }
-
+    private void BackupGroundCheck()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, 1.15f))
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+    }
 
     /// <summary>
     /// Temporary code allow player to adjust direction with mouse
