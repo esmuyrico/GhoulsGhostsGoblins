@@ -99,13 +99,9 @@ public class PlayerController : MonoBehaviour
     private void BackupGroundCheck()
     {
         if (Physics.Raycast(transform.position, Vector3.down, 1.15f))
-        {
             isGrounded = true;
-        }
         else
-        {
             isGrounded = false;
-        }
     }
 
     /// <summary>
@@ -288,13 +284,10 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        //if the obstacle you triggered has a tag "Enemy":
         if (other.transform.gameObject)
         {
             if (isDiving == true)
             {
-                //destroys wall if diving
-                //transform.Rotate(-90, 0, 0);
                 isGrounded = true;
                 isDiving = false;
             }
@@ -303,9 +296,12 @@ public class PlayerController : MonoBehaviour
         if (other.transform.tag == "Enemy")
         {
             Debug.Log("hitenemy");
-            //Destroy(other.transform.gameObject);
         }
 
+        if (other.transform.tag == "BreakableWall")
+        {
+            Destroy(other.transform.gameObject);
+        }
     }
 
 }

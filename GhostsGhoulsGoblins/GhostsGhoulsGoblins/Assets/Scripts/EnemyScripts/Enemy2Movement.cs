@@ -75,7 +75,7 @@ public class Enemy2Movement : MonoBehaviour
     }
 
     /// <summary>
-    /// chases player
+    /// chases player to close distance
     /// </summary>
     private void ChasePlayer()
     {

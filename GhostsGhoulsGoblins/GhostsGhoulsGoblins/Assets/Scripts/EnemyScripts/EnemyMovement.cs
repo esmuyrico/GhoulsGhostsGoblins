@@ -114,17 +114,12 @@ public class EnemyMovement : MonoBehaviour
     /// </summary>
     private void EnemyDeath()
     {
-        //Once dive is fix, uncomment code
-
-        //if (_playerController.isDiving == true)
-        //{
-            Debug.Log("yay its working");
+        if (_playerController.isDiving == true)
+        {
             //spawn coin
             Instantiate(goldCoin, coinSpawn, Quaternion.identity);
-            //spawnGold.GetComponent<Rigidbody>().velocity = coinSpawn.forward * 1;
-            //destroys enemy if diving
             Destroy(gameObject);
-        //}
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -135,7 +130,6 @@ public class EnemyMovement : MonoBehaviour
 
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("HITPLAYERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
             EnemyDeath();
         }
     }
