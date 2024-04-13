@@ -170,7 +170,6 @@ public class PlayerController : MonoBehaviour
         if (isDiving == false)
         {
             transform.position += Vector3.back * playerSpeed * Time.deltaTime;
-
         }
     }
     /// <summary>
