@@ -29,7 +29,8 @@ public class Checkpoints : MonoBehaviour
     public void GoLastGroundPoint()
     {
         Debug.Log("going to last ground point");
-        transform.position = _lastGroundPoint;
+        transform.position = _lastGroundPoint + Vector3.up;
+
         alreadyFell = false;
     }
 

@@ -16,6 +16,8 @@ public class UIManager : Singleton<UIManager>
     [SerializeField]
     private GameObject currentMenuScreen;
 
+    private GameObject canvasRef;
+
     // True when the player is in the MainMenus
     private bool notInGame;
 
@@ -27,10 +29,26 @@ public class UIManager : Singleton<UIManager>
 
     // UI Element arrays
     [SerializeField] private GameObject[] _HUDElements = new GameObject[5];
-    // Start is called before the first frame update
-    void Start()
+
+    private bool isPaused = false;
+
+    private void Awake()
     {
         currentMenuScreen = mainMenuScreen;
+        HealthBarRef = _HUDRef.transform.GetChild(1).gameObject;
+        DiveStrengthBar = _HUDRef.transform.GetChild(2).gameObject;
+        MoneyTrackerRef = _HUDRef.transform.GetChild(3).gameObject;
+        canvasRef = mainMenuScreen.transform.parent.gameObject;
+
+        // set all UI elements except the the main menu to inactive
+        for (int child = 1; child < canvasRef.transform.childCount; child++)
+        {
+            canvasRef.transform.GetChild(child).gameObject.SetActive(false);
+        }
+    }
+    void Start()
+    {
+        
        // Time.timeScale = 0;
 
         _HUDRef = GameObject.FindGameObjectWithTag("HUD");
@@ -45,9 +63,7 @@ public class UIManager : Singleton<UIManager>
             index++;
         }*/
 
-        HealthBarRef = _HUDRef.transform.GetChild(1).gameObject;
-        DiveStrengthBar = _HUDRef.transform.GetChild(2).gameObject;
-        MoneyTrackerRef = _HUDRef.transform.GetChild(3).gameObject;
+        
     }
 
     
@@ -82,7 +98,7 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
-    private void StartGame()
+    public void StartGame()
     {
         Time.timeScale = 1;
         _HUDRef.SetActive(true);
@@ -131,7 +147,25 @@ public class UIManager : Singleton<UIManager>
 
     }
 
-    private void OnGUI()
+    public void TogglePause(GameObject PauseMenu)
+    {
+        // unpause
+        if (isPaused)
+        {
+            Time.timeScale = 1;
+            PauseMenu.SetActive(false);
+        }
+        // pause
+        else
+        {
+            PauseMenu.SetActive(true);
+            Time.timeScale = 0;
+        }
+
+            isPaused = !isPaused;
+    }
+
+    /*private void OnGUI()
     {
         if (GUILayout.Button("Health 50"))
         {
@@ -151,5 +185,5 @@ public class UIManager : Singleton<UIManager>
         }
 
 
-    }
+    }*/
 }
