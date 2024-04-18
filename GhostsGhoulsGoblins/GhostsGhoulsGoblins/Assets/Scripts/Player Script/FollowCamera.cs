@@ -5,8 +5,8 @@ using UnityEngine;
 public class FollowCamera : MonoBehaviour
 {
     private Transform playerTransform;
-    [SerializeField] private Vector3 offset = new Vector3(0, 12, -2.5f);
-    private Vector3 cameraAngle = new Vector3(75, 0, 0);
+    [SerializeField] private Vector3 offset = new Vector3(0, 10, -6f);
+    private Vector3 cameraAngle = new Vector3(50, 0, 0);
     [SerializeField] private float cameraSpeed = 50;
 
     private bool cameraMoving = false;
@@ -14,11 +14,12 @@ public class FollowCamera : MonoBehaviour
     private void Awake()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        offset = new Vector3(0, 10, -6f);
+        cameraAngle = new Vector3(50, 0, 0);
     }
     // Start is called before the first frame update
     void Start()
     {
-        
         transform.position = playerTransform.position + offset;
         transform.rotation = Quaternion.Euler(cameraAngle);
     }
