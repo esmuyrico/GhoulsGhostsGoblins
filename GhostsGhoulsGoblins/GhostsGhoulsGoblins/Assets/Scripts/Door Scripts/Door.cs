@@ -4,32 +4,21 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    // the total number of keys needed for the door to open
-    [SerializeField]
-    private int keysNeeded = 1;
-    [SerializeField] private float currentKeys = 0;
+    // Brough, Heath
+    // 4/17/2024
+    // Controls the opening of the Door
+
+    private bool unlocked = false;
 
     [SerializeField]
-    private int switchesNeeded = 1;
-    [SerializeField] private int currentSwitches = 0;
+    private GameObject doorController;
 
-    public void IncreaseKeyCount()
+    private void Awake()
     {
-        currentKeys++;
-        Debug.Log("Player needs " + (keysNeeded - currentKeys) + " more keys");
-    } 
-
-    public void IncreaseSwitchCount()
-    {
-        currentSwitches++;
-        Debug.Log("Player needs " + (switchesNeeded - currentSwitches) + " more keys");
-        if (currentSwitches == switchesNeeded)
-        {
-            StartCoroutine(OpenDoorWithDelay());
-        }
+        doorController.GetComponent<DoorController>().SetDoor(gameObject);
     }
 
-    private IEnumerator OpenDoorWithDelay()
+    public IEnumerator OpenDoorWithDelay()
     {
         yield return new WaitForSeconds(1f);
         GetRidOFDoor();
@@ -37,10 +26,17 @@ public class Door : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && currentKeys >= keysNeeded)
+        if (other.CompareTag("Player") && unlocked)
         {
             GetRidOFDoor();
         }
+    }
+
+    
+
+    public void UnlockDoor()
+    {
+        unlocked = true;
     }
 
     // opens the door and reveals the next part
