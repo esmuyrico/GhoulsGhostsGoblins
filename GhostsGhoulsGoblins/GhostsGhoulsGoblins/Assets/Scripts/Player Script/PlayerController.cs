@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     PlayerInput playerInput;
     InputAction moveAction;
     [SerializeField] float playerSpeed = 3.8f;
-    [SerializeField] int jumpForce = 5;
+    [SerializeField] float jumpForce = 0.5f;
     [SerializeField] int divefwdForce = 6;
     [SerializeField] float diveUpForce = 5;
     [SerializeField] float sensitivityValue = 40f;
@@ -24,7 +24,9 @@ public class PlayerController : MonoBehaviour
     public bool isInvincible;
     private Vector3 previousPos;
 
-    //private Vector3 startPos;
+    // Checks for if the player hadDived or hasJumped
+    public bool hasDived;
+    public bool hasJumped;
 
     //ground/dive check variables
     private float xDir;
@@ -76,11 +78,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void GroundCheck()
     {
-        //Checks if standing on ground
+        // Code here for checking if standing on ground
         feetOnGround = Physics.BoxCast(feetCollider.bounds.center, transform.localScale * 0.5f, -transform.up, out feetFloor, transform.rotation, floorToFeet);
         if (feetOnGround)
         {
             isGrounded = true;
+            // Set hasJumped and hasDived to false
         }
         else
         {
@@ -138,6 +141,11 @@ public class PlayerController : MonoBehaviour
             {
                 OnMoveRight();
             }
+            if (Input.GetKey(KeyCode.Space))
+            {
+               
+                OnJump();
+            }
         }
     }
 
@@ -149,7 +157,8 @@ public class PlayerController : MonoBehaviour
     {
         if (isDiving == false)
         {
-            transform.position += Vector3.forward * playerSpeed * Time.deltaTime;
+            //transform.position += Vector3.forward * playerSpeed * Time.deltaTime;
+            GetComponent<Rigidbody>().AddForce(Vector3.forward * playerSpeed, ForceMode.Force);
         }
     }
     /// <summary>
@@ -159,7 +168,8 @@ public class PlayerController : MonoBehaviour
     {
         if (isDiving == false)
         {
-            transform.position += Vector3.left * playerSpeed * Time.deltaTime;
+            //transform.position += Vector3.left * playerSpeed * Time.deltaTime;
+            GetComponent<Rigidbody>().AddForce(Vector3.left * playerSpeed, ForceMode.Force);
         }
     }
     /// <summary>
@@ -169,7 +179,8 @@ public class PlayerController : MonoBehaviour
     {
         if (isDiving == false)
         {
-            transform.position += Vector3.back * playerSpeed * Time.deltaTime;
+            //transform.position += Vector3.back * playerSpeed * Time.deltaTime;
+            GetComponent<Rigidbody>().AddForce(Vector3.back * playerSpeed, ForceMode.Force);
         }
     }
     /// <summary>
@@ -179,7 +190,8 @@ public class PlayerController : MonoBehaviour
     {
         if (isDiving == false)
         {
-            transform.position += Vector3.right * playerSpeed * Time.deltaTime;
+            //transform.position += Vector3.right * playerSpeed * Time.deltaTime;
+            GetComponent<Rigidbody>().AddForce(Vector3.right * playerSpeed, ForceMode.Force);
         }
     }
 
@@ -188,6 +200,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void OnJump()
     {
+        // Also checks if the player "!hasJumped"
+       
         if (isGrounded == true)
         {
             GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
@@ -199,14 +213,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void OnDive()
     {
-        if (!isGrounded)
-        {
-            //null
-        }
-        if (isGrounded && !isDiving)
+        // Also checks if the player "!hasDived"
+        
+        if (!isDiving)
         {
             GetComponent<Rigidbody>().AddForce(Vector3.up * diveUpForce, ForceMode.Impulse);
-            //code that works w/o point to click
+            //code that works without point to click
             //GetComponent<Rigidbody>().AddForce(Vector3.forward * divefwdForce, ForceMode.Impulse);
             //code that works with point to click
             GetComponent<Rigidbody>().AddForce(diveDirection * divefwdForce, ForceMode.Impulse);

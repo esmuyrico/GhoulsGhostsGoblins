@@ -13,9 +13,9 @@ public class PlayerData : MonoBehaviour
         coinNum = 0;
     }
 
-    public void HurtPlayer()
+    public void HurtPlayer(int damage)
     {
-        health--;
+        health-=damage;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,9 +28,9 @@ public class PlayerData : MonoBehaviour
         }
 
 
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy" && !gameObject.GetComponent<PlayerController>().isDiving)
         {
-            HurtPlayer();
+            HurtPlayer(2);
         }
     }
 }

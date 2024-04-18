@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyMelee : MonoBehaviour
@@ -12,6 +13,10 @@ public class EnemyMelee : MonoBehaviour
     public LayerMask obstacleMask;
     public bool enemyAlerted;
     public Transform player;
+    public int health = 1;
+    public GameObject swordPrefab;
+    public bool canSwing = true;
+    public float detectDistanceFromPlayer = 3;
 
     // Melee System:
     //public int attack;
@@ -24,7 +29,6 @@ public class EnemyMelee : MonoBehaviour
     private void Update()
     {
         DetectPlayer();
-        meleePlayer();
     }
 
     private void DetectPlayer()
@@ -36,9 +40,11 @@ public class EnemyMelee : MonoBehaviour
             float distanceToTarget = Vector3.Distance(transform.position, playerLoc.transform.position);
             if (distanceToTarget <= visionRange)
             {
+                Debug.Log("In Range");
                 if (Physics.Raycast(transform.position, playerTarget, distanceToTarget, obstacleMask) == false)
                 {
                     enemyAlerted = true;
+                    meleePlayer();
                 }
             }
             if (distanceToTarget >= visionRange)
@@ -54,12 +60,37 @@ public class EnemyMelee : MonoBehaviour
 
     private void meleePlayer()
     {
-        if (enemyAlerted == true)
+        // Before if statement > Find the distance between the player and the enemy
+        float distanceToPlayer = Vector3.Distance(transform.position, playerLoc.transform.position);
+
+        // If statement > Check if the player is close enough (unity func find dist between 2 points / float for dist
+        if (distanceToPlayer < detectDistanceFromPlayer)
         {
             transform.LookAt(player);
             Debug.Log("Kill you");
-            // Melee function goes here <<<<<
-            //attack/player
+            StartCoroutine(swing());
+        }
+    }
+
+    private IEnumerator swing()
+    {
+        Debug.Log(canSwing);
+        if (canSwing)
+        {
+            canSwing = false;
+            GameObject sword = Instantiate(swordPrefab, transform);
+            StartCoroutine(sword.GetComponent<MeleeAttack>().swing());
+            yield return new WaitForSeconds(1);
+            canSwing = true;
+        }
+        
+    }
+
+    private void OnGUI()
+    {
+        if (GUILayout.Button("swing"))
+        {
+            StartCoroutine(swing());
         }
     }
 }
