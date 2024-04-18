@@ -660,6 +660,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProjectileEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 5136193457440645499, guid: 0af7cd80c2e907d41a06919b02beee1f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5922779703452047028, guid: 0af7cd80c2e907d41a06919b02beee1f,
         type: 3}
       propertyPath: m_UseGravity
