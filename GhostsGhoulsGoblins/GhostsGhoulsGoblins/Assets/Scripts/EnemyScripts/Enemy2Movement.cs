@@ -14,9 +14,8 @@ public class Enemy2Movement : MonoBehaviour
     //Chase player variables
     public GameObject playerLocation;
     [SerializeField] float alertSpeed = 4;
-
-    //external scripts
     private PlayerController _playerController;
+    public Transform player;
 
     //spawngold variables
     public GameObject goldCoin;
@@ -28,13 +27,11 @@ public class Enemy2Movement : MonoBehaviour
 
 
     // Alert System:
-    public GameObject playerLoc;
     public float visionRange;
     public float visionAngle;
     public LayerMask targetPlayer;
     public LayerMask obstacleMask;
     public bool enemyAlerted;
-    public Transform player;
     public int health = 1;
     public GameObject swordPrefab;
     public bool canSwing = true;
@@ -103,11 +100,11 @@ public class Enemy2Movement : MonoBehaviour
 
     private void DetectPlayer()
     {
-        Vector3 playerTarget = (playerLoc.transform.position - transform.position).normalized;
+        Vector3 playerTarget = (playerLocation.transform.position - transform.position).normalized;
 
         if (Vector3.Angle(transform.forward, playerTarget) <= visionAngle)
         {
-            float distanceToTarget = Vector3.Distance(transform.position, playerLoc.transform.position);
+            float distanceToTarget = Vector3.Distance(transform.position, playerLocation.transform.position);
             if (distanceToTarget <= visionRange)
             {
                 Debug.Log("In Range");
@@ -131,7 +128,7 @@ public class Enemy2Movement : MonoBehaviour
     private void meleePlayer()
     {
         // Before if statement > Find the distance between the player and the enemy
-        float distanceToPlayer = Vector3.Distance(transform.position, playerLoc.transform.position);
+        float distanceToPlayer = Vector3.Distance(transform.position, playerLocation.transform.position);
 
         // If statement > Check if the player is close enough (unity func find dist between 2 points / float for dist
         if (distanceToPlayer < detectDistanceFromPlayer)
@@ -177,15 +174,9 @@ public class Enemy2Movement : MonoBehaviour
     /// </summary>
     private void EnemyDeath()
     {
-        Debug.Log("HitPlayer");
-        //Once dive is fix, uncomment code
-
         if (_playerController.isDiving == true)
         {
-            //spawn coin
-            //Instantiate(goldCoin, coinSpawn.position, coinSpawn.rotation);
-            //spawnGold.GetComponent<Rigidbody>().velocity = coinSpawn.forward * 1;
-            //destroys enemy if diving
+            Instantiate(goldCoin, coinSpawn, Quaternion.identity);
             Destroy(gameObject);
         }
     }

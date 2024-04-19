@@ -44,8 +44,7 @@ GameObject:
   - component: {fileID: 6460878731128235600}
   - component: {fileID: 4642597982411030742}
   - component: {fileID: 7783626778660757606}
-  - component: {fileID: 8654782797558038652}
-  - component: {fileID: 4264433036598628755}
+  - component: {fileID: -6783655445265166790}
   m_Layer: 0
   m_Name: MeleeEnemy
   m_TagString: Enemy
@@ -101,7 +100,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c576fb3bc7b631347b568b74d8ff0702, type: 2}
+  - {fileID: 2100000, guid: 8a23ff6f1a4466b469b360c50eae69c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -138,7 +137,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -168,12 +167,12 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &8654782797558038652
+--- !u!114 &-6783655445265166790
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,32 +181,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1968486558088438340}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed67256a2cf01e4c9c7a6d1c04aa6c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 51284dc4cbde2ee4f9b9ca0632d7b577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints: []
   walkSpeed: 2
   playerLocation: {fileID: 0}
   alertSpeed: 4
+  player: {fileID: 0}
   goldCoin: {fileID: 1990478050186777301, guid: 91bb6abed1f0cd649ab0df3469ddb975,
     type: 3}
-  coinSpawn: {x: 0, y: 0, z: 0}
-  meleeEnemy: 0
---- !u!114 &4264433036598628755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1968486558088438340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b60f9c519f188047a62d6c582d5a150, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerLoc: {fileID: 0}
-  visionRange: 15
-  visionAngle: 30
+  visionRange: 20
+  visionAngle: 20
   targetPlayer:
     serializedVersion: 2
     m_Bits: 64
@@ -215,12 +200,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   enemyAlerted: 0
-  player: {fileID: 0}
   health: 1
   swordPrefab: {fileID: 3346465728600331962, guid: 4b86d3c30be5e0d4490bd71ca6b14883,
     type: 3}
   canSwing: 1
-  detectDistanceFromPlayer: 3
+  detectDistanceFromPlayer: 6
 --- !u!1 &2153383531627471113
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,7 +266,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c576fb3bc7b631347b568b74d8ff0702, type: 2}
+  - {fileID: 2100000, guid: 8a23ff6f1a4466b469b360c50eae69c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

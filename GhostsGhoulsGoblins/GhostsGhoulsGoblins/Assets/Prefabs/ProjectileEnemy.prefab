@@ -75,7 +75,6 @@ GameObject:
   - component: {fileID: 5737686327559676683}
   - component: {fileID: 5064259382351905465}
   - component: {fileID: 5922779703452047028}
-  - component: {fileID: 1991916153783288390}
   - component: {fileID: 6615073948840180082}
   m_Layer: 0
   m_Name: ProjectileEnemy
@@ -202,34 +201,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &1991916153783288390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5136193457440645499}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f1446c6f1a392d4aaca2d70a3f77659, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectileObject: {fileID: 7458706678525288684, guid: f674536083bdef44090d07d4d2223f6d,
-    type: 3}
-  projectileSpawn: {fileID: 4228070885960755180}
-  projectileSpeed: 30
-  canShoot: 0
-  playerLoc: {fileID: 0}
-  visionRange: 15
-  visionAngle: 30
-  targetPlayer:
-    serializedVersion: 2
-    m_Bits: 64
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 128
-  enemyAlerted: 0
-  player: {fileID: 0}
 --- !u!114 &6615073948840180082
 MonoBehaviour:
   m_ObjectHideFlags: 0
