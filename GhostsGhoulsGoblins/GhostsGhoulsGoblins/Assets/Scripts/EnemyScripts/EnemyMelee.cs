@@ -18,13 +18,7 @@ public class EnemyMelee : MonoBehaviour
     public bool canSwing = true;
     public float detectDistanceFromPlayer = 3;
 
-    // Melee System:
-    //public int attack;
 
-    private void Start()
-    {
-
-    }
 
     private void Update()
     {

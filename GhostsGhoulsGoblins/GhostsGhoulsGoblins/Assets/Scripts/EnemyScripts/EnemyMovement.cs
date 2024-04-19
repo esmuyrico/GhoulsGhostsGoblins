@@ -14,62 +14,52 @@ public class EnemyMovement : MonoBehaviour
     //Chase player variables
     public GameObject playerLocation;
     [SerializeField] float alertSpeed = 4;
-
-    //external scripts
-    private EnemyShoot _enemyShoot;
     private PlayerController _playerController;
+    private float playerDistance = 5;
+    public Transform player;
 
     //spawngold variables
     public GameObject goldCoin;
     public Vector3 coinSpawn;
 
+    //Shoot variables
+    public GameObject projectileObject;
+    public Transform projectileSpawn;
+    [SerializeField] float projectileSpeed;
+    [SerializeField] bool canShoot;
 
-    //enemy type (for parent/child script)
-    public bool meleeEnemy;
-    private float playerDistance;
+    //alert variables
+    public float visionRange;
+    public float visionAngle;
+    public LayerMask targetPlayer;
+    public LayerMask obstacleMask;
+    public bool enemyAlerted;
 
 
     void Start()
     {
         _playerController = FindObjectOfType<PlayerController>();
-        _enemyShoot = FindObjectOfType<EnemyShoot>();
-        EnemyType();
+        canShoot = true;
         coinSpawn = transform.position;
     }
 
     void Update()
     {
         EnemyMove();
-
+        DetectPlayer();
+        shootPlayer();
     }
-
-    /// <summary>
-    /// sets the enemy type 
-    /// </summary>
-    public virtual void EnemyType()
-    {
-        meleeEnemy = false;
-        if (meleeEnemy == true)
-        {
-            playerDistance = 2;
-        }
-        if (meleeEnemy == false)
-        {
-            playerDistance = 5;
-        }
-    }
-
 
     /// <summary>
     /// determines whether to follow path or chase player
     /// </summary>
     private void EnemyMove()
     {
-        if (_enemyShoot.enemyAlerted == false)
+        if (enemyAlerted == false)
         {
             MoveToWaypoint();
         }
-        if (_enemyShoot.enemyAlerted == true)
+        if (enemyAlerted == true)
         {
             ChasePlayer();
         }
@@ -94,6 +84,33 @@ public class EnemyMovement : MonoBehaviour
         }
         transform.position = Vector3.MoveTowards(transform.position, waypoints[currentPath].transform.position, Time.deltaTime * walkSpeed);
     }
+    /// <summary>
+    /// if player is in range, shoots at player
+    /// </summary>
+    private void DetectPlayer()
+    {
+        Vector3 playerTarget = (playerLocation.transform.position - transform.position).normalized;
+
+        if (Vector3.Angle(transform.forward, playerTarget) <= visionAngle)
+        {
+            float distanceToTarget = Vector3.Distance(transform.position, playerLocation.transform.position);
+            if (distanceToTarget <= visionRange)
+            {
+                if (Physics.Raycast(transform.position, playerTarget, distanceToTarget, obstacleMask) == false)
+                {
+                    enemyAlerted = true;
+                }
+            }
+            if (distanceToTarget >= visionRange)
+            {
+                enemyAlerted = false;
+            }
+        }
+        else
+        {
+            enemyAlerted = false;
+        }
+    }
 
     /// <summary>
     /// chases player
@@ -106,7 +123,47 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// shoots at player if alerted
+    /// </summary>
+    private void shootPlayer()
+    {
+        if (enemyAlerted == true)
+        {
+            transform.LookAt(player);
+            if (canShoot == true)
+            {
+                StartCoroutine(ShootProjectiles());
+            }
+        }
+    }
 
+    /// <summary>
+    /// Shoots projectile
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ShootProjectiles()
+    {
+        if (canShoot == true)
+        {
+            canShoot = false;
+            var projectile = Instantiate(projectileObject, projectileSpawn.position, projectileSpawn.rotation);
+            projectile.GetComponent<Rigidbody>().velocity = projectileSpawn.forward * projectileSpeed;
+        }
+        StartCoroutine(ShootDelay());
+        yield return null;
+    }
+
+    /// <summary>
+    /// Delays shooting time
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ShootDelay()
+    {
+        float timeBetween = 4f;
+        yield return new WaitForSeconds(timeBetween);
+        canShoot = true;
+    }
 
     /// <summary>
     /// when player dives into enemy, the enemy drops a coin and dies
@@ -116,7 +173,6 @@ public class EnemyMovement : MonoBehaviour
     {
         if (_playerController.isDiving == true)
         {
-            //spawn coin
             Instantiate(goldCoin, coinSpawn, Quaternion.identity);
             Destroy(gameObject);
         }
@@ -124,10 +180,6 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-
-
-
-
         if (collision.gameObject.tag == "Player")
         {
             EnemyDeath();

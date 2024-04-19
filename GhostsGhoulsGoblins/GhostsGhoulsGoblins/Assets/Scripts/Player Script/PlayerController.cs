@@ -41,6 +41,14 @@ public class PlayerController : MonoBehaviour
     private float floorToFeet = .5f;
 
 
+    //JUMP VARIABLES
+    public int jumpAmt;
+    //private bool hasJumpedOnce;
+    //private bool hasJumpedTwice;
+    [SerializeField] int jumpOneForce = 3;
+    [SerializeField] int jumpTwoForce = 2;
+
+
     private void Awake()
     {
         playerActions = new PlayerMove();
@@ -64,10 +72,34 @@ public class PlayerController : MonoBehaviour
         MoveDirection();
         PlayerMovement();
         feetCollider = GetComponent<Collider>();
-        //  faceCollider = GetComponent<Collider>();
+        SpeedRegulator();
+
     }
 
-
+    private void SpeedRegulator()
+    {
+        // if on ground
+        if (isGrounded)
+        {
+            playerSpeed = 5f;
+            jumpAmt = 0;
+        }
+        //if in air
+        if (!isGrounded)
+        {
+            //maybe a swutch here?
+            switch (jumpAmt)
+            {
+                case 1:
+                    playerSpeed = 2;
+                    break;
+                case 2:
+                    playerSpeed = 1;
+                    break;
+                default: break;
+            }
+        }
+    }
 
 
 
@@ -141,11 +173,7 @@ public class PlayerController : MonoBehaviour
             {
                 OnMoveRight();
             }
-            if (Input.GetKey(KeyCode.Space))
-            {
-               
-                OnJump();
-            }
+
         }
     }
 
@@ -157,8 +185,9 @@ public class PlayerController : MonoBehaviour
     {
         if (isDiving == false)
         {
-            //transform.position += Vector3.forward * playerSpeed * Time.deltaTime;
-            GetComponent<Rigidbody>().AddForce(Vector3.forward * playerSpeed, ForceMode.Force);
+            //transform.position += transform.forward * playerSpeed * Time.deltaTime;
+            GetComponent<Rigidbody>().AddForce(transform.forward * playerSpeed, ForceMode.Force);
+
         }
     }
     /// <summary>
@@ -200,11 +229,17 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void OnJump()
     {
-        // Also checks if the player "!hasJumped"
-       
-        if (isGrounded == true)
+        //first jump
+        if (isGrounded)
         {
-            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpOneForce, ForceMode.Impulse);
+            StartCoroutine(JumpCheckDelay());
+        }
+        if (isDiving && (jumpAmt == 1))
+        {
+            jumpAmt++;
+            FinishDive();
+            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpTwoForce, ForceMode.Impulse);
         }
     }
 
@@ -213,29 +248,15 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void OnDive()
     {
-        // Also checks if the player "!hasDived"
-        
-        if (!isDiving)
+        if (!isDiving && !(jumpAmt ==2))
         {
             GetComponent<Rigidbody>().AddForce(Vector3.up * diveUpForce, ForceMode.Impulse);
-            //code that works without point to click
-            //GetComponent<Rigidbody>().AddForce(Vector3.forward * divefwdForce, ForceMode.Impulse);
-            //code that works with point to click
             GetComponent<Rigidbody>().AddForce(diveDirection * divefwdForce, ForceMode.Impulse);
             //delay a sec or 2
             StartCoroutine(DiveCheckDelay());
-            //if no contact: is diving = true
-
+            //StartCoroutine(DiveCheckDelay());
 
         }
-    }
-
-    private void OnEnemy()
-    {
-        //make sure player is upright
-        //attach to enemy
-        //set a bool or circumstance connecting to OnDive funnction saying that player can (smaller) dive off in oposite direction from enemy
-
     }
 
     /// <summary>
@@ -243,12 +264,22 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void FinishDive()
     {
+        hasDived = true;
         transform.Rotate(-90, 0, 0);
-
         isDiving = false;
-        //isGrounded = true;
 
     }
+
+    /// <summary>
+    /// waits to check if player is on ground after diving
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator JumpTwoDelay()
+    {
+        yield return new WaitForSeconds(0.3f);
+        jumpAmt = 1;
+    }
+
     /// <summary>
     /// waits to check if player is on ground after diving
     /// </summary>
@@ -258,7 +289,18 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         transform.Rotate(90, 0, 0);
         isDiving = true;
+        jumpAmt = 1;
 
+    }
+
+    /// <summary>
+    /// waits to check if player is on ground after diving
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator JumpCheckDelay()
+    {
+        yield return new WaitForSeconds(0.1f);
+        jumpAmt = 1;
     }
 
     /// <summary>
@@ -267,52 +309,24 @@ public class PlayerController : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.tag == "Enemy")
-        {
-            if (isDiving == true)
-            {
-                //FinishDive();
-                Debug.Log("First?");
-
-            }
-        }
-
         if (isDiving == true)
-        {
             FinishDive();
-            Debug.Log("last?");
-        }
 
-        if (other.transform.tag == "Untagged")
-        {
-            isGrounded = true;
-
-            if (isDiving == true)
-            {
-                //destroys wall if diving
-                //transform.Rotate(-90, 0, 0);
-                isDiving = false;
-            }
-        }
-
+        //dive into anything ends dive
         if (other.transform.gameObject)
         {
             if (isDiving == true)
-            {
-                isGrounded = true;
-                isDiving = false;
-            }
+                FinishDive();
         }
 
-        if (other.transform.tag == "Enemy")
-        {
-            Debug.Log("hitenemy");
-        }
-
+        //Breakable Walls
         if (other.transform.tag == "BreakableWall")
         {
-            Destroy(other.transform.gameObject);
+            if (isDiving == true)
+            {
+                FinishDive();
+                Destroy(other.transform.gameObject);
+            }
         }
     }
-
 }
