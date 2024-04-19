@@ -9,6 +9,7 @@ using UnityEngine;
 public class DoorController : MonoBehaviour
 {
     private List<GameObject> _keys = new List<GameObject>();
+    [SerializeField] private List<GameObject> _Locks = new List<GameObject>();
     private GameObject _door;
     private int keysActivated = 0;
     [SerializeField] [Tooltip("DO NOT CHANGE")] private bool isKeyDoor;
@@ -31,6 +32,7 @@ public class DoorController : MonoBehaviour
 
     public void KeyActivated()
     {
+        RemoveLock();
         keysActivated++;
         if (keysActivated >= _keys.Count)
         {
@@ -51,5 +53,18 @@ public class DoorController : MonoBehaviour
     private void SetUpDisplayKeysOnDoor()
     {
         Vector3 doorPos = _door.transform.position;
+    }
+    
+    public void addLockToList(GameObject lockToAdd)
+    {
+        _Locks.Add(lockToAdd);
+    }
+
+    private void RemoveLock()
+    {
+        if (_Locks.Count != 0)
+        {
+            _Locks[keysActivated].SetActive(false);
+        }
     }
 }
