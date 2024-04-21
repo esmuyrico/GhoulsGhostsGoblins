@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private PlayerMove playerActions;
     PlayerInput playerInput;
     InputAction moveAction;
-    [SerializeField] float playerSpeed = 3.8f;
+    [SerializeField] float playerSpeed;
     [SerializeField] float jumpForce = 0.5f;
     [SerializeField] int divefwdForce = 6;
     [SerializeField] float diveUpForce = 5;
@@ -78,16 +78,22 @@ public class PlayerController : MonoBehaviour
 
     private void SpeedRegulator()
     {
+
+
         // if on ground
         if (isGrounded)
         {
-            playerSpeed = 5f;
+            playerSpeed = 3f;
             jumpAmt = 0;
         }
         //if in air
         if (!isGrounded)
         {
-            //maybe a swutch here?
+
+
+
+
+            playerSpeed = 2;
             switch (jumpAmt)
             {
                 case 1:
@@ -121,14 +127,9 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
-        //respawns if falls too far
-        if (transform.position.y < -2)
+        if (transform.position.y < -6)
         {
-            if (isDiving)
-            {
-                isDiving = false;
-            }
-            transform.position = new Vector3(-1.3f, 20, 1.1f);
+            transform.position = new Vector3(.2f, 19.81f, .3f);
         }
     }
     private void BackupGroundCheck()
