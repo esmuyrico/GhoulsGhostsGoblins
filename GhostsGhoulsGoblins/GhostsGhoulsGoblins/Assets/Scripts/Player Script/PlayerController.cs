@@ -12,13 +12,16 @@ public class PlayerController : MonoBehaviour
     PlayerInput playerInput;
     InputAction moveAction;
     [SerializeField] float playerSpeed;
+    [SerializeField] float maxSpeed = 3;
+
     [SerializeField] float jumpForce = 0.5f;
     [SerializeField] int divefwdForce = 6;
     [SerializeField] float diveUpForce = 5;
     [SerializeField] float sensitivityValue = 40f;
     Rigidbody rb;
     private float yRotate = 0f;
-
+    private float airDrag = 2.2f;
+    private float groundDrag = 4f;
 
     // Respawning Variables
     public bool isInvincible;
@@ -32,6 +35,9 @@ public class PlayerController : MonoBehaviour
     private float xDir;
     public bool isGrounded;
     public bool isDiving;
+    private bool canDive;
+    [SerializeField] float DiveDelayTime = 1;
+
     public Vector3 diveDirection { get; set; }
 
     //variables for checking if walking on ground
@@ -43,8 +49,6 @@ public class PlayerController : MonoBehaviour
 
     //JUMP VARIABLES
     public int jumpAmt;
-    //private bool hasJumpedOnce;
-    //private bool hasJumpedTwice;
     [SerializeField] int jumpOneForce = 3;
     [SerializeField] int jumpTwoForce = 2;
 
@@ -62,6 +66,7 @@ public class PlayerController : MonoBehaviour
         moveAction = playerInput.actions.FindAction("Movement");
         feetCollider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
+        canDive = true;
     }
 
     private void Update()
@@ -75,35 +80,20 @@ public class PlayerController : MonoBehaviour
         SpeedRegulator();
 
     }
-
     private void SpeedRegulator()
     {
-
-
         // if on ground
         if (isGrounded)
         {
             playerSpeed = 3f;
             jumpAmt = 0;
+            rb.drag = groundDrag;
         }
         //if in air
         if (!isGrounded)
         {
-
-
-
-
-            playerSpeed = 2;
-            switch (jumpAmt)
-            {
-                case 1:
-                    playerSpeed = 2;
-                    break;
-                case 2:
-                    playerSpeed = 1;
-                    break;
-                default: break;
-            }
+            rb.drag = airDrag;
+            playerSpeed = maxSpeed / 2;
         }
     }
 
@@ -121,7 +111,6 @@ public class PlayerController : MonoBehaviour
         if (feetOnGround)
         {
             isGrounded = true;
-            // Set hasJumped and hasDived to false
         }
         else
         {
@@ -187,7 +176,7 @@ public class PlayerController : MonoBehaviour
         if (isDiving == false)
         {
             //transform.position += transform.forward * playerSpeed * Time.deltaTime;
-            GetComponent<Rigidbody>().AddForce(transform.forward * playerSpeed, ForceMode.Force);
+            GetComponent<Rigidbody>().AddForce(Vector3.forward * playerSpeed, ForceMode.Force);
 
         }
     }
@@ -249,14 +238,17 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void OnDive()
     {
-        if (!isDiving && !(jumpAmt ==2))
+        if (!isDiving && !(jumpAmt == 2))
         {
-            GetComponent<Rigidbody>().AddForce(Vector3.up * diveUpForce, ForceMode.Impulse);
-            GetComponent<Rigidbody>().AddForce(diveDirection * divefwdForce, ForceMode.Impulse);
-            //delay a sec or 2
-            StartCoroutine(DiveCheckDelay());
-            //StartCoroutine(DiveCheckDelay());
-
+            if (canDive)
+            {
+                canDive = false;
+                GetComponent<Rigidbody>().AddForce(Vector3.up * diveUpForce, ForceMode.Impulse);
+                GetComponent<Rigidbody>().AddForce(diveDirection * divefwdForce, ForceMode.Impulse);
+                //delay a sec or 2
+                StartCoroutine(DiveCheckDelay());
+                StartCoroutine(DiveAbilityDelay());
+            }
         }
     }
 
@@ -293,6 +285,18 @@ public class PlayerController : MonoBehaviour
         jumpAmt = 1;
 
     }
+    
+    /// <summary>
+    /// After being used, the dive will not be able to be used until 
+    /// the time delay (currently 1.5 sec) is finished
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator DiveAbilityDelay()
+    {
+        yield return new WaitForSeconds(DiveDelayTime);
+        canDive = true;
+    }
+    
 
     /// <summary>
     /// waits to check if player is on ground after diving
@@ -310,11 +314,8 @@ public class PlayerController : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if (isDiving == true)
-            FinishDive();
-
-        //dive into anything ends dive
-        if (other.transform.gameObject)
+        //dive into anything (except keys, pitedges, coins and checkpoints) ends dive
+        if (!(other.transform.tag == "PitEdge") && !(other.transform.tag == "Coin") && !(other.transform.tag == "Key") && !(other.transform.tag == "CheckPoint"))
         {
             if (isDiving == true)
                 FinishDive();

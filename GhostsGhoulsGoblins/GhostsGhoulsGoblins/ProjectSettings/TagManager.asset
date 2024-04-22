@@ -15,6 +15,7 @@ TagManager:
   - GameEnd
   - Coin
   - DiveCollider
+  - PitEdge
   layers:
   - Default
   - TransparentFX
