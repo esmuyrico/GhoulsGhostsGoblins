@@ -150,18 +150,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff25c7e7cad86e4da882728974ecb88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 3
-  maxSpeed: 3
+  playerSpeed: 3.4
+  maxSpeed: 1
   jumpForce: 2
-  divefwdForce: 15
+  divefwdForce: 14
   diveUpForce: 7
   sensitivityValue: 0
-  isInvincible: 0
+  airDrag: 2.9
+  groundDrag: 3.4
   hasDived: 0
   hasJumped: 0
   isGrounded: 0
   isDiving: 0
-  DiveDelayTime: 1.5
+  DiveDelayTime: 1.25
   jumpAmt: 0
   jumpOneForce: 4
   jumpTwoForce: 3

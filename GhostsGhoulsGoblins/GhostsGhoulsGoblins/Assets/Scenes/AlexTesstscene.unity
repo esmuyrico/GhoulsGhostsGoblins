@@ -4851,7 +4851,7 @@ PrefabInstance:
     - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
         type: 3}
       propertyPath: airDrag
-      value: 2.8
+      value: 2.9
       objectReference: {fileID: 0}
     - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
         type: 3}
@@ -4861,7 +4861,12 @@ PrefabInstance:
     - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
         type: 3}
       propertyPath: groundDrag
-      value: 3
+      value: 3.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
+        type: 3}
+      propertyPath: isGrounded
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
         type: 3}
@@ -4876,12 +4881,12 @@ PrefabInstance:
     - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
         type: 3}
       propertyPath: playerSpeed
-      value: 5
+      value: 3.4
       objectReference: {fileID: 0}
     - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
         type: 3}
       propertyPath: divefwdForce
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
         type: 3}
@@ -4896,7 +4901,7 @@ PrefabInstance:
     - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
         type: 3}
       propertyPath: DiveDelayTime
-      value: 1.5
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 7557266637533346692, guid: 840756714422b824181f610166563144,
         type: 3}
@@ -24830,7 +24835,7 @@ Transform:
   m_GameObject: {fileID: 1777945752}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 36.6114, y: 6.0527, z: 109.123634}
+  m_LocalPosition: {x: 36.6114, y: 0.2, z: 109.123634}
   m_LocalScale: {x: 9.922915, y: 7.181308, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -20,12 +20,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float sensitivityValue = 40f;
     Rigidbody rb;
     private float yRotate = 0f;
-    private float airDrag = 2.2f;
-    private float groundDrag = 4f;
+    [SerializeField] float airDrag = 2.2f;
+    [SerializeField] float groundDrag = 4f;
 
     // Respawning Variables
-    public bool isInvincible;
-    private Vector3 previousPos;
+    //public bool isInvincible;
+    //private Vector3 previousPos;
 
     // Checks for if the player hadDived or hasJumped
     public bool hasDived;
@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        previousPos = transform.position;
+        //previousPos = transform.position;
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions.FindAction("Movement");
         feetCollider = GetComponent<Collider>();
@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
         // if on ground
         if (isGrounded)
         {
-            playerSpeed = 3f;
+            playerSpeed = 3.4f;
             jumpAmt = 0;
             rb.drag = groundDrag;
         }
