@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
         // if on ground
         if (isGrounded)
         {
-            playerSpeed = 10f;
+            playerSpeed = 8.5f;
             jumpAmt = 0;
             rb.drag = groundDrag;
         }
