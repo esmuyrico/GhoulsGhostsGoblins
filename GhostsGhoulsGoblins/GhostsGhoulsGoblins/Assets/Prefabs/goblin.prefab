@@ -151,9 +151,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 3.4
-  maxSpeed: 1
+  maxSpeed: 4
   jumpForce: 2
-  divefwdForce: 14
+  divefwdForce: 16
   diveUpForce: 7
   sensitivityValue: 0
   airDrag: 2.9
