@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brough, Heath
+// Last Edited 4/22/2024
+// holds a function to store a point when the player hits the object
+
 public class PitEdge : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
@@ -10,8 +14,8 @@ public class PitEdge : MonoBehaviour
         {
             Debug.Log("hit");
             // stores the last point that the player was when they leave the ground
-            Vector3 lastGroundPoint = new Vector3(other.transform.position.x, transform.position.y, other.transform.position.z);
-            Debug.Log(lastGroundPoint);
+            Vector3 lastGroundPoint = transform.position;
+            //Debug.Log(lastGroundPoint);
             other.GetComponent<Checkpoints>().StoreLastGroundPoint(lastGroundPoint);
         }
     }

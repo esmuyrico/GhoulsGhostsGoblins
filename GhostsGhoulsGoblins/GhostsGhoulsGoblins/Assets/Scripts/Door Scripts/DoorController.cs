@@ -22,7 +22,7 @@ public class DoorController : MonoBehaviour
     public void AddKeyToList(GameObject key)
     {
         _keys.Add(key);
-        Debug.Log("Key added. keys: " + _keys.Count);
+       // Debug.Log("Key added. keys: " + _keys.Count);
     }
 
     public void SetDoor(GameObject door)

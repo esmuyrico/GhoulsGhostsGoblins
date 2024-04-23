@@ -6,14 +6,7 @@ public class TurnToLook : MonoBehaviour
 {
 
     [SerializeField] private Transform pointToLookAt;
-    private Transform rotatePoint;
     public Vector3 temp;
-    // Start is called before the first frame update
-    void Start()
-    {
-        // rotatePoint = transform.Find("RotatePoint");
-        rotatePoint = transform;
-    }
 
     // Update is called once per frame
     void Update()
@@ -23,7 +16,7 @@ public class TurnToLook : MonoBehaviour
 
         if (!gameObject.GetComponent<PlayerController>().isDiving)
         {
-            rotatePoint.LookAt(posToLookAt);
+            transform.LookAt(posToLookAt);
             transform.Find("RotatePoint").localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
         }
         else
@@ -31,8 +24,7 @@ public class TurnToLook : MonoBehaviour
             transform.Find("RotatePoint").localRotation = Quaternion.Euler(new Vector3(-90, 0, 0));
         }
         
-        temp = Quaternion.Euler(0, rotatePoint.rotation.y, 0) * rotatePoint.forward;
-
+        temp = Quaternion.Euler(0, transform.rotation.y, 0) * transform.forward;
 
         gameObject.GetComponent<PlayerController>().diveDirection = temp;
     } 

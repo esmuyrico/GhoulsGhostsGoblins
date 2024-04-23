@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 // Brough, Heath
-// Created (3/26/2024)
+// Created (4/22/2024)
 // Last updated (4/3/2024)
 // Handles UI navigation and holds functions to update the Coins, Health, and Dive Charge Meter
 
@@ -15,6 +15,7 @@ public class UIManager : Singleton<UIManager>
     private GameObject mainMenuScreen;
     [SerializeField]
     private GameObject currentMenuScreen;
+    
 
     private GameObject canvasRef;
 
@@ -26,7 +27,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private GameObject HealthBarRef;
     [SerializeField] private GameObject DiveStrengthBar;
     [SerializeField] private GameObject MoneyTrackerRef;
-
+    [SerializeField] private GameObject TipTextRef;
     // UI Element arrays
     [SerializeField] private GameObject[] _HUDElements = new GameObject[5];
 
@@ -35,6 +36,7 @@ public class UIManager : Singleton<UIManager>
     private void Awake()
     {
         currentMenuScreen = mainMenuScreen;
+        TipTextRef = _HUDRef.transform.GetChild(0).gameObject;
         HealthBarRef = _HUDRef.transform.GetChild(1).gameObject;
         DiveStrengthBar = _HUDRef.transform.GetChild(2).gameObject;
         MoneyTrackerRef = _HUDRef.transform.GetChild(3).gameObject;
@@ -45,6 +47,8 @@ public class UIManager : Singleton<UIManager>
         {
             canvasRef.transform.GetChild(child).gameObject.SetActive(false);
         }
+
+        TipTextRef.GetComponent<TMP_Text>().text = "Read the sign";
     }
     void Start()
     {
@@ -101,7 +105,6 @@ public class UIManager : Singleton<UIManager>
     public void StartGame()
     {
         Time.timeScale = 1;
-        _HUDRef.SetActive(true);
         mainMenuScreen.SetActive(false);
     }
 
@@ -110,12 +113,15 @@ public class UIManager : Singleton<UIManager>
     /// </summary>
     /// <param name="newHealthTotal">the new value that health is at</param>
     /// <param name="maxHealth">the maximum health the player can have</param>
-    public void UpdateHealth(int newHealthTotal, int maxHealth)
+    public void UpdateHealth(float newHealthTotal, float maxHealth)
     {
         float healthPercent = newHealthTotal / maxHealth;
+        Debug.Log("Health: " + newHealthTotal);
+        Debug.Log("Max Health: " + maxHealth);
         // update the health in the UI
         HealthBarRef.transform.GetChild(1).GetComponent<TMP_Text>().text = newHealthTotal.ToString();
         HealthBarRef.transform.GetChild(0).localScale = new Vector3(healthPercent , 1, 1);
+        Debug.Log(healthPercent);
     }
 
     /// <summary>
@@ -144,7 +150,6 @@ public class UIManager : Singleton<UIManager>
             DiveStrengthBar.GetComponent<Image>().color = Color.blue;
             DiveStrengthBar.GetComponent<RectTransform>().transform.localScale = new Vector3(0.1f + 0.9f * percentComplete, 1, 1);
         }
-
     }
 
     public void TogglePause(GameObject PauseMenu)
@@ -164,6 +169,20 @@ public class UIManager : Singleton<UIManager>
 
             isPaused = !isPaused;
     }
+
+    public void UpdateTipText(string tipText)
+    {
+        TipTextRef.SetActive(true);
+        TipTextRef.GetComponent<TMP_Text>().text = tipText;
+    }
+
+    public void CloseTipText()
+    {
+        TipTextRef.GetComponent<TMP_Text>().text = "";
+        TipTextRef.SetActive(false);
+    }
+
+
 
     /*private void OnGUI()
     {
