@@ -48,7 +48,7 @@ public class UIManager : Singleton<UIManager>
             canvasRef.transform.GetChild(child).gameObject.SetActive(false);
         }
 
-        TipTextRef.GetComponent<TMP_Text>().text = "Read the sign";
+        TipTextRef.GetComponent<TMP_Text>().text = "What an interesting looking sign, I should investigate";
     }
     void Start()
     {
@@ -180,6 +180,11 @@ public class UIManager : Singleton<UIManager>
     {
         TipTextRef.GetComponent<TMP_Text>().text = "";
         TipTextRef.SetActive(false);
+    }
+
+    public void EndGame()
+    {
+        Application.Quit();
     }
 
 

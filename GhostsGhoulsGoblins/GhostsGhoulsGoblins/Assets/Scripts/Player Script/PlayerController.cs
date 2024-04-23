@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
         // if on ground
         if (isGrounded)
         {
-            playerSpeed = 14;
+            playerSpeed = 25;
             jumpAmt = 0;
             rb.drag = groundDrag;
         }
@@ -229,6 +229,7 @@ public class PlayerController : MonoBehaviour
         {
             if (canDive)
             {
+                UIManager.Instance.UpdateDiveCharge(0);
                 canDive = false;
                 GetComponent<Rigidbody>().AddForce(Vector3.up * diveUpForce, ForceMode.Impulse);
                 GetComponent<Rigidbody>().AddForce(diveDirection * divefwdForce, ForceMode.Impulse);
@@ -281,6 +282,11 @@ public class PlayerController : MonoBehaviour
     IEnumerator DiveAbilityDelay()
     {
         yield return new WaitForSeconds(DiveDelayTime);
+        for (float i = 0; i < DiveDelayTime; i += DiveDelayTime/10)
+        {
+            UIManager.Instance.UpdateDiveCharge(i / DiveDelayTime);
+            yield return new WaitForSeconds(DiveDelayTime/10);
+        }
         canDive = true;
     }
     

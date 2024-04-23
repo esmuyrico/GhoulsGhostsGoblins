@@ -6,8 +6,8 @@ public class FollowCamera : MonoBehaviour
 {
     private Transform playerTransform;
     [SerializeField] private Vector3 offset = new Vector3(0, 10, -6f);
-    private Vector3 cameraAngle = new Vector3(50, 0, 0);
-    [SerializeField] private float cameraSpeed = 50;
+    [SerializeField] private Vector3 cameraAngle = new Vector3(50, 0, 0);
+    private float cameraSpeed = 50;
 
     private bool cameraMoving = false;
 
