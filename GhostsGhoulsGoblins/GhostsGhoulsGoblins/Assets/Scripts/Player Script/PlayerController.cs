@@ -12,16 +12,14 @@ public class PlayerController : MonoBehaviour
     PlayerInput playerInput;
     InputAction moveAction;
     [SerializeField] float playerSpeed;
-    [SerializeField] float maxSpeed = 3;
+    [SerializeField] float maxSpeed = 4;
 
-    [SerializeField] float jumpForce = 0.5f;
-    [SerializeField] int divefwdForce = 6;
-    [SerializeField] float diveUpForce = 5;
-    [SerializeField] float sensitivityValue = 40f;
+    [SerializeField] float jumpForce = 2f;
+    [SerializeField] int divefwdForce = 7;
+    [SerializeField] float diveUpForce = 16;
     Rigidbody rb;
-    private float yRotate = 0f;
-    [SerializeField] float airDrag = 2.2f;
-    [SerializeField] float groundDrag = 4f;
+    [SerializeField] float airDrag = 2.9f;
+    [SerializeField] float groundDrag = 3.4f;
 
     // Respawning Variables
     //public bool isInvincible;
@@ -36,7 +34,7 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded;
     public bool isDiving;
     private bool canDive;
-    [SerializeField] float DiveDelayTime = 1;
+    [SerializeField] float DiveDelayTime = 1.25f;
 
     public Vector3 diveDirection { get; set; }
 
@@ -49,8 +47,8 @@ public class PlayerController : MonoBehaviour
 
     //JUMP VARIABLES
     public int jumpAmt;
-    [SerializeField] int jumpOneForce = 3;
-    [SerializeField] int jumpTwoForce = 2;
+    [SerializeField] int jumpOneForce = 4;
+    [SerializeField] int jumpTwoForce = 3;
 
 
     private void Awake()
@@ -74,7 +72,6 @@ public class PlayerController : MonoBehaviour
         xDir = transform.forward.x;
         GroundCheck();
         BackupGroundCheck();
-        MoveDirection();
         PlayerMovement();
         feetCollider = GetComponent<Collider>();
         SpeedRegulator();
@@ -85,7 +82,7 @@ public class PlayerController : MonoBehaviour
         // if on ground
         if (isGrounded)
         {
-            playerSpeed = 3.4f;
+            playerSpeed = 14;
             jumpAmt = 0;
             rb.drag = groundDrag;
         }
@@ -129,17 +126,7 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
     }
 
-    /// <summary>
-    /// Temporary code allow player to adjust direction with mouse
-    /// </summary>
-    private void MoveDirection()
-    {
-        if (!isDiving)
-        {
-            yRotate += Input.GetAxis("Mouse X") * sensitivityValue;
-            transform.localEulerAngles = new Vector3(xDir, yRotate, 0);
-        }
-    }
+
     /// <summary>
     /// Player movement checking if player can move
     /// </summary>
