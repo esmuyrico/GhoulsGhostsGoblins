@@ -13,10 +13,11 @@ public class PlayerController : MonoBehaviour
     InputAction moveAction;
     [SerializeField] float playerSpeed;
     [SerializeField] float maxSpeed = 4;
+    [SerializeField] float walkSpeed = 35;
 
-    [SerializeField] float jumpForce = 2f;
+
     [SerializeField] int divefwdForce = 7;
-    [SerializeField] float diveUpForce = 16;
+    [SerializeField] float diveUpForce = 14;
     Rigidbody rb;
     [SerializeField] float airDrag = 2.9f;
     [SerializeField] float groundDrag = 3.4f;
@@ -34,7 +35,7 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded;
     public bool isDiving;
     private bool canDive;
-    [SerializeField] float DiveDelayTime = 1.25f;
+    private float DiveDelayTime = .6f;
 
     public Vector3 diveDirection { get; set; }
 
@@ -47,8 +48,8 @@ public class PlayerController : MonoBehaviour
 
     //JUMP VARIABLES
     public int jumpAmt;
-    [SerializeField] int jumpOneForce = 4;
-    [SerializeField] int jumpTwoForce = 3;
+    [SerializeField] int jumpOneForce = 10;
+    [SerializeField] int jumpTwoForce = 7;
 
 
     private void Awake()
@@ -67,7 +68,7 @@ public class PlayerController : MonoBehaviour
         canDive = true;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         xDir = transform.forward.x;
         GroundCheck();
@@ -82,7 +83,7 @@ public class PlayerController : MonoBehaviour
         // if on ground
         if (isGrounded)
         {
-            playerSpeed = 25;
+            playerSpeed = walkSpeed;
             jumpAmt = 0;
             rb.drag = groundDrag;
         }
@@ -90,7 +91,7 @@ public class PlayerController : MonoBehaviour
         if (!isGrounded)
         {
             rb.drag = airDrag;
-            playerSpeed = maxSpeed / 2;
+            playerSpeed = walkSpeed / 3;
         }
     }
 
