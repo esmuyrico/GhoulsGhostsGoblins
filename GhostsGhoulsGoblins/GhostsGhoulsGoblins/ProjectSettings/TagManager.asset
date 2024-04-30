@@ -17,6 +17,7 @@ TagManager:
   - DiveCollider
   - PitEdge
   - Pit
+  - Ramp
   layers:
   - Default
   - TransparentFX

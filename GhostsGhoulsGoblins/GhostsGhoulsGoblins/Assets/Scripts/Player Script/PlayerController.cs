@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     PlayerInput playerInput;
     InputAction moveAction;
     [SerializeField] float playerSpeed;
-    [SerializeField] float maxSpeed = 4;
+    [SerializeField] float airSpeed = 4;
     [SerializeField] float walkSpeed = 35;
 
 
@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     // Checks for if the player hadDived or hasJumped
     public bool hasDived;
     public bool hasJumped;
+    public bool canInterruptDive;
+
 
     //ground/dive check variables
     private float xDir;
@@ -71,7 +73,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         xDir = transform.forward.x;
-        GroundCheck();
+        //GroundCheck();
         BackupGroundCheck();
         PlayerMovement();
         feetCollider = GetComponent<Collider>();
@@ -91,13 +93,13 @@ public class PlayerController : MonoBehaviour
         if (!isGrounded)
         {
             rb.drag = airDrag;
-            playerSpeed = walkSpeed / 3;
+            playerSpeed = airSpeed;
         }
     }
 
 
 
-
+    /*
     /// <summary>
     /// Checks if the player is on the ground, falling or in the air.
     /// Respawns player if fall off map.
@@ -119,6 +121,19 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(.2f, 19.81f, .3f);
         }
     }
+    
+
+    private void OnRamp()
+    {
+        if(Physics.Raycast(transform.position, Vector3.down, out slopeValue, .5f + .3f))
+        {
+            float angle = Vector3.Angle(Vector3.up, slopeValue.normal);
+            return angle < slopeAngle && angle != 0;
+        }
+        return false;
+    }
+    */
+
     private void BackupGroundCheck()
     {
         if (Physics.Raycast(transform.position, Vector3.down, 1.15f))
@@ -163,7 +178,6 @@ public class PlayerController : MonoBehaviour
     {
         if (isDiving == false)
         {
-            //transform.position += transform.forward * playerSpeed * Time.deltaTime;
             GetComponent<Rigidbody>().AddForce(Vector3.forward * playerSpeed, ForceMode.Force);
 
         }
@@ -175,7 +189,6 @@ public class PlayerController : MonoBehaviour
     {
         if (isDiving == false)
         {
-            //transform.position += Vector3.left * playerSpeed * Time.deltaTime;
             GetComponent<Rigidbody>().AddForce(Vector3.left * playerSpeed, ForceMode.Force);
         }
     }
@@ -186,7 +199,6 @@ public class PlayerController : MonoBehaviour
     {
         if (isDiving == false)
         {
-            //transform.position += Vector3.back * playerSpeed * Time.deltaTime;
             GetComponent<Rigidbody>().AddForce(Vector3.back * playerSpeed, ForceMode.Force);
         }
     }
@@ -197,7 +209,6 @@ public class PlayerController : MonoBehaviour
     {
         if (isDiving == false)
         {
-            //transform.position += Vector3.right * playerSpeed * Time.deltaTime;
             GetComponent<Rigidbody>().AddForce(Vector3.right * playerSpeed, ForceMode.Force);
         }
     }
@@ -215,9 +226,13 @@ public class PlayerController : MonoBehaviour
         }
         if (isDiving && (jumpAmt == 1))
         {
-            jumpAmt++;
-            FinishDive();
-            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpTwoForce, ForceMode.Impulse);
+            if (canInterruptDive)
+            {
+                jumpAmt++;
+                FinishDive();
+                GetComponent<Rigidbody>().AddForce(Vector3.up * jumpTwoForce, ForceMode.Impulse);
+            }
+ 
         }
     }
 
@@ -230,6 +245,8 @@ public class PlayerController : MonoBehaviour
         {
             if (canDive)
             {
+                canInterruptDive = false;
+                StartCoroutine(JumpTwoDelay());
                 UIManager.Instance.UpdateDiveCharge(0);
                 canDive = false;
                 GetComponent<Rigidbody>().AddForce(Vector3.up * diveUpForce, ForceMode.Impulse);
@@ -237,6 +254,7 @@ public class PlayerController : MonoBehaviour
                 //delay a sec or 2
                 StartCoroutine(DiveCheckDelay());
                 StartCoroutine(DiveAbilityDelay());
+
             }
         }
     }
@@ -258,8 +276,8 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     IEnumerator JumpTwoDelay()
     {
-        yield return new WaitForSeconds(0.3f);
-        jumpAmt = 1;
+        yield return new WaitForSeconds(.2f);
+        canInterruptDive = true;
     }
 
     /// <summary>
@@ -301,6 +319,8 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         jumpAmt = 1;
     }
+
+
 
     /// <summary>
     /// destroy wall when player dives into it
