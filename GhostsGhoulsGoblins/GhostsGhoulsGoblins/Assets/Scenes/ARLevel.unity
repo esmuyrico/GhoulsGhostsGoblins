@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7072,7 +7072,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 22d9d07af31d39445b24ae8c46b680d2, type: 2}
+  - {fileID: 2100000, guid: cd92de8aba5841c4c9d5ef4d12d1c27a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12125,6 +12125,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6615073948840180082, guid: 0af7cd80c2e907d41a06919b02beee1f,
         type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1037224004}
+    - target: {fileID: 6615073948840180082, guid: 0af7cd80c2e907d41a06919b02beee1f,
+        type: 3}
       propertyPath: playerLocation
       value: 
       objectReference: {fileID: 1037223994}
@@ -13452,7 +13457,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: cd92de8aba5841c4c9d5ef4d12d1c27a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16669,8 +16674,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f119ad201feb44b4bbd02002c210fdd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 16, z: -2.5}
-  cameraAngle: {x: 50, y: 0, z: 0}
+  offset: {x: 0, y: 10, z: -3}
+  cameraAngle: {x: 55, y: 0, z: 0}
 --- !u!114 &1188128414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24556,13 +24561,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6615073948840180082, guid: 0af7cd80c2e907d41a06919b02beee1f,
         type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1037224004}
+    - target: {fileID: 6615073948840180082, guid: 0af7cd80c2e907d41a06919b02beee1f,
+        type: 3}
       propertyPath: playerLocation
       value: 
       objectReference: {fileID: 1037223994}
     - target: {fileID: 6615073948840180082, guid: 0af7cd80c2e907d41a06919b02beee1f,
         type: 3}
       propertyPath: waypoints.Array.size
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6615073948840180082, guid: 0af7cd80c2e907d41a06919b02beee1f,
         type: 3}
@@ -24573,7 +24583,7 @@ PrefabInstance:
         type: 3}
       propertyPath: waypoints.Array.data[1]
       value: 
-      objectReference: {fileID: 1397452734}
+      objectReference: {fileID: 1405326763}
     - target: {fileID: 6615073948840180082, guid: 0af7cd80c2e907d41a06919b02beee1f,
         type: 3}
       propertyPath: waypoints.Array.data[2]
@@ -28249,7 +28259,7 @@ PrefabInstance:
     - target: {fileID: 2904938111577138391, guid: 69a878f58138d6a458e5b8382063dba0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.977833
+      value: -5.56
       objectReference: {fileID: 0}
     - target: {fileID: 2904938111577138391, guid: 69a878f58138d6a458e5b8382063dba0,
         type: 3}
@@ -28259,17 +28269,17 @@ PrefabInstance:
     - target: {fileID: 2931923031496231033, guid: 69a878f58138d6a458e5b8382063dba0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2931923031496231033, guid: 69a878f58138d6a458e5b8382063dba0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2931923031496231033, guid: 69a878f58138d6a458e5b8382063dba0,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.86
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4002108375901036343, guid: 69a878f58138d6a458e5b8382063dba0,
         type: 3}

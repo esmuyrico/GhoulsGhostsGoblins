@@ -18,6 +18,7 @@ TagManager:
   - PitEdge
   - Pit
   - Ramp
+  - Rock
   layers:
   - Default
   - TransparentFX
