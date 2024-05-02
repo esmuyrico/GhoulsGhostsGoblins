@@ -12,7 +12,7 @@ public class DoorController : MonoBehaviour
     [SerializeField] private List<GameObject> _Locks = new List<GameObject>();
     private GameObject _door;
     private int keysActivated = 0;
-    [SerializeField] [Tooltip("DO NOT CHANGE")] private bool isKeyDoor;
+    [SerializeField] private bool isKeyDoor;
 
     private void Start()
     {
