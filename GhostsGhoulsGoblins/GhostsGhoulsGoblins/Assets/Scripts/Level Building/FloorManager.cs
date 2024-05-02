@@ -6,7 +6,7 @@ public class FloorManager : MonoBehaviour
 {
     [SerializeField] private BuildingFloorBehavior[] floors = new BuildingFloorBehavior[3];
 
-    public static bool wantToPause = false;
+    public bool wantToPause = false;
     // adds a floor to the list of floors
     public void addFloor(BuildingFloorBehavior floor, int floorNumber)
     {
@@ -55,14 +55,5 @@ public class FloorManager : MonoBehaviour
             }
             LeftBuilding();
         }
-    }
-
-    private void OnGUI()
-    {
-        if (GUILayout.Button("want to pause"))
-        {
-           // wantToPause = !wantToPause;
-        }
-
     }
 }

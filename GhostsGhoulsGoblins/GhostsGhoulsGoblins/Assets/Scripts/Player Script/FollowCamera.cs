@@ -22,8 +22,7 @@ public class FollowCamera : MonoBehaviour
         transform.rotation = Quaternion.Euler(cameraAngle);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void LateUpdate()
     {
         if (transform.position - offset != playerTransform.position)
             transform.position = playerTransform.position + offset;
