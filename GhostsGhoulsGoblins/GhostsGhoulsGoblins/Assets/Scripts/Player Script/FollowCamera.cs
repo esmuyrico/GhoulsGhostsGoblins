@@ -14,6 +14,8 @@ public class FollowCamera : MonoBehaviour
     private void Awake()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        offset = new Vector3(0, 10, -6f);
+        cameraAngle = new Vector3(50, 0, 0);
     }
     // Start is called before the first frame update
     void Start()
