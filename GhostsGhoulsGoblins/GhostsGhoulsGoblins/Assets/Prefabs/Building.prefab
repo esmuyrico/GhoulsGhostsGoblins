@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 2265677986494471512}
   m_Layer: 0
   m_Name: Building
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -293,6 +293,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  wantToPause: 0
 --- !u!65 &2265677986494471512
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -643,7 +644,7 @@ GameObject:
   - component: {fileID: 8261610208407606559}
   m_Layer: 0
   m_Name: 1st floor
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1133,7 +1134,7 @@ GameObject:
   - component: {fileID: 2526585242497221940}
   m_Layer: 0
   m_Name: 2nd floor
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2047,7 +2048,7 @@ GameObject:
   - component: {fileID: 2057928616204365857}
   m_Layer: 0
   m_Name: 3rd floor
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2148,7 +2149,7 @@ PrefabInstance:
     - target: {fileID: 5785178517238950058, guid: 81427ecf621efed41a02c30ab286ca2b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.41
+      value: -1.01
       objectReference: {fileID: 0}
     - target: {fileID: 6187196450481950346, guid: 81427ecf621efed41a02c30ab286ca2b,
         type: 3}

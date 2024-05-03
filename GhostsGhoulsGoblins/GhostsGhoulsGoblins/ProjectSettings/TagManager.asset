@@ -19,6 +19,7 @@ TagManager:
   - Pit
   - Ramp
   - Rock
+  - Building
   layers:
   - Default
   - TransparentFX

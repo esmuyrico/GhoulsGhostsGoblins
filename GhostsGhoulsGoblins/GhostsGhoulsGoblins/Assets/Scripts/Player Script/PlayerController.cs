@@ -329,7 +329,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //dive into anything (except keys, pitedges, coins and checkpoints) ends dive
-        if (!(other.transform.tag == "PitEdge") && !(other.transform.tag == "Coin") && !(other.transform.tag == "Key") && !(other.transform.tag == "CheckPoint"))
+        if (!(other.transform.tag == "PitEdge") && !(other.transform.tag == "Coin") && !(other.transform.tag == "Key") && !(other.transform.tag == "CheckPoint") && !(other.transform.tag == "Building"))
         {
             if (isDiving == true)
                 FinishDive();
