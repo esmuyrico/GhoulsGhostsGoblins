@@ -11,25 +11,21 @@ public class PlayerController : MonoBehaviour
     private PlayerMove playerActions;
     PlayerInput playerInput;
     InputAction moveAction;
-    [SerializeField] float playerSpeed;
-    [SerializeField] float airSpeed = 4;
-    [SerializeField] float walkSpeed = 35;
+    private float playerSpeed;
+    private float airSpeed = 20;
+    private float walkSpeed = 31;
+    private float jumpWait = .3f;
 
-
-    [SerializeField] int divefwdForce = 7;
-    [SerializeField] float diveUpForce = 14;
+    private int divefwdForce = 16;
+    private float diveUpForce = 8;
     Rigidbody rb;
-    [SerializeField] float airDrag = 2.9f;
-    [SerializeField] float groundDrag = 3.4f;
-
-    // Respawning Variables
-    //public bool isInvincible;
-    //private Vector3 previousPos;
+    private float airDrag = 2.9f;
+    private float groundDrag = 2f;
 
     // Checks for if the player hadDived or hasJumped
-    public bool hasDived;
-    public bool hasJumped;
-    public bool canInterruptDive;
+    private bool hasDived;
+    private bool hasJumped;
+    private bool canInterruptDive;
 
 
     //ground/dive check variables
@@ -37,22 +33,49 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded;
     public bool isDiving;
     private bool canDive;
-    private float DiveDelayTime = .6f;
+    private float DiveDelayTime = .1f;
+    private float fallSpeed = 98f;
 
     public Vector3 diveDirection { get; set; }
 
-    //variables for checking if walking on ground
-    private bool feetOnGround;
-    RaycastHit feetFloor;
-    Collider feetCollider;
-    private float floorToFeet = .5f;
-
-
     //JUMP VARIABLES
-    public int jumpAmt;
-    [SerializeField] int jumpOneForce = 10;
-    [SerializeField] int jumpTwoForce = 7;
+    private int jumpAmt;
+    private int jumpOneForce = 10;
+    private int jumpTwoForce = 7;
 
+    //RAMP VARIABLES
+    private float slopeAngle = 40;
+    private RaycastHit slopeHit;
+    private float rampSpeed = 10f;
+
+
+
+    private bool OnSlope()
+    {
+            if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, 1.15f + .2f))
+            {
+                float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+                return angle < slopeAngle && angle != 0;
+            }
+        return false;
+    }
+
+    private Vector3 SlopeLeft()
+    {
+        return Vector3.ProjectOnPlane(Vector3.left, slopeHit.normal).normalized;
+    }
+    private Vector3 SlopeRight()
+    {
+        return Vector3.ProjectOnPlane(Vector3.right, slopeHit.normal).normalized;
+    }
+    private Vector3 SlopeForward()
+    {
+        return Vector3.ProjectOnPlane(Vector3.forward, slopeHit.normal).normalized;
+    }
+    private Vector3 SlopeBack()
+    {
+        return Vector3.ProjectOnPlane(Vector3.back, slopeHit.normal).normalized;
+    }
 
     private void Awake()
     {
@@ -65,18 +88,18 @@ public class PlayerController : MonoBehaviour
         //previousPos = transform.position;
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions.FindAction("Movement");
-        feetCollider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
         canDive = true;
     }
 
+
     private void FixedUpdate()
     {
+
+        rb.useGravity = !OnSlope();
         xDir = transform.forward.x;
-        //GroundCheck();
-        BackupGroundCheck();
+        GroundCheck();
         PlayerMovement();
-        feetCollider = GetComponent<Collider>();
         SpeedRegulator();
 
     }
@@ -99,48 +122,46 @@ public class PlayerController : MonoBehaviour
 
 
 
-    /*
-    /// <summary>
-    /// Checks if the player is on the ground, falling or in the air.
-    /// Respawns player if fall off map.
-    /// </summary>
+
+
     private void GroundCheck()
     {
-        // Code here for checking if standing on ground
-        feetOnGround = Physics.BoxCast(feetCollider.bounds.center, transform.localScale * 0.5f, -transform.up, out feetFloor, transform.rotation, floorToFeet);
-        if (feetOnGround)
-        {
-            isGrounded = true;
-        }
-        else
-        {
-            isGrounded = false;
-        }
-        if (transform.position.y < -6)
-        {
-            transform.position = new Vector3(.2f, 19.81f, .3f);
-        }
-    }
-    
 
-    private void OnRamp()
-    {
-        if(Physics.Raycast(transform.position, Vector3.down, out slopeValue, .5f + .3f))
-        {
-            float angle = Vector3.Angle(Vector3.up, slopeValue.normal);
-            return angle < slopeAngle && angle != 0;
-        }
-        return false;
-    }
-    */
-
-    private void BackupGroundCheck()
-    {
-        if (Physics.Raycast(transform.position, Vector3.down, 1.15f))
+        if ((Physics.Raycast(transform.position + new Vector3(.2f, 0f, .2f), Vector3.down, 1.15f))
+            || (Physics.Raycast(transform.position + new Vector3(-.2f, 0f, .2f), Vector3.down, 1.15f))
+            || (Physics.Raycast(transform.position + new Vector3(-.2f, 0f, .2f), Vector3.down, 1.15f))
+            || (Physics.Raycast(transform.position + new Vector3(.2f, 0f, -.2f), Vector3.down, 1.15f)))
+            {
             isGrounded = true;
+
+        }
+
         else
             isGrounded = false;
+
+
     }
+
+    private void WallStick()
+    {
+        if (isGrounded)
+        {
+            GetComponent<Collider>().material.dynamicFriction = 0;
+            GetComponent<Collider>().material.staticFriction = 0;
+            // Access the physics material of the collider
+            PhysicMaterial physicsMaterial = GetComponent<Collider>().material;
+            // Set the friction to 0 (no friction)
+            //physicsMaterial.friction = 0f;
+        }
+
+    }
+
+
+
+
+
+
+
 
 
     /// <summary>
@@ -178,8 +199,17 @@ public class PlayerController : MonoBehaviour
     {
         if (isDiving == false)
         {
-            GetComponent<Rigidbody>().AddForce(Vector3.forward * playerSpeed, ForceMode.Force);
+            if (OnSlope())
+            {
 
+                rb.AddForce(SlopeForward() * (playerSpeed - rampSpeed), ForceMode.Force);
+
+            }
+            if (!OnSlope())
+            {
+                GetComponent<Rigidbody>().AddForce(Vector3.forward * playerSpeed, ForceMode.Force);
+
+            }
         }
     }
     /// <summary>
@@ -187,9 +217,15 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void OnMoveLeft()
     {
-        if (isDiving == false)
+        if (OnSlope())
         {
-            GetComponent<Rigidbody>().AddForce(Vector3.left * playerSpeed, ForceMode.Force);
+
+          rb.AddForce(SlopeLeft() * (playerSpeed - rampSpeed), ForceMode.Force);
+
+        }
+        if (!OnSlope())
+        {
+        GetComponent<Rigidbody>().AddForce(Vector3.left * playerSpeed, ForceMode.Force);
         }
     }
     /// <summary>
@@ -197,7 +233,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void OnMoveBack()
     {
-        if (isDiving == false)
+        if (OnSlope())
+        {
+            rb.AddForce(SlopeBack() * (playerSpeed - rampSpeed), ForceMode.Force);
+        }
+        if (!OnSlope())
         {
             GetComponent<Rigidbody>().AddForce(Vector3.back * playerSpeed, ForceMode.Force);
         }
@@ -207,7 +247,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void OnMoveRight()
     {
-        if (isDiving == false)
+        if (OnSlope())
+        {
+
+            rb.AddForce(SlopeRight() * (playerSpeed - rampSpeed), ForceMode.Force);
+        }
+        if (!OnSlope())
         {
             GetComponent<Rigidbody>().AddForce(Vector3.right * playerSpeed, ForceMode.Force);
         }
@@ -271,12 +316,13 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// waits to check if player is on ground after diving
+    /// prevents player from spamming the second jump with the first jump and dive
+    /// to get a higher jump
     /// </summary>
     /// <returns></returns>
     IEnumerator JumpTwoDelay()
     {
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(jumpWait);
         canInterruptDive = true;
     }
 
@@ -320,7 +366,16 @@ public class PlayerController : MonoBehaviour
         jumpAmt = 1;
     }
 
-
+    /// <summary>
+    /// if player hits enemy, player will wait less than a second to return to not diving
+    /// </summary>
+    IEnumerator HitEnemyDelay()
+    {
+        yield return new WaitForSeconds(.1f);
+        hasDived = true;
+        transform.Rotate(-90, 0, 0);
+        isDiving = false;
+    }
 
     /// <summary>
     /// destroy wall when player dives into it
@@ -329,11 +384,23 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //dive into anything (except keys, pitedges, coins and checkpoints) ends dive
-        if (!(other.transform.tag == "PitEdge") && !(other.transform.tag == "Coin") && !(other.transform.tag == "Key") && !(other.transform.tag == "CheckPoint"))
+        if (!(other.transform.tag == "PitEdge")
+            && !(other.transform.tag == "Coin")
+            && !(other.transform.tag == "Key")
+            && !(other.transform.tag == "CheckPoint")
+            && !(other.transform.tag == "Enemy"))
         {
             if (isDiving == true)
                 FinishDive();
         }
+
+
+        if (other.transform.tag == "Enemy")
+        {
+           //HitEnemyDelay();
+        }
+
+
 
         //Breakable Walls
         if (other.transform.tag == "BreakableWall")

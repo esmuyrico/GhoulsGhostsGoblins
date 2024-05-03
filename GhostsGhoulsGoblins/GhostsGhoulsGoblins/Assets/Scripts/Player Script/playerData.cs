@@ -44,7 +44,7 @@ public class PlayerData : Singleton<PlayerData>
 
         if (other.gameObject.tag == "Enemy" && !gameObject.GetComponent<PlayerController>().isDiving)
         {
-            HurtPlayer(2);
+            //HurtPlayer(2);
         }
 
         if (other.CompareTag("Pit"))
