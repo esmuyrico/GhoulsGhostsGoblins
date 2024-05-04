@@ -388,6 +388,7 @@ public class PlayerController : MonoBehaviour
             && !(other.transform.tag == "Coin")
             && !(other.transform.tag == "Key")
             && !(other.transform.tag == "CheckPoint")
+            && !(other.transform.tag == "Building")
             && !(other.transform.tag == "Enemy"))
         {
             if (isDiving == true)
