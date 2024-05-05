@@ -48,7 +48,7 @@ public class PlayerData : Singleton<PlayerData>
 
         if (other.tag == "HealthPack")
         {
-            Heal(15);
+            Heal(6);
             Destroy(other.gameObject);
         }
 
