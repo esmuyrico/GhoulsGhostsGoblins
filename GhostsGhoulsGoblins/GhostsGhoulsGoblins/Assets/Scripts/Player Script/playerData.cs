@@ -32,6 +32,11 @@ public class PlayerData : Singleton<PlayerData>
         UIManager.Instance.UpdateHealth(health, maxHealth);
     }
 
+    private void Heal(int life)
+    {
+        health += life;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Coin")
@@ -41,6 +46,11 @@ public class PlayerData : Singleton<PlayerData>
             UIManager.Instance.UpdateGold(coinNum);
         }
 
+        if (other.tag == "HealthPack")
+        {
+            Heal(15);
+            Destroy(other.gameObject);
+        }
 
         if (other.gameObject.tag == "Enemy" && !gameObject.GetComponent<PlayerController>().isDiving)
         {
