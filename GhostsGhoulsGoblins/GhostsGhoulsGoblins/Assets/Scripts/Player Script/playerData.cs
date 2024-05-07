@@ -50,6 +50,10 @@ public class PlayerData : Singleton<PlayerData>
         {
             Heal(6);
             Destroy(other.gameObject);
+            if (health > 10)
+            {
+                health = 10;
+            }
         }
 
         if (other.gameObject.tag == "Enemy" && !gameObject.GetComponent<PlayerController>().isDiving)
