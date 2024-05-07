@@ -3,7 +3,15 @@ guid: 51284dc4cbde2ee4f9b9ca0632d7b577
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - playerLocation: {fileID: 673190492060221989, guid: 840756714422b824181f610166563144,
+      type: 3}
+  - player: {fileID: 2515482390688758343, guid: 840756714422b824181f610166563144,
+      type: 3}
+  - goldCoin: {fileID: 1990478050186777301, guid: 91bb6abed1f0cd649ab0df3469ddb975,
+      type: 3}
+  - swordPrefab: {fileID: 3346465728600331962, guid: 4b86d3c30be5e0d4490bd71ca6b14883,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

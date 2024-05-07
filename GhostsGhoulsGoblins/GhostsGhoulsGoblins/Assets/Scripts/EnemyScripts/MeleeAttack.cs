@@ -8,7 +8,7 @@ public class MeleeAttack : MonoBehaviour
     private float swingAngle;
     private bool isSwinging = false;
     private int speed = 5;
-    private int damage;
+    private int damage = 2;
 
     // Start is called before the first frame update
     private void Start()
@@ -46,20 +46,13 @@ public class MeleeAttack : MonoBehaviour
         }
     }
 
-    private void OnGUI()
-    {
-        if (GUILayout.Button("swing"))
-        {
-            StartCoroutine(swing());
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             other.GetComponent<PlayerData>().HurtPlayer(damage);
             Debug.Log("hit player");
+            Destroy(gameObject);
         }
     }
 }

@@ -33,6 +33,7 @@ public class EnemyMovement : MonoBehaviour
     public float visionAngle;
     public LayerMask targetPlayer;
     public LayerMask obstacleMask;
+    private bool enemyKilled = false;
     public bool enemyAlerted;
 
 
@@ -45,9 +46,12 @@ public class EnemyMovement : MonoBehaviour
 
     void Update()
     {
-        EnemyMove();
-        DetectPlayer();
-        shootPlayer();
+        if (!enemyKilled)
+        {
+            EnemyMove();
+            DetectPlayer();
+            shootPlayer();
+        }
     }
 
     /// <summary>
@@ -109,6 +113,7 @@ public class EnemyMovement : MonoBehaviour
         else
         {
             enemyAlerted = false;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
 
@@ -173,9 +178,16 @@ public class EnemyMovement : MonoBehaviour
     {
         if (_playerController.isDiving == true)
         {
+            enemyKilled = true;
             Instantiate(goldCoin, coinSpawn, Quaternion.identity);
-            Destroy(gameObject);
+            transform.rotation = Quaternion.Euler(0, 0, 90);
+            StartCoroutine(EnemyDeathDelay());
         }
+    }
+    IEnumerator EnemyDeathDelay()
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)

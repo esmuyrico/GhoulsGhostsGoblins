@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EnemyMelee : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class EnemyMelee : MonoBehaviour
     {
         DetectPlayer();
     }
+
+
 
     private void DetectPlayer()
     {
@@ -68,7 +71,7 @@ public class EnemyMelee : MonoBehaviour
 
     private IEnumerator swing()
     {
-        Debug.Log(canSwing);
+        // Debug.Log(canSwing);
         if (canSwing)
         {
             canSwing = false;
@@ -77,14 +80,14 @@ public class EnemyMelee : MonoBehaviour
             yield return new WaitForSeconds(1);
             canSwing = true;
         }
-        
     }
 
-    private void OnGUI()
+    /* // Alex said comment this out
+     * private void OnGUI()
     {
         if (GUILayout.Button("swing"))
         {
             StartCoroutine(swing());
         }
-    }
+    } */
 }

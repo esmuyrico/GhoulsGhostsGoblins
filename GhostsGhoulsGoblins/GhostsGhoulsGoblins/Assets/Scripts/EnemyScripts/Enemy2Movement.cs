@@ -23,7 +23,7 @@ public class Enemy2Movement : MonoBehaviour
 
 
     //enemy type (for parent/child script)
-    private float playerDistance = 1.3f;
+    public float playerDistance = 7;
 
 
     // Alert System:
@@ -35,14 +35,8 @@ public class Enemy2Movement : MonoBehaviour
     public int health = 1;
     public GameObject swordPrefab;
     public bool canSwing = true;
-    public float detectDistanceFromPlayer = 3;
-
-
-
-
-
-
-
+    private bool enemyKilled = false;
+    public float detectDistanceFromPlayer = 1;
 
 
 
@@ -54,8 +48,11 @@ public class Enemy2Movement : MonoBehaviour
 
     void Update()
     {
-        EnemyMove();
-        DetectPlayer();
+        if (!enemyKilled)
+        {
+            EnemyMove();
+            DetectPlayer();
+        }
 
     }
 
@@ -104,6 +101,7 @@ public class Enemy2Movement : MonoBehaviour
 
         if (Vector3.Angle(transform.forward, playerTarget) <= visionAngle)
         {
+            Debug.Log("Detect");
             float distanceToTarget = Vector3.Distance(transform.position, playerLocation.transform.position);
             if (distanceToTarget <= visionRange)
             {
@@ -121,7 +119,9 @@ public class Enemy2Movement : MonoBehaviour
         }
         else
         {
+            Debug.Log("Alerted");
             enemyAlerted = false;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
 
@@ -160,8 +160,10 @@ public class Enemy2Movement : MonoBehaviour
     /// </summary>
     private void ChasePlayer()
     {
+        
         if (Vector3.Distance(playerLocation.transform.position, transform.position) >= playerDistance)
         {
+            Debug.Log("isChasing");
             transform.position = Vector3.MoveTowards(transform.position, playerLocation.transform.position, Time.deltaTime * alertSpeed);
         }
     }
@@ -176,13 +178,17 @@ public class Enemy2Movement : MonoBehaviour
     {
         if (_playerController.isDiving == true)
         {
+            enemyKilled = true;
             Instantiate(goldCoin, coinSpawn, Quaternion.identity);
-            Destroy(gameObject);
+            transform.rotation = Quaternion.Euler(0, 0, 90);
+            StartCoroutine(EnemyDeathDelay());
         }
     }
-
-
-
+    IEnumerator EnemyDeathDelay()
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
