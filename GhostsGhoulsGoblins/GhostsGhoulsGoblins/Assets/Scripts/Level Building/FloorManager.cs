@@ -49,10 +49,6 @@ public class FloorManager : MonoBehaviour
         {
             // player left the building
             Debug.Log("left building");
-            if (wantToPause)
-            {
-                UnityEditor.EditorApplication.isPaused = true;
-            }
             LeftBuilding();
         }
     }
