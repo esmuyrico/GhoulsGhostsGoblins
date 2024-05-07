@@ -20,6 +20,7 @@ TagManager:
   - Ramp
   - Rock
   - Building
+  - Sign
   layers:
   - Default
   - TransparentFX
