@@ -115,8 +115,17 @@ public class PlayerController : MonoBehaviour
         //if in air
         if (!isGrounded)
         {
+            if (isDiving)
+            {
+                rb.drag = airDrag;
+                playerSpeed = 0;
+            }
+            if (!isDiving)
+            {
             rb.drag = airDrag;
             playerSpeed = airSpeed;
+            }
+
         }
     }
 
