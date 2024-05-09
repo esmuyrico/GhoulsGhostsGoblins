@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 // Brough, Heath
 // Created (4/22/2024)
@@ -28,6 +26,8 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private GameObject DiveStrengthBar;
     [SerializeField] private GameObject MoneyTrackerRef;
     [SerializeField] private GameObject TipTextRef;
+    [SerializeField] private GameObject ChoiceMenu;
+    [SerializeField] private GameObject endScreenRef;
     // UI Element arrays
     [SerializeField] private GameObject[] _HUDElements = new GameObject[5];
 
@@ -187,27 +187,35 @@ public class UIManager : Singleton<UIManager>
         Application.Quit();
     }
 
-
-
-    /*private void OnGUI()
+    public void OpenChoiceMenu()
     {
-        if (GUILayout.Button("Health 50"))
+        ChoiceMenu.SetActive(true);
+    }
+
+    public void CloseChoiceMenu()
+    {
+        ChoiceMenu.SetActive(false);
+    }
+
+    public void DisplayEndScreen()
+    {
+        string killerTitle = "Stone Cold Killer";
+        string sparerTitle= "Heart of Gold";
+
+        string title;
+
+        if (GhostDialogue.Instance.ghoulKilled)
         {
-            UpdateHealth(50, 100);
+            title = killerTitle;
         }
-        if (GUILayout.Button("Dive 0"))
+        else
         {
-            UpdateDiveCharge(0);
-        }
-        if (GUILayout.Button("Dive 50"))
-        {
-            UpdateDiveCharge(0.5f);
-        }
-        if (GUILayout.Button("Gold 5"))
-        {
-            UpdateGold(5);
+            title = sparerTitle;
         }
 
-
-    }*/
+        endScreenRef.gameObject.SetActive(true);
+        endScreenRef.transform.GetChild(0).GetComponent<TMP_Text>().text = "Title \n" + title;
+        //endScreen.GetChild(1).GetComponent<TMP_Text>().text = "Score \n" + PlayerData.Instance.CoinNum
+        Time.timeScale = 0;
+    }
 }

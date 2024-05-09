@@ -20,6 +20,8 @@ TagManager:
   - Ramp
   - Rock
   - HealthPack
+  - Building
+  - Sign
   layers:
   - Default
   - TransparentFX
