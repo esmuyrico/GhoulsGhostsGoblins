@@ -12,8 +12,8 @@ public class PlayerController : MonoBehaviour
     PlayerInput playerInput;
     InputAction moveAction;
     private float playerSpeed;
-    private float airSpeed = 20;
-    private float walkSpeed = 31;
+    [SerializeField ]private float airSpeed = 20;
+    [SerializeField] private float walkSpeed = 31;
     private float jumpWait = .3f;
 
     private int divefwdForce = 16;
@@ -40,8 +40,8 @@ public class PlayerController : MonoBehaviour
 
     //JUMP VARIABLES
     private int jumpAmt;
-    private int jumpOneForce = 10;
-    private int jumpTwoForce = 7;
+    [SerializeField] private int jumpOneForce = 10;
+    [SerializeField] private int jumpTwoForce = 7;
 
     //RAMP VARIABLES
     private float slopeAngle = 40;
@@ -389,7 +389,8 @@ public class PlayerController : MonoBehaviour
             && !(other.transform.tag == "Key")
             && !(other.transform.tag == "CheckPoint")
             && !(other.transform.tag == "Building")
-            && !(other.transform.tag == "Enemy"))
+            && !(other.transform.tag == "Enemy")
+            && !(other.transform.tag == "Sign"))
         {
             if (isDiving == true)
                 FinishDive();

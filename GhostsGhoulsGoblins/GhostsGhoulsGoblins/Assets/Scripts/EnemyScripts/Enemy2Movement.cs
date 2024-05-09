@@ -101,11 +101,9 @@ public class Enemy2Movement : MonoBehaviour
 
         if (Vector3.Angle(transform.forward, playerTarget) <= visionAngle)
         {
-            Debug.Log("Detect");
             float distanceToTarget = Vector3.Distance(transform.position, playerLocation.transform.position);
             if (distanceToTarget <= visionRange)
             {
-                Debug.Log("In Range");
                 if (Physics.Raycast(transform.position, playerTarget, distanceToTarget, obstacleMask) == false)
                 {
                     enemyAlerted = true;
@@ -119,7 +117,6 @@ public class Enemy2Movement : MonoBehaviour
         }
         else
         {
-            Debug.Log("Alerted");
             enemyAlerted = false;
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
@@ -134,7 +131,6 @@ public class Enemy2Movement : MonoBehaviour
         if (distanceToPlayer < detectDistanceFromPlayer)
         {
             transform.LookAt(player);
-            Debug.Log("Kill you");
             StartCoroutine(swing());
         }
     }
@@ -163,7 +159,6 @@ public class Enemy2Movement : MonoBehaviour
         
         if (Vector3.Distance(playerLocation.transform.position, transform.position) >= playerDistance)
         {
-            Debug.Log("isChasing");
             transform.position = Vector3.MoveTowards(transform.position, playerLocation.transform.position, Time.deltaTime * alertSpeed);
         }
     }
